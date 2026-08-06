@@ -19,88 +19,150 @@ type ScrollHolofoteProps = {
 
 export function ScrollHolofote({
   id = "cases",
-  eyebrow = "Como funciona",
+  eyebrow,
   heading,
   intro,
   cases,
 }: ScrollHolofoteProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const activeIndexRef = useRef(0);
+  const cardRefs = useRef<(HTMLElement | null)[]>([]);
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReduced) return; // fica no estado default (sem dimming), sem observer
+    let animationFrame = 0;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
-            const index = cardRefs.current.findIndex((el) => el === entry.target);
-            if (index !== -1) setActiveIndex(index);
-          }
-        });
-      },
-      { threshold: [0.6], rootMargin: "-20% 0px -20% 0px" }
-    );
+    const updateActiveCard = () => {
+      animationFrame = 0;
+      const viewportCenter = window.innerHeight / 2;
+      let closestIndex = 0;
+      let closestDistance = Number.POSITIVE_INFINITY;
 
-    cardRefs.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
+      cardRefs.current.forEach((card, index) => {
+        if (!card) return;
+
+        const bounds = card.getBoundingClientRect();
+        const cardCenter = bounds.top + bounds.height / 2;
+        const distance = Math.abs(cardCenter - viewportCenter);
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      if (closestIndex !== activeIndexRef.current) {
+        activeIndexRef.current = closestIndex;
+        setActiveIndex(closestIndex);
+      }
+    };
+
+    const scheduleUpdate = () => {
+      if (animationFrame) return;
+      animationFrame = window.requestAnimationFrame(updateActiveCard);
+    };
+
+    updateActiveCard();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+    };
   }, [cases.length]);
 
   return (
-    <section id={id} aria-label={heading} className="relative scroll-mt-20">
-      <div className="mx-auto grid max-w-container grid-cols-1 gap-8 px-4 py-14 md:grid-cols-[0.9fr_1.2fr_0.9fr] md:px-6 md:py-20">
-        {/* coluna esquerda — estática */}
-        <div className="md:sticky md:top-32 md:self-start">
-          <span className="mb-4 inline-flex items-center gap-2 font-body text-caption font-semibold uppercase tracking-[0.1em] text-accent-text before:content-['—'] after:content-['—'] before:opacity-60 after:opacity-60">
-            {eyebrow}
-          </span>
-          <h2 className="font-display text-h3 font-extrabold uppercase leading-tight text-foreground">
-            {heading}
-          </h2>
-          {intro && <p className="mt-3 text-sm text-muted-foreground">{intro}</p>}
-        </div>
+    <section
+      id={id}
+      aria-label={heading}
+      className="relative scroll-mt-20 overflow-clip bg-background"
+    >
+      <div className="mx-auto max-w-container px-4 py-20 md:px-6 md:py-0">
+        <div className="md:grid md:grid-cols-[minmax(0,1fr)_minmax(360px,500px)_minmax(0,1fr)] md:gap-x-10 lg:gap-x-14">
+          <div className="mb-10 md:mb-0 md:self-stretch">
+            <div className="md:sticky md:top-[calc(50%_-_4rem)]">
+              {eyebrow && (
+                <p className="mb-4 font-body text-caption font-semibold uppercase tracking-[0.14em] text-accent-text">
+                  {eyebrow}
+                </p>
+              )}
 
-        {/* coluna central — stack de cards */}
-        <div className="flex flex-col gap-6">
-          {cases.map((item, index) => (
-            <div
-              key={item.id}
-              ref={(el) => {
-                cardRefs.current[index] = el;
-              }}
-              data-active={index === activeIndex ? "true" : "false"}
-              className="group aspect-[4/5] rounded-lg border border-border bg-gradient-to-br from-blue-700 to-card p-5 opacity-30 brightness-[.55] transition-[opacity,filter] duration-base ease-premium data-[active=true]:opacity-100 data-[active=true]:brightness-100 motion-reduce:opacity-100 motion-reduce:brightness-100"
-            >
-              <div className="flex h-full flex-col justify-end">
-                <span className="font-display text-lg font-extrabold uppercase text-white">
-                  {item.title}
-                </span>
+              <div className="hidden min-h-32 items-center md:flex">
+                <div className="relative w-full">
+                  {cases.map((item, index) => (
+                    <h2
+                      key={item.id}
+                      data-active={index === activeIndex ? "true" : "false"}
+                      aria-hidden={index !== activeIndex}
+                      className="absolute left-0 top-1/2 w-full -translate-y-1/2 font-display text-[clamp(2.5rem,4vw,4.75rem)] font-black uppercase leading-[0.92] tracking-[-0.045em] text-foreground opacity-0 transition-opacity duration-500 ease-premium data-[active=true]:opacity-100"
+                    >
+                      {item.title}
+                    </h2>
+                  ))}
+                </div>
+              </div>
+
+              <h2 className="font-display text-h2 font-black uppercase leading-none tracking-[-0.04em] text-foreground md:hidden">
+                {heading}
+              </h2>
+              {intro && (
+                <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
+                  {intro}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2 md:py-[31svh]">
+            {cases.map((item, index) => (
+              <article
+                key={item.id}
+                ref={(element) => {
+                  cardRefs.current[index] = element;
+                }}
+                data-active={index === activeIndex ? "true" : "false"}
+                className="group"
+              >
+                <div className="relative aspect-video overflow-hidden rounded-[3px] border border-border bg-gradient-to-br from-blue-700 via-blue-500 to-black-900 opacity-30 brightness-[0.42] saturate-50 transition-[opacity,filter] duration-500 ease-premium group-data-[active=true]:opacity-100 group-data-[active=true]:brightness-100 group-data-[active=true]:saturate-100 motion-reduce:opacity-100 motion-reduce:brightness-100 motion-reduce:saturate-100">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_12%,rgba(255,255,255,0.28),transparent_35%)]" />
+                  <span className="absolute bottom-4 left-4 font-display text-sm font-extrabold uppercase tracking-[-0.02em] text-white">
+                    {item.title}
+                  </span>
+                </div>
+
+                <div className="pt-4 md:hidden">
+                  <p className="font-body text-caption font-semibold uppercase tracking-[0.14em] text-accent-text">
+                    {item.client}
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div className="hidden md:block md:self-stretch">
+            <div className="sticky top-[calc(50%_-_4rem)]">
+              <div className="relative min-h-32">
+                {cases.map((item, index) => (
+                  <div
+                    key={item.id}
+                    data-active={index === activeIndex ? "true" : "false"}
+                    aria-hidden={index !== activeIndex}
+                    className="absolute left-0 top-1/2 w-full -translate-y-1/2 opacity-0 transition-opacity duration-500 ease-premium data-[active=true]:opacity-100"
+                  >
+                    <p className="font-body text-caption font-semibold uppercase tracking-[0.16em] text-accent-text">
+                      {item.client}
+                    </p>
+                    <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* coluna direita — texto sincronizado com o card ativo */}
-        <div className="md:sticky md:top-32 md:self-start">
-          <div className="relative min-h-[120px]">
-            {cases.map((item, index) => (
-              <div
-                key={item.id}
-                data-active={index === activeIndex ? "true" : "false"}
-                aria-hidden={index !== activeIndex}
-                className="absolute inset-0 translate-y-3 opacity-0 transition-[opacity,transform] duration-base ease-premium data-[active=true]:relative data-[active=true]:translate-y-0 data-[active=true]:opacity-100"
-              >
-                <span className="font-body text-caption font-semibold uppercase tracking-[0.1em] text-accent-text">
-                  {item.client}
-                </span>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  {item.description}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
       </div>
