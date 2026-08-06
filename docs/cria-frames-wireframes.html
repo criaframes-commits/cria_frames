@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cria Frames — Wireframes de baixa fidelidade</title>
+<style>
+:root{
+  --wf-bg:#EFEFEF; --wf-panel:#FFFFFF; --wf-line:#B9B9B9; --wf-line-strong:#8A8A8A;
+  --wf-text:#3A3A3A; --wf-text-light:#8F8F8F; --wf-fill:#E2E2E2; --wf-fill-strong:#D2D2D2;
+  --wf-active:#4A4A4A; --wf-annot:#C0392B;
+  --radius:4px;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:var(--wf-bg); color:var(--wf-text); font-family:'Segoe UI',system-ui,Arial,sans-serif;}
+.topbar{
+  position:sticky; top:0; z-index:50; background:#2B2B2B; color:#fff;
+  display:flex; align-items:center; justify-content:space-between; padding:12px 20px; flex-wrap:wrap; gap:10px;
+}
+.topbar .title{font-size:13px; letter-spacing:.06em; text-transform:uppercase; opacity:.75;}
+.tabs{display:flex; gap:8px;}
+.tab-btn{
+  background:transparent; border:1px solid rgba(255,255,255,.35); color:#fff; padding:8px 16px;
+  font-size:13px; border-radius:20px; cursor:pointer; transition:.15s;
+}
+.tab-btn.active{background:#fff; color:#2B2B2B; border-color:#fff;}
+.legend{font-size:11px; color:#bbb; display:flex; gap:14px; align-items:center; flex-wrap:wrap;}
+.legend b{color:#fff;}
+
+.page{display:none; max-width:1180px; margin:32px auto 80px; padding:0 20px;}
+.page.active{display:block;}
+.page-label{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--wf-text-light); margin-bottom:8px;}
+
+/* ---- wireframe kit ---- */
+.wf-block{
+  background:var(--wf-panel); border:1.5px dashed var(--wf-line); border-radius:var(--radius);
+  position:relative; padding:16px; margin-bottom:14px;
+}
+.wf-tag{
+  position:absolute; top:-11px; left:14px; background:#2B2B2B; color:#fff;
+  font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:2px 8px; border-radius:10px;
+}
+.wf-note{
+  font-size:11px; color:var(--wf-annot); font-style:italic; margin-top:8px; display:flex; gap:6px; align-items:flex-start;
+}
+.wf-note::before{content:"note"; font-style:normal; font-size:9px; background:var(--wf-annot); color:#fff; padding:1px 5px; border-radius:3px; letter-spacing:.05em; text-transform:uppercase; flex-shrink:0; margin-top:2px;}
+
+.wf-line{height:9px; background:var(--wf-fill); border-radius:2px; margin-bottom:7px;}
+.wf-line.w90{width:90%;} .wf-line.w75{width:75%;} .wf-line.w60{width:60%;} .wf-line.w45{width:45%;} .wf-line.w30{width:30%;}
+.wf-heading{height:20px; background:var(--wf-fill-strong); border-radius:2px; margin-bottom:10px;}
+.wf-heading.w70{width:70%;} .wf-heading.w50{width:50%;} .wf-heading.w40{width:40%;}
+
+.wf-media{
+  background:repeating-linear-gradient(45deg, var(--wf-fill) 0 2px, transparent 2px 10px), var(--wf-panel);
+  border:1.5px solid var(--wf-line); border-radius:var(--radius);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--wf-text-light); font-size:12px; letter-spacing:.05em; text-transform:uppercase;
+}
+
+.wf-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  border:1.5px solid var(--wf-line-strong); border-radius:20px; padding:9px 22px;
+  font-size:12px; color:var(--wf-text); background:#fff;
+}
+.wf-btn.solid{background:var(--wf-active); color:#fff; border-color:var(--wf-active);}
+
+.wf-icon{width:34px; height:34px; border:1.5px solid var(--wf-line-strong); border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--wf-text-light);}
+
+/* ---- nav / footer reused em todas as páginas ---- */
+.wf-nav{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+.wf-nav .logo-box{width:76px; height:26px; border:1.5px solid var(--wf-line-strong); border-radius:3px;
+  display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--wf-text-light); flex-shrink:0;}
+.wf-nav-links{display:flex; gap:18px; font-size:12px; color:var(--wf-text-light); flex-wrap:wrap;}
+.wf-footer{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:20px;}
+@media (max-width:640px){.wf-footer{grid-template-columns:1fr 1fr;}}
+
+/* ---- HOME: hero ---- */
+.hero-media{height:340px;}
+@media (max-width:640px){.hero-media{height:220px;}}
+
+/* ---- HOME: scroll holofote ---- */
+.holo-grid{display:grid; grid-template-columns:0.9fr 1.2fr 0.9fr; gap:16px;}
+@media (max-width:820px){.holo-grid{grid-template-columns:1fr;}}
+.holo-cards{display:flex; flex-direction:column; gap:14px;}
+.holo-card{
+  height:150px; border:1.5px dashed var(--wf-line); border-radius:var(--radius);
+  background:repeating-linear-gradient(45deg, var(--wf-fill) 0 2px, transparent 2px 10px), var(--wf-panel);
+  display:flex; align-items:flex-end; padding:10px; font-size:11px; color:var(--wf-text-light);
+  opacity:.55;
+}
+.holo-card.active{opacity:1; border-color:var(--wf-active); border-style:solid; background:var(--wf-fill-strong);
+  color:var(--wf-text); font-weight:600;}
+
+/* ---- HOME: prova social ---- */
+.logo-row{display:flex; gap:14px; flex-wrap:wrap;}
+.logo-chip{width:84px; height:38px; border:1.5px solid var(--wf-line); border-radius:3px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--wf-text-light);}
+.metric-row{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:16px;}
+@media (max-width:640px){.metric-row{grid-template-columns:1fr 1fr;}}
+.metric-box{text-align:center; padding:14px 8px; border:1.5px dashed var(--wf-line); border-radius:var(--radius);}
+.metric-box .wf-heading{height:26px; margin:0 auto 8px; width:50%;}
+
+/* ---- SERVIÇOS: cards & steps ---- */
+.svc-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+@media (max-width:700px){.svc-grid{grid-template-columns:1fr;}}
+.step-row{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+@media (max-width:800px){.step-row{grid-template-columns:1fr 1fr;}}
+.step-num{font-size:22px; font-weight:700; color:var(--wf-line-strong); margin-bottom:6px;}
+.faq-item{border:1.5px dashed var(--wf-line); border-radius:var(--radius); padding:12px 14px; margin-bottom:8px;
+  display:flex; justify-content:space-between; align-items:center;}
+
+/* ---- CONTATO ---- */
+.contact-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:22px;}
+@media (max-width:800px){.contact-grid{grid-template-columns:1fr;}}
+.field{border:1.5px solid var(--wf-line); border-radius:var(--radius); padding:10px 12px; margin-bottom:12px;
+  font-size:11px; color:var(--wf-text-light);}
+.field.textarea{height:80px; display:flex; align-items:flex-start;}
+
+/* ---- HOME: seção especial temporária (pré-estreia) ---- */
+.wf-block.on-dark{background:#141414; border-color:#000;}
+.wf-block.on-dark .wf-line{background:#454545;}
+.wf-block.on-dark .wf-heading{background:#565656;}
+.wf-block.on-dark .wf-media{background:repeating-linear-gradient(45deg,#333 0 2px, transparent 2px 10px), #1b1b1b;
+  color:#9a9a9a; border-color:#444;}
+.wf-block.on-dark .wf-btn{border-color:#8a8a8a; color:#eee; background:transparent;}
+.wf-block.on-dark .wf-btn.solid{background:#fff; color:#141414; border-color:#fff;}
+.wf-block.on-dark .wf-note{color:#ff8b78;}
+.wf-block.on-dark .wf-note::before{background:#ff8b78; color:#141414;}
+
+.temp-badge{
+  display:inline-flex; align-items:center; gap:7px; background:#000; color:#fff;
+  font-size:10px; letter-spacing:.06em; text-transform:uppercase; padding:5px 12px 5px 10px;
+  border-radius:3px; margin-bottom:16px;
+}
+.temp-badge::before{content:""; width:6px; height:6px; border-radius:50%; background:#E74C3C; display:inline-block; flex-shrink:0;}
+
+.countdown-row{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:20px 0 14px;}
+.countdown-box{width:76px; text-align:center; border:1.5px solid #555; border-radius:var(--radius); padding:12px 4px; background:#000;}
+.countdown-num{font-size:26px; font-weight:700; color:#fff; font-variant-numeric:tabular-nums;}
+.countdown-label{font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:#999; margin-top:4px;}
+
+/* ---- CASE DO CURTA ---- */
+.live-badge{
+  display:inline-flex; align-items:center; gap:6px; background:#000; color:#fff;
+  font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:5px 12px; border-radius:12px; flex-shrink:0;
+}
+.live-badge::before{content:""; width:6px; height:6px; border-radius:50%; background:#E74C3C; display:inline-block;}
+
+.editorial-row{display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:center; margin-bottom:20px;}
+.editorial-row.reverse{direction:rtl;}
+.editorial-row.reverse > *{direction:ltr;}
+@media (max-width:700px){.editorial-row{grid-template-columns:1fr; direction:ltr;}}
+
+.gallery-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
+@media (max-width:700px){.gallery-grid{grid-template-columns:repeat(2,1fr);}}
+.gallery-item{aspect-ratio:1/1; font-size:10px;}
+
+/* ---- SOBRE ---- */
+.manifesto-block{text-align:center; padding:40px 20px;}
+.timeline{position:relative; padding-left:26px;}
+.timeline::before{content:""; position:absolute; left:5px; top:4px; bottom:4px; width:2px; background:var(--wf-line);}
+.timeline-item{position:relative; margin-bottom:22px;}
+.timeline-item:last-child{margin-bottom:0;}
+.timeline-item::before{content:""; position:absolute; left:-26px; top:3px; width:10px; height:10px; border-radius:50%;
+  background:var(--wf-active); border:2px solid #fff; box-shadow:0 0 0 1.5px var(--wf-line-strong);}
+.timeline-year{font-size:11px; font-weight:700; color:var(--wf-text-light); letter-spacing:.05em; margin-bottom:5px; text-transform:uppercase;}
+
+.pillar-row{display:grid; grid-template-columns:repeat(6,1fr); gap:12px;}
+@media (max-width:900px){.pillar-row{grid-template-columns:repeat(3,1fr);}}
+@media (max-width:520px){.pillar-row{grid-template-columns:repeat(2,1fr);}}
+.pillar-box{text-align:center; padding:16px 8px; border:1.5px dashed var(--wf-line); border-radius:var(--radius);}
+
+.team-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px;}
+@media (max-width:800px){.team-grid{grid-template-columns:repeat(2,1fr);}}
+.team-card{text-align:center;}
+.team-photo{
+  aspect-ratio:1/1; border-radius:50%; margin:0 auto 10px; max-width:120px;
+  background:repeating-linear-gradient(45deg, var(--wf-fill) 0 2px, transparent 2px 10px), var(--wf-panel);
+  border:1.5px solid var(--wf-line); display:flex; align-items:center; justify-content:center;
+  color:var(--wf-text-light); font-size:10px; text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="title">Cria Frames — Wireframes · Baixa fidelidade · v1</span>
+  <div class="tabs">
+    <button class="tab-btn active" data-page="home">Home</button>
+    <button class="tab-btn" data-page="servicos">Serviços</button>
+    <button class="tab-btn" data-page="sobre">Sobre</button>
+    <button class="tab-btn" data-page="contato">Contato</button>
+    <button class="tab-btn" data-page="case-curta">Case Curta 🔒 (dia da estreia)</button>
+  </div>
+  <div class="legend">
+    <span><b>▦</b> mídia (img/vídeo)</span>
+    <span><b>▬</b> texto (greeked)</span>
+    <span style="color:var(--wf-annot);"><b>nota</b> = comportamento/decisão</span>
+    <span>redimensione a janela p/ ver quebra mobile</span>
+  </div>
+</div>
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="home">
+  <div class="page-label">Página — Home</div>
+
+  <!-- NAV -->
+  <div class="wf-block"><span class="wf-tag">Nav</span>
+    <div class="wf-nav">
+      <div class="logo-box">LOGO</div>
+      <div class="wf-nav-links"><span>Serviços</span><span>Cases</span><span>Sobre</span><span>Contato</span></div>
+      <div class="wf-btn solid">Falar com o estúdio</div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="wf-block"><span class="wf-tag">Hero</span>
+    <div class="wf-line w30" style="margin:0 auto 12px; width:160px;"></div>
+    <div class="wf-heading w50" style="margin:0 auto 10px; width:70%;"></div>
+    <div class="wf-heading w40" style="margin:0 auto 18px; width:55%;"></div>
+    <div class="wf-media hero-media">VÍDEO FULL-BLEED — REEL DE ABERTURA</div>
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:16px;">
+      <div class="wf-btn solid">Ver portfólio</div>
+      <div class="wf-btn">Falar com o estúdio</div>
+    </div>
+    <div class="wf-note">Vídeo autoplay/mudo/loop, poster de fallback; headline + eyebrow centralizados sobre overlay escuro.</div>
+  </div>
+
+  <!-- SEÇÃO ESPECIAL — PRÉ-ESTREIA (TEMPORÁRIA) -->
+  <div class="wf-block on-dark">
+    <span class="wf-tag">Seção especial — pré-estreia</span>
+    <div class="temp-badge">Temporário — remover/arquivar após a estreia</div>
+    <div style="text-align:center;">
+      <div class="wf-line" style="width:110px; margin:0 auto 10px;"></div>
+      <div class="wf-heading" style="width:60%; height:28px; margin:0 auto 10px;"></div>
+      <div class="wf-line" style="width:44%; margin:0 auto 4px;"></div>
+    </div>
+    <div class="wf-media" style="height:280px; margin-top:16px;">TRAILER — VÍDEO COM BOTÃO PLAY EM DESTAQUE</div>
+    <div class="countdown-row">
+      <div class="countdown-box"><div class="countdown-num">07</div><div class="countdown-label">Dias</div></div>
+      <div class="countdown-box"><div class="countdown-num">14</div><div class="countdown-label">Horas</div></div>
+      <div class="countdown-box"><div class="countdown-num">32</div><div class="countdown-label">Min</div></div>
+      <div class="countdown-box"><div class="countdown-num">09</div><div class="countdown-label">Seg</div></div>
+    </div>
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:4px;">
+      <div class="wf-btn solid">Ativar lembrete</div>
+      <div class="wf-btn">Ver bastidores</div>
+    </div>
+    <div class="wf-note">Dígitos do contador animam em flip/odômetro a cada troca de segundo; fundo com movimento ambiente sutil (feixe de luz varrendo devagar, ecoando o refletor da logo). Única seção do site com essa carga extra de motion — justificado por ser evento único e por tempo limitado. "Ativar lembrete" captura e-mail/WhatsApp para notificar na estreia. Seção inteira é desmontada do código assim que o curta estreia (vira, no máximo, 1 card dentro do Scroll Holofote).</div>
+  </div>
+
+  <!-- SCROLL HOLOFOTE -->
+  <div class="wf-block"><span class="wf-tag">Scroll Holofote — Cases</span>
+    <div class="holo-grid">
+      <div>
+        <div class="wf-line w30" style="width:120px;"></div>
+        <div class="wf-heading w70"></div>
+        <div class="wf-line w90"></div>
+        <div class="wf-line w60"></div>
+      </div>
+      <div class="holo-cards">
+        <div class="holo-card">Case 01</div>
+        <div class="holo-card active">Case 02 — ativo</div>
+        <div class="holo-card">Case 03</div>
+        <div class="holo-card">Case 04</div>
+      </div>
+      <div>
+        <div class="wf-line w45" style="width:90px;"></div>
+        <div class="wf-line w75"></div>
+        <div class="wf-line w60"></div>
+        <div class="wf-line w45"></div>
+      </div>
+    </div>
+    <div class="wf-note">Coluna esquerda e direita ficam sticky; conforme o scroll, 1 card por vez fica "aceso" e o texto lateral correspondente aparece via crossfade. Em mobile as 3 colunas empilham e o texto fica logo abaixo do card ativo.</div>
+  </div>
+
+  <!-- PROVA SOCIAL -->
+  <div class="wf-block"><span class="wf-tag">Prova social</span>
+    <div class="wf-line w30" style="width:200px; margin-bottom:14px;"></div>
+    <div class="logo-row">
+      <div class="logo-chip">logo</div><div class="logo-chip">logo</div><div class="logo-chip">logo</div>
+      <div class="logo-chip">logo</div><div class="logo-chip">logo</div><div class="logo-chip">logo</div>
+    </div>
+    <div class="wf-note">Faixa em marquee horizontal contínuo (loop), velocidade constante.</div>
+    <div class="metric-row">
+      <div class="metric-box"><div class="wf-heading"></div><div class="wf-line w60" style="margin:0 auto;"></div></div>
+      <div class="metric-box"><div class="wf-heading"></div><div class="wf-line w60" style="margin:0 auto;"></div></div>
+      <div class="metric-box"><div class="wf-heading"></div><div class="wf-line w60" style="margin:0 auto;"></div></div>
+      <div class="metric-box"><div class="wf-heading"></div><div class="wf-line w60" style="margin:0 auto;"></div></div>
+    </div>
+    <div class="wf-note">Contadores sobem ao entrar 40% no viewport (ex.: vídeos entregues, marcas atendidas, turnaround médio).</div>
+  </div>
+
+  <!-- CTA FINAL -->
+  <div class="wf-block" style="text-align:center; padding:36px 16px;"><span class="wf-tag">CTA final</span>
+    <div class="wf-heading w50" style="margin:0 auto 10px; width:60%;"></div>
+    <div class="wf-line w45" style="margin:0 auto 16px; width:40%;"></div>
+    <div class="wf-btn solid" style="margin:0 auto;">Pedir orçamento</div>
+    <div class="wf-note" style="justify-content:center;">Seção muda para fundo claro (Modo Estúdio) — sinaliza mudança de "atmosfera" para "decisão".</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="wf-block"><span class="wf-tag">Rodapé</span>
+    <div class="wf-footer">
+      <div><div class="logo-box" style="margin-bottom:10px;">LOGO</div><div class="wf-line w75"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div><div class="wf-line w60"></div></div>
+      <div><div class="wf-line w45"></div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SERVIÇOS ============ -->
+<div class="page" id="servicos">
+  <div class="page-label">Página — Serviços</div>
+
+  <div class="wf-block"><span class="wf-tag">Nav</span>
+    <div class="wf-nav">
+      <div class="logo-box">LOGO</div>
+      <div class="wf-nav-links"><span>Serviços</span><span>Cases</span><span>Sobre</span><span>Contato</span></div>
+      <div class="wf-btn solid">Falar com o estúdio</div>
+    </div>
+  </div>
+
+  <!-- PAGE HERO -->
+  <div class="wf-block"><span class="wf-tag">Hero de página</span>
+    <div class="wf-line w30" style="width:120px;"></div>
+    <div class="wf-heading w50" style="width:55%;"></div>
+    <div class="wf-line w75"></div>
+    <div class="wf-line w45"></div>
+    <div class="wf-note">Mais curto que a home — sem vídeo full-bleed; foco em orientar rápido quem já sabe o que procura.</div>
+  </div>
+
+  <!-- LISTA DE SERVIÇOS -->
+  <div class="wf-block"><span class="wf-tag">Lista de serviços</span>
+    <div class="svc-grid">
+      <div class="wf-block" style="margin:0;">
+        <div class="wf-icon" style="margin-bottom:10px;">ic</div>
+        <div class="wf-heading w40"></div>
+        <div class="wf-line w90"></div>
+        <div class="wf-line w60"></div>
+      </div>
+      <div class="wf-block" style="margin:0;">
+        <div class="wf-icon" style="margin-bottom:10px;">ic</div>
+        <div class="wf-heading w40"></div>
+        <div class="wf-line w90"></div>
+        <div class="wf-line w60"></div>
+      </div>
+      <div class="wf-block" style="margin:0;">
+        <div class="wf-icon" style="margin-bottom:10px;">ic</div>
+        <div class="wf-heading w40"></div>
+        <div class="wf-line w90"></div>
+        <div class="wf-line w60"></div>
+      </div>
+      <div class="wf-block" style="margin:0;">
+        <div class="wf-icon" style="margin-bottom:10px;">ic</div>
+        <div class="wf-heading w40"></div>
+        <div class="wf-line w90"></div>
+        <div class="wf-line w60"></div>
+      </div>
+    </div>
+    <div class="wf-note">Ex.: Vídeo com IA · Motion Design · Campanha completa · Consultoria criativa. Hover revela um preview em crossfade simples (sem cursor-follow) — clique leva a uma seção com detalhe/exemplos daquele serviço.</div>
+  </div>
+
+  <!-- COMO FUNCIONA (processo) -->
+  <div class="wf-block"><span class="wf-tag">Como funciona — processo</span>
+    <div class="wf-line w30" style="width:180px; margin-bottom:14px;"></div>
+    <div class="step-row">
+      <div><div class="step-num">01</div><div class="wf-line w75"></div><div class="wf-line w60"></div></div>
+      <div><div class="step-num">02</div><div class="wf-line w75"></div><div class="wf-line w60"></div></div>
+      <div><div class="step-num">03</div><div class="wf-line w75"></div><div class="wf-line w60"></div></div>
+      <div><div class="step-num">04</div><div class="wf-line w75"></div><div class="wf-line w60"></div></div>
+    </div>
+    <div class="wf-note">Único lugar do site em que numeração 01–04 se justifica: é uma sequência real (briefing → produção → revisão → entrega).</div>
+  </div>
+
+  <!-- CTA MID PAGE -->
+  <div class="wf-block" style="text-align:center; padding:28px 16px;"><span class="wf-tag">CTA intermediário</span>
+    <div class="wf-line w45" style="margin:0 auto 14px; width:50%;"></div>
+    <div class="wf-btn solid" style="margin:0 auto;">Pedir orçamento</div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="wf-block"><span class="wf-tag">FAQ</span>
+    <div class="wf-line w30" style="width:80px; margin-bottom:14px;"></div>
+    <div class="faq-item"><div class="wf-line w75" style="margin:0;"></div><span>+</span></div>
+    <div class="faq-item"><div class="wf-line w60" style="margin:0;"></div><span>+</span></div>
+    <div class="faq-item"><div class="wf-line w75" style="margin:0;"></div><span>+</span></div>
+    <div class="wf-note">Acordeão — 1 item aberto por vez.</div>
+  </div>
+
+  <div class="wf-block"><span class="wf-tag">Rodapé</span>
+    <div class="wf-footer">
+      <div><div class="logo-box" style="margin-bottom:10px;">LOGO</div><div class="wf-line w75"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div><div class="wf-line w60"></div></div>
+      <div><div class="wf-line w45"></div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SOBRE ============ -->
+<div class="page" id="sobre">
+  <div class="page-label">Página — Sobre</div>
+
+  <div class="wf-block"><span class="wf-tag">Nav</span>
+    <div class="wf-nav">
+      <div class="logo-box">LOGO</div>
+      <div class="wf-nav-links"><span>Serviços</span><span>Cases</span><span>Sobre</span><span>Contato</span></div>
+      <div class="wf-btn solid">Falar com o estúdio</div>
+    </div>
+  </div>
+
+  <!-- PAGE HERO -->
+  <div class="wf-block"><span class="wf-tag">Hero de página</span>
+    <div class="wf-line w30" style="width:140px;"></div>
+    <div class="wf-heading w50" style="width:60%;"></div>
+    <div class="wf-line w90"></div>
+    <div class="wf-line w75"></div>
+    <div class="wf-note">Abertura em 1ª pessoa do plural ("somos uma equipe de criação com IA...") — mais pessoal que a Home, menos comercial que Serviços.</div>
+  </div>
+
+  <!-- MANIFESTO / FRASE-CHAVE -->
+  <div class="wf-block on-dark manifesto-block"><span class="wf-tag">Manifesto</span>
+    <div class="wf-heading" style="width:70%; height:26px; margin:0 auto 10px;"></div>
+    <div class="wf-heading" style="width:55%; height:26px; margin:0 auto 14px;"></div>
+    <div class="wf-line" style="width:40%; margin:0 auto;"></div>
+    <div class="wf-note" style="justify-content:center;">Frase-chave já existe no manual de marca: "Criamos o impossível porque dominamos o processo." Complemento: "IA como método. Audiovisual como linguagem. Criação como resultado." — cabe exatamente aqui.</div>
+  </div>
+
+  <!-- NOSSA HISTÓRIA -->
+  <div class="wf-block"><span class="wf-tag">Nossa história</span>
+    <div class="wf-line w30" style="width:150px; margin-bottom:16px;"></div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">Marco 01</div>
+        <div class="wf-line w75"></div>
+        <div class="wf-line w60"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">Marco 02</div>
+        <div class="wf-line w75"></div>
+        <div class="wf-line w60"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">Marco 03</div>
+        <div class="wf-line w75"></div>
+        <div class="wf-line w60"></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">Hoje</div>
+        <div class="wf-line w75"></div>
+        <div class="wf-line w60"></div>
+      </div>
+    </div>
+    <div class="wf-note">Linha do tempo vertical com marcador + conector — de onde surgiu o nome/ideia até o presente. Sequência real, então a estrutura cronológica (não numeração decorativa) é o que justifica o formato.</div>
+  </div>
+
+  <!-- COMO PENSAMOS / PILARES -->
+  <div class="wf-block"><span class="wf-tag">Como pensamos — pilares</span>
+    <div class="wf-line w30" style="width:170px; margin-bottom:16px;"></div>
+    <div class="pillar-row">
+      <div class="pillar-box"><div class="wf-icon" style="margin:0 auto 8px;">ic</div><div class="wf-line w75" style="margin:0 auto;"></div></div>
+      <div class="pillar-box"><div class="wf-icon" style="margin:0 auto 8px;">ic</div><div class="wf-line w75" style="margin:0 auto;"></div></div>
+      <div class="pillar-box"><div class="wf-icon" style="margin:0 auto 8px;">ic</div><div class="wf-line w75" style="margin:0 auto;"></div></div>
+      <div class="pillar-box"><div class="wf-icon" style="margin:0 auto 8px;">ic</div><div class="wf-line w75" style="margin:0 auto;"></div></div>
+      <div class="pillar-box"><div class="wf-icon" style="margin:0 auto 8px;">ic</div><div class="wf-line w75" style="margin:0 auto;"></div></div>
+      <div class="pillar-box"><div class="wf-icon" style="margin:0 auto 8px;">ic</div><div class="wf-line w75" style="margin:0 auto;"></div></div>
+    </div>
+    <div class="wf-note">Os 6 pilares já definidos no manual de marca: Ideia · Pré-produção · Produção · Pós-produção · Conteúdo · Impacto. Diferente do "Como funciona" da página de Serviços (que é o passo a passo pro cliente) — aqui é a filosofia interna, evita repetir o mesmo bloco com outra roupagem.</div>
+  </div>
+
+  <!-- EQUIPE -->
+  <div class="wf-block"><span class="wf-tag">Equipe</span>
+    <div class="wf-line w30" style="width:100px; margin-bottom:16px;"></div>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-photo">foto</div><div class="wf-line w60" style="margin:0 auto 4px;"></div><div class="wf-line w45" style="margin:0 auto;"></div></div>
+      <div class="team-card"><div class="team-photo">foto</div><div class="wf-line w60" style="margin:0 auto 4px;"></div><div class="wf-line w45" style="margin:0 auto;"></div></div>
+      <div class="team-card"><div class="team-photo">foto</div><div class="wf-line w60" style="margin:0 auto 4px;"></div><div class="wf-line w45" style="margin:0 auto;"></div></div>
+      <div class="team-card"><div class="team-photo">foto</div><div class="wf-line w60" style="margin:0 auto 4px;"></div><div class="wf-line w45" style="margin:0 auto;"></div></div>
+    </div>
+    <div class="wf-note">Foto + nome + função; hover revela 1 link social (opcional). Grid quebra pra 2 colunas no mobile.</div>
+  </div>
+
+  <!-- CTA FINAL -->
+  <div class="wf-block" style="text-align:center; padding:32px 16px;"><span class="wf-tag">CTA final</span>
+    <div class="wf-line w45" style="margin:0 auto 14px; width:44%;"></div>
+    <div class="wf-btn solid" style="margin:0 auto;">Falar com o estúdio</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="wf-block"><span class="wf-tag">Rodapé</span>
+    <div class="wf-footer">
+      <div><div class="logo-box" style="margin-bottom:10px;">LOGO</div><div class="wf-line w75"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div><div class="wf-line w60"></div></div>
+      <div><div class="wf-line w45"></div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTATO ============ -->
+<div class="page" id="contato">
+  <div class="page-label">Página — Contato</div>
+
+  <div class="wf-block"><span class="wf-tag">Nav</span>
+    <div class="wf-nav">
+      <div class="logo-box">LOGO</div>
+      <div class="wf-nav-links"><span>Serviços</span><span>Cases</span><span>Sobre</span><span>Contato</span></div>
+      <div class="wf-btn solid">Falar com o estúdio</div>
+    </div>
+  </div>
+
+  <div class="wf-block"><span class="wf-tag">Hero de página</span>
+    <div class="wf-line w30" style="width:120px;"></div>
+    <div class="wf-heading w50" style="width:50%;"></div>
+    <div class="wf-line w60"></div>
+  </div>
+
+  <!-- FORM + INFO -->
+  <div class="wf-block"><span class="wf-tag">Formulário + informações</span>
+    <div class="contact-grid">
+      <div>
+        <div class="wf-line w30" style="width:100px; margin-bottom:12px;"></div>
+        <div class="field">Nome</div>
+        <div class="field">E-mail</div>
+        <div class="field">Empresa</div>
+        <div class="field">Tipo de projeto ▾</div>
+        <div class="field">Orçamento estimado ▾</div>
+        <div class="field textarea">Mensagem</div>
+        <div class="wf-btn solid">Enviar</div>
+        <div class="wf-note">Label sempre visível (não só placeholder); erro inline abaixo do campo; foco com outline azul-céu.</div>
+      </div>
+      <div>
+        <div class="wf-block" style="margin-bottom:12px;">
+          <div class="wf-line w45"></div>
+          <div class="wf-line w60"></div>
+        </div>
+        <div class="wf-block" style="margin-bottom:12px;">
+          <div class="wf-icon" style="margin-bottom:8px;">ic</div>
+          <div class="wf-line w60"></div>
+        </div>
+        <div class="wf-block">
+          <div class="wf-line w60"></div>
+          <div class="wf-line w45"></div>
+        </div>
+        <div class="wf-note">Coluna direita: e-mail direto, WhatsApp/redes, tempo médio de resposta — reforça confiança perto do formulário.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wf-block"><span class="wf-tag">Rodapé</span>
+    <div class="wf-footer">
+      <div><div class="logo-box" style="margin-bottom:10px;">LOGO</div><div class="wf-line w75"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div><div class="wf-line w60"></div></div>
+      <div><div class="wf-line w45"></div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CASE — CURTA (ROTA EXCLUSIVA, SÓ NO DIA DA ESTREIA) ============ -->
+<div class="page" id="case-curta">
+  <div class="page-label">Página — Case do Curta <span style="color:var(--wf-annot); font-style:italic;">(rota especial, temporária → depois vira case permanente)</span></div>
+
+  <div class="wf-block" style="border-style:solid; border-color:#000;">
+    <span class="wf-tag">Nota de sistema (roteamento)</span>
+    <div class="wf-note" style="margin-top:0;">Antes da estreia, essa rota não existe no nav e um acesso direto ao link redireciona para a seção de contagem regressiva na Home. No dia da estreia, o item aparece no menu com o indicador "ao vivo" e a página abre normalmente. Depois da estreia, a página permanece publicada como um case comum do portfólio — só o badge "ao vivo" e o contador somem.</div>
+  </div>
+
+  <!-- NAV -->
+  <div class="wf-block"><span class="wf-tag">Nav</span>
+    <div class="wf-nav">
+      <div class="logo-box">LOGO</div>
+      <div class="wf-nav-links"><span>Serviços</span><span>Cases</span><span>Sobre</span><span>Contato</span></div>
+      <div class="live-badge">Ao vivo — estreia hoje</div>
+    </div>
+  </div>
+
+  <!-- HERO FULL-BLEED FILME/TRAILER -->
+  <div class="wf-block on-dark">
+    <span class="wf-tag">Hero — filme/trailer</span>
+    <div style="text-align:center;">
+      <div class="wf-line" style="width:90px; margin:0 auto 10px;"></div>
+      <div class="wf-heading" style="width:55%; height:30px; margin:0 auto 4px;"></div>
+    </div>
+    <div class="wf-media" style="height:380px; margin-top:16px;">PLAYER FULL-BLEED — FILME / TRAILER</div>
+    <div class="wf-note">Título entra com reveal cinematográfico (fade + leve escala, ~1s); player ocupa quase toda a viewport, UI mínima ao redor.</div>
+  </div>
+
+  <!-- SINOPSE -->
+  <div class="wf-block"><span class="wf-tag">Sinopse</span>
+    <div class="editorial-row">
+      <div>
+        <div class="wf-line w30" style="width:110px;"></div>
+        <div class="wf-heading w50"></div>
+        <div class="wf-line w90"></div>
+        <div class="wf-line w90"></div>
+        <div class="wf-line w60"></div>
+      </div>
+      <div class="wf-media" style="height:220px;">KEY ART / PÔSTER</div>
+    </div>
+  </div>
+
+  <!-- ASSISTIR AGORA -->
+  <div class="wf-block" style="text-align:center;"><span class="wf-tag">Assistir</span>
+    <div class="wf-media" style="height:320px;">PLAYER — FILME COMPLETO</div>
+    <div class="wf-line w30" style="width:220px; margin:12px auto 0;"></div>
+    <div class="wf-note" style="justify-content:center;">Duração + créditos resumidos logo abaixo do player; botão de compartilhar ao lado.</div>
+  </div>
+
+  <!-- PROCESSO CRIATIVO (editorial alternado) -->
+  <div class="wf-block"><span class="wf-tag">O processo criativo</span>
+    <div class="wf-line w30" style="width:170px; margin-bottom:16px;"></div>
+
+    <div class="editorial-row">
+      <div><div class="wf-heading w40"></div><div class="wf-line w90"></div><div class="wf-line w75"></div></div>
+      <div class="wf-media" style="height:180px;">IMG — ROTEIRO</div>
+    </div>
+    <div class="editorial-row reverse">
+      <div><div class="wf-heading w40"></div><div class="wf-line w90"></div><div class="wf-line w75"></div></div>
+      <div class="wf-media" style="height:180px;">IMG — DIREÇÃO DE ARTE</div>
+    </div>
+    <div class="editorial-row">
+      <div><div class="wf-heading w40"></div><div class="wf-line w90"></div><div class="wf-line w75"></div></div>
+      <div class="wf-media" style="height:180px;">IMG — GERAÇÃO COM IA</div>
+    </div>
+    <div class="wf-note">Storytelling vertical com imagem alternando esquerda/direita a cada bloco — única exceção ao princípio "o Scroll Holofote não se repete" (Seção 4.6 do design system), justificada porque essa é uma página de evento único, fora da navegação permanente do site.</div>
+  </div>
+
+  <!-- GALERIA / MOODBOARD -->
+  <div class="wf-block"><span class="wf-tag">Imagens base / moodboard</span>
+    <div class="wf-line w30" style="width:180px; margin-bottom:14px;"></div>
+    <div class="gallery-grid">
+      <div class="wf-media gallery-item">img</div><div class="wf-media gallery-item">img</div>
+      <div class="wf-media gallery-item">img</div><div class="wf-media gallery-item">img</div>
+      <div class="wf-media gallery-item">img</div><div class="wf-media gallery-item">img</div>
+      <div class="wf-media gallery-item">img</div><div class="wf-media gallery-item">img</div>
+    </div>
+    <div class="wf-note">Grid abre em lightbox ao clicar — referências visuais, frames de teste e prints do processo de geração com IA.</div>
+  </div>
+
+  <!-- FICHA TÉCNICA -->
+  <div class="wf-block"><span class="wf-tag">Ficha técnica</span>
+    <div class="step-row">
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+    </div>
+  </div>
+
+  <!-- CTA FINAL -->
+  <div class="wf-block on-dark" style="text-align:center; padding:32px 16px;"><span class="wf-tag">CTA final</span>
+    <div class="wf-heading" style="width:55%; height:24px; margin:0 auto 10px;"></div>
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:10px;">
+      <div class="wf-btn solid">Compartilhar o curta</div>
+      <div class="wf-btn">Falar com o estúdio</div>
+    </div>
+    <div class="wf-note" style="justify-content:center;">Converte quem chegou pelo hype do curta em lead comercial — CTA leva pro mesmo fluxo de contato do resto do site.</div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="wf-block"><span class="wf-tag">Rodapé</span>
+    <div class="wf-footer">
+      <div><div class="logo-box" style="margin-bottom:10px;">LOGO</div><div class="wf-line w75"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div><div class="wf-line w60"></div></div>
+      <div><div class="wf-line w45"></div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+      <div><div class="wf-line w60"></div><div class="wf-line w45"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.page).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>

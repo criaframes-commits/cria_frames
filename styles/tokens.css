@@ -1,0 +1,134 @@
+/* ============================================================
+   CRIA FRAMES — DESIGN TOKENS
+   Fonte da verdade: cria-frames-design-system.md, Seção 4.
+   Regra: nunca usar hex cru em componente. Sempre var(--token-semântico).
+   Qualquer ajuste de valor entra AQUI primeiro, nunca direto no componente.
+   ============================================================ */
+
+:root {
+  /* ---------- PRIMITIVOS — Neutros ---------- */
+  --black-950: #060606;
+  --black-900: #0A0A0A;
+  --black-800: #141414;
+  --black-700: #1F1F1F;
+  --white-000: #FFFFFF;
+  --white-050: #F7F7F5;
+  --gray-600:  #6B7280;
+  --gray-400:  #9AA3AF;
+  --gray-200:  #E5E7EB;
+
+  /* ---------- PRIMITIVOS — Azul de marca (extraído por amostragem da logo) ---------- */
+  --blue-900: #002C7A; /* hover/pressed em fundo claro */
+  --blue-700: #0044BD; /* AZUL CRIA — valor exato da logo */
+  --blue-500: #3D6EFF; /* "elétrico" — interativo em fundo escuro */
+  --blue-300: #82A6FF; /* "céu" — texto/ícone acessível em fundo escuro (6.9:1) */
+  --blue-100: #DCE6FF; /* tint — hover/badge em fundo claro */
+
+  /* ---------- TIPOGRAFIA ---------- */
+  --font-display: 'Archivo', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --text-display: clamp(2.75rem, 2rem + 4vw, 5.5rem);
+  --text-h2:      clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  --text-h3:      clamp(1.375rem, 1.2rem + 1vw, 2rem);
+  --text-lede:    clamp(1.125rem, 1rem + 0.4vw, 1.375rem);
+  --text-body:    1rem;
+  --text-caption: 0.8125rem;
+  --text-metric:  clamp(2.5rem, 2rem + 3vw, 4.5rem);
+
+  --leading-tight: 1.05;
+  --leading-base:  1.6;
+  --tracking-label:   0.1em;
+  --tracking-display: -0.01em;
+
+  /* ---------- ESPAÇAMENTO / GRID ---------- */
+  --space-1: 4px;   --space-2: 8px;   --space-3: 12px;  --space-4: 16px;
+  --space-5: 24px;  --space-6: 32px;  --space-8: 48px;  --space-10: 64px;
+  --space-14: 96px; --space-20: 140px;
+
+  --container-max:   1320px;
+  --gutter-desktop:  24px;
+  --gutter-mobile:   16px;
+
+  /* ---------- RAIO / SOMBRA ---------- */
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   20px;
+  --radius-pill: 999px;
+  --shadow-soft: 0 20px 40px rgba(0,0,0,.06); /* usar só em .theme-light */
+
+  /* ---------- MOTION ---------- */
+  --duration-instant:   120ms;
+  --duration-fast:      200ms;
+  --duration-base:      320ms;
+  --duration-slow:      600ms;
+  --duration-cinematic: 1000ms;
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ---------- SEMÂNTICOS — Modo Cinema (escuro), tema padrão do site ---------- */
+  --bg-canvas:   var(--black-950);
+  --bg-surface:  var(--black-900);
+  --bg-elevated: var(--black-800);
+  --text-primary:   var(--white-000);
+  --text-secondary: rgba(255,255,255,.65);
+  --border-subtle:  rgba(255,255,255,.08);
+  --accent-interactive: var(--blue-500); /* CTAs/links/focus em fundo escuro — NUNCA --blue-700 (2.4:1, reprova AA) */
+  --accent-text:        var(--blue-300); /* texto/ícone azul em fundo escuro */
+}
+
+/* ---------- SEMÂNTICOS — Modo Estúdio (claro) ----------
+   Escopado por classe, não por :root — porque no site ele alterna
+   por SEÇÃO (hero/portfólio ficam escuros; preços/contato ficam claros),
+   não é um dark-mode/light-mode global.
+   Uso: <section class="theme-light"> ... </section>
+------------------------------------------------------------- */
+.theme-light {
+  --bg-canvas:   var(--white-000);
+  --bg-surface:  var(--white-050);
+  --bg-elevated: var(--white-050);
+  --text-primary:   var(--black-950);
+  --text-secondary: var(--gray-600);
+  --border-subtle:  var(--gray-200);
+  --accent-interactive: var(--blue-700); /* CTAs/links/ícones em fundo claro — 8.2:1 */
+  --accent-text:        var(--blue-700);
+}
+
+/* ---------- COMPONENTE — exemplos de referência (Seção 5 do design-system.md) ---------- */
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--accent-interactive);
+  color: var(--white-000);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 14px 28px;
+  min-height: 44px; /* alvo de toque */
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: transform var(--duration-instant) var(--ease-out),
+              background var(--duration-fast) var(--ease-out);
+}
+.btn-primary:hover { transform: translateY(-1px); background: var(--blue-300); }
+.theme-light .btn-primary:hover { background: var(--blue-900); color: var(--white-000); }
+.btn-primary:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-body); font-weight: 600;
+  font-size: var(--text-caption);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.eyebrow::before, .eyebrow::after { content: "—"; opacity: .6; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 150ms !important;
+    scroll-behavior: auto !important;
+  }
+}
