@@ -127,7 +127,7 @@ export function Hero() {
 
               <div className="hero-fade hero-fade-4 mt-9 flex flex-wrap items-center gap-3">
                 <Link
-                  href="#cases"
+                  href="/cases"
                   className="inline-flex min-h-11 items-center rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground transition-[transform,background] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950"
                 >
                   Ver portfólio

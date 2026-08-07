@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
@@ -9,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { href: "/servicos", label: "Serviços" },
-  { href: "/#cases", label: "Cases" },
+  { href: "/cases", label: "Cases" },
   { href: "/sobre", label: "Sobre" },
   { href: "/contato", label: "Contato" },
 ];
@@ -22,9 +23,18 @@ export function Header() {
       <div className="mx-auto flex max-w-container items-center justify-between px-4 py-3 md:px-6">
         <Link
           href="/"
-          className="font-display text-lg font-black uppercase tracking-tight text-foreground"
+          aria-label="Cria Frames — início"
+          className="flex shrink-0 items-center"
         >
-          Cria Frames
+          <Image
+            src="/cria-frames-logo-branca.png"
+            alt="Cria Frames"
+            width={1018}
+            height={796}
+            priority
+            sizes="56px"
+            className="h-11 w-auto object-contain"
+          />
         </Link>
 
         {/* nav desktop */}

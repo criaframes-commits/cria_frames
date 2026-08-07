@@ -1,10 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const FOOTER_LINKS: Record<string, { href: string; label: string }[]> = {
   Estúdio: [
     { href: "/sobre", label: "Sobre" },
     { href: "/servicos", label: "Serviços" },
-    { href: "/#cases", label: "Cases" },
+    { href: "/cases", label: "Cases" },
   ],
   Contato: [
     { href: "/contato", label: "Fale conosco" },
@@ -22,9 +23,16 @@ export function Footer() {
     <footer className="border-t border-border bg-background">
       <div className="mx-auto grid max-w-container gap-10 px-4 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:px-6">
         <div>
-          <span className="font-display text-lg font-black uppercase text-foreground">
-            Cria Frames
-          </span>
+          <Link href="/" aria-label="Cria Frames — início" className="inline-flex">
+            <Image
+              src="/cria-frames-logo-branca.png"
+              alt="Cria Frames"
+              width={1018}
+              height={796}
+              sizes="144px"
+              className="h-28 w-auto object-contain"
+            />
+          </Link>
           <p className="mt-3 max-w-[28ch] text-sm text-muted-foreground">
             Estúdio de criação com IA: vídeo, motion e campanhas completas.
           </p>
