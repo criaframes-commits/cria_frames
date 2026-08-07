@@ -62,14 +62,22 @@ export function ProvaSocial() {
     <section aria-label="Prova social" className="border-t border-border bg-background">
       {/* marquee de logos */}
       <div className="overflow-hidden py-12">
-        <div className="flex w-max animate-[marquee_32s_linear_infinite] gap-14 motion-reduce:animate-none">
-          {[...CLIENTS, ...CLIENTS].map((name, i) => (
-            <span
-              key={`${name}-${i}`}
-              className="whitespace-nowrap font-display text-lg font-bold uppercase tracking-wide text-muted-foreground"
+        <div className="flex w-max animate-[marquee_32s_linear_infinite] motion-reduce:animate-none">
+          {[0, 1].map((copyIndex) => (
+            <div
+              key={copyIndex}
+              aria-hidden={copyIndex === 1 ? true : undefined}
+              className="flex min-w-[100vw] shrink-0 items-center justify-around gap-14 px-7"
             >
-              {name}
-            </span>
+              {CLIENTS.map((name) => (
+                <span
+                  key={`${copyIndex}-${name}`}
+                  className="whitespace-nowrap font-display text-lg font-bold uppercase tracking-wide text-muted-foreground"
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
           ))}
         </div>
       </div>

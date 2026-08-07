@@ -25,7 +25,7 @@ export function Footer() {
             Cria Frames
           </span>
           <p className="mt-3 max-w-[28ch] text-sm text-muted-foreground">
-            Estúdio de criação com IA — vídeo, motion e campanhas completas.
+            Estúdio de criação com IA: vídeo, motion e campanhas completas.
           </p>
         </div>
 

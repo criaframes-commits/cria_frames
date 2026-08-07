@@ -120,7 +120,7 @@ export function PreEstreia() {
             </p>
             <p className="mt-4 max-w-[56ch] leading-relaxed text-muted-foreground">
               Um curta sobre a história do ex-governador de Goiás e candidato à
-              Presidência da República — criado com inteligência artificial, do
+              Presidência da República, criado com inteligência artificial, do
               roteiro à finalização.
             </p>
 
