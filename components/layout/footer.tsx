@@ -8,10 +8,11 @@ const FOOTER_LINKS: Record<string, { href: string; label: string }[]> = {
   ],
   Contato: [
     { href: "/contato", label: "Fale conosco" },
-    { href: "mailto:oi@criaframes.com", label: "oi@criaframes.com" },
+    { href: "mailto:cria@criaframes.com.br", label: "cria@criaframes.com.br" },
   ],
   Social: [
-    { href: "https://instagram.com", label: "Instagram" },
+    { href: "https://www.instagram.com/cria_frames/", label: "Instagram" },
+    { href: "https://www.tiktok.com/@criaframes", label: "TikTok" },
     { href: "https://linkedin.com", label: "LinkedIn" },
   ],
 };
