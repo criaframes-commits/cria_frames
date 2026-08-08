@@ -2,7 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Play } from "lucide-react";
+import { Play } from "lucide-react";
+import {
+  CAIADO_FEATURE_END_DATE,
+  CAIADO_PREMIERE_DATE,
+} from "@/lib/caiado-project";
 
 /* ============================================================
    DESTAQUE DE NOVIDADE — HOME
@@ -10,14 +14,10 @@ import { ArrowUpRight, Play } from "lucide-react";
    Para uma nova campanha, atualize datas e conteúdo neste módulo.
    ============================================================ */
 
-// data/hora da estreia — ajustar aqui (formato ISO, fuso de Brasília)
-export const PREMIERE_DATE = new Date("2026-08-09T12:00:00-03:00");
-export const FEATURE_END_DATE = new Date("2026-09-09T12:00:00-03:00");
-
 type TimeLeft = { days: number; hours: number; minutes: number; seconds: number };
 
 function getTimeLeft(): TimeLeft | null {
-  const diff = PREMIERE_DATE.getTime() - Date.now();
+  const diff = CAIADO_PREMIERE_DATE.getTime() - Date.now();
   if (diff <= 0) return null;
   return {
     days: Math.floor(diff / 86400000),
@@ -63,7 +63,7 @@ export function PreEstreia() {
     const updateReleaseState = () => {
       const now = Date.now();
       setTimeLeft(getTimeLeft());
-      setFeatureExpired(now >= FEATURE_END_DATE.getTime());
+      setFeatureExpired(now >= CAIADO_FEATURE_END_DATE.getTime());
     };
     const initialFrame = requestAnimationFrame(() => {
       setMounted(true);
@@ -270,11 +270,11 @@ export function PreEstreia() {
             >
               {released ? (
                 <Link
-                  href="/projetos/ronaldo-caiado"
+                  href="/projetos/ronaldo-caiado#assistir"
                   className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground shadow-[0_14px_40px_rgba(61,110,255,0.28)] transition-[transform,background,box-shadow] duration-300 ease-premium hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 hover:shadow-[0_18px_48px_rgba(61,110,255,0.42)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
                 >
-                  Conhecer o projeto
-                  <ArrowUpRight className="h-4 w-4" aria-hidden />
+                  <Play className="h-4 w-4 fill-current" aria-hidden />
+                  Assistir ao curta
                 </Link>
               ) : (
                 <button
@@ -333,11 +333,11 @@ export function PreEstreia() {
               {!isTrailerPlaying &&
                 (released ? (
                   <Link
-                    href="/projetos/ronaldo-caiado"
-                    aria-label="Conhecer o projeto Ronaldo Caiado"
+                    href="/projetos/ronaldo-caiado#assistir"
+                    aria-label="Assistir ao curta Ronaldo Caiado"
                     className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full border border-white/30 bg-white/90 text-black-950 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-[transform,background] duration-300 ease-premium hover:scale-105 hover:bg-blue-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
-                    <ArrowUpRight className="h-4 w-4" aria-hidden />
+                    <Play className="h-4 w-4 fill-current" aria-hidden />
                   </Link>
                 ) : (
                   <button

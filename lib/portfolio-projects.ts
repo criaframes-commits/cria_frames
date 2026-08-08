@@ -13,8 +13,10 @@ export type PortfolioProject = {
   context: string;
   memberIds: string[];
   teaser?: {
-    youtubeId: string;
+    youtubeId?: string;
+    src?: string;
     label: "Teaser" | "Trailer";
+    availableFrom?: string;
   };
 };
 
@@ -33,6 +35,11 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     context:
       "Um projeto especial sobre a trajetória pública de Ronaldo Caiado, ex-governador de Goiás e candidato à Presidência. O filme combina pesquisa, roteiro, direção de arte e geração com inteligência artificial em uma narrativa concebida frame a frame.",
     memberIds: [],
+    teaser: {
+      src: "/curta-trailer.mp4",
+      label: "Trailer",
+      availableFrom: "2026-08-09T12:00:00-03:00",
+    },
   },
   {
     slug: "site-cria-frames",

@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Play } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import {
+  CaiadoFilmPlayer,
+  CaiadoGallery,
+  CaiadoHeroWatchLink,
+  CaiadoProcessVideo,
+} from "@/components/projects/caiado-media";
 import { ProjectShareButton } from "@/components/projects/project-share-button";
+import { CAIADO_ASSETS } from "@/lib/caiado-project";
 
 export const metadata: Metadata = {
   title: "Ronaldo Caiado — Projeto especial | Cria Frames",
@@ -16,29 +23,25 @@ const PROCESS = [
     title: "Pesquisa e roteiro",
     description:
       "A trajetória pública orientou uma narrativa construída para condensar tempo, memória e identidade em uma história de linguagem cinematográfica.",
-    position: "object-[48%_42%]",
+    videoSrc: CAIADO_ASSETS.processVideos[0],
+    objectPosition: "48% 42%",
   },
   {
     marker: "02",
     title: "Direção de arte",
     description:
       "Texturas, luz e composição transformam referências históricas em um universo visual coeso, com escala de cinema e identidade própria.",
-    position: "object-[68%_48%]",
+    videoSrc: CAIADO_ASSETS.processVideos[1],
+    objectPosition: "68% 48%",
   },
   {
     marker: "03",
     title: "Cinema com IA",
     description:
       "Cada imagem foi dirigida cena a cena. A inteligência artificial amplia a produção; roteiro, intenção, montagem e acabamento continuam conduzindo o filme.",
-    position: "object-[30%_58%]",
+    videoSrc: CAIADO_ASSETS.processVideos[2],
+    objectPosition: "30% 58%",
   },
-] as const;
-
-const GALLERY_POSITIONS = [
-  "object-[20%_45%]",
-  "object-[46%_38%]",
-  "object-[72%_52%]",
-  "object-[88%_44%]",
 ] as const;
 
 export default function RonaldoCaiadoProjectPage() {
@@ -85,13 +88,7 @@ export default function RonaldoCaiadoProjectPage() {
                 Uma trajetória transformada em cinema. Um curta inteiramente
                 criado com inteligência artificial, direção e processo.
               </p>
-              <a
-                href="#assistir"
-                className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-pill bg-blue-500 px-6 text-sm font-semibold text-white transition-[background,transform] duration-300 hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
-              >
-                <Play className="h-4 w-4 fill-current" aria-hidden />
-                Assistir ao trailer
-              </a>
+              <CaiadoHeroWatchLink />
             </div>
           </div>
         </div>
@@ -130,36 +127,7 @@ export default function RonaldoCaiadoProjectPage() {
         aria-labelledby="watch-caiado-heading"
         className="scroll-mt-[var(--site-header-height)] border-y border-white/10 bg-black-900"
       >
-        <div className="mx-auto max-w-[1500px] px-4 py-20 md:px-6 md:py-28">
-          <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-300">
-                Assista
-              </p>
-              <h2
-                id="watch-caiado-heading"
-                className="mt-4 font-display text-h2 font-black uppercase leading-none tracking-[-0.04em]"
-              >
-                Trailer oficial.
-              </h2>
-            </div>
-            <p className="text-xs uppercase tracking-[0.15em] text-white/45">
-              Curta-metragem · 01:23
-            </p>
-          </div>
-          <div className="overflow-hidden rounded-lg border border-white/14 bg-black shadow-[0_32px_100px_rgba(0,0,0,0.52)]">
-            <video
-              controls
-              playsInline
-              preload="metadata"
-              poster="/curta-poster.jpg"
-              className="aspect-video max-h-[82svh] w-full bg-black object-contain"
-            >
-              <source src="/curta-trailer.mp4" type="video/mp4" />
-              Seu navegador não suporta a reprodução deste vídeo.
-            </video>
-          </div>
-        </div>
+        <CaiadoFilmPlayer />
       </section>
 
       <section className="bg-black-950">
@@ -193,12 +161,9 @@ export default function RonaldoCaiadoProjectPage() {
                     index % 2 === 1 ? "md:order-1" : ""
                   }`}
                 >
-                  <Image
-                    src="/curta-poster.jpg"
-                    alt=""
-                    fill
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className={`scale-[1.45] object-cover brightness-[0.7] ${item.position}`}
+                  <CaiadoProcessVideo
+                    src={item.videoSrc}
+                    objectPosition={item.objectPosition}
                   />
                   <span className="absolute inset-0 bg-gradient-to-tr from-black/48 via-transparent to-blue-500/16" />
                 </div>
@@ -213,24 +178,7 @@ export default function RonaldoCaiadoProjectPage() {
           <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-300">
             Imagens do projeto
           </p>
-          <div className="mt-8 grid auto-rows-[12rem] grid-cols-2 gap-2 md:auto-rows-[18rem] md:grid-cols-4">
-            {GALLERY_POSITIONS.map((position, index) => (
-              <div
-                key={position}
-                className={`relative overflow-hidden rounded-md border border-white/10 bg-black ${
-                  index === 0 || index === 3 ? "col-span-2" : ""
-                }`}
-              >
-                <Image
-                  src="/curta-poster.jpg"
-                  alt=""
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  className={`scale-[1.55] object-cover brightness-[0.65] transition-transform duration-700 hover:scale-[1.62] ${position}`}
-                />
-              </div>
-            ))}
-          </div>
+          <CaiadoGallery />
         </div>
       </section>
 
