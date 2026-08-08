@@ -5,7 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { LanguageSelector } from "@/components/i18n/language-selector";
 import { cn } from "@/lib/utils";
 
@@ -71,27 +76,42 @@ export function Header() {
           >
             <Menu className="h-5 w-5" />
           </SheetTrigger>
-          <SheetContent side="right" className="border-border bg-background">
-            <nav className="mt-10 flex flex-col gap-6">
-              {NAV_LINKS.map((link) => (
+          <SheetContent
+            side="right"
+            className="overflow-y-auto border-white/10 bg-black-950 p-0 text-white sm:max-w-sm"
+          >
+            <SheetTitle className="sr-only">Menu de navegação</SheetTitle>
+            <div className="flex min-h-full flex-col px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(4.75rem,env(safe-area-inset-top))]">
+              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-blue-300">
+                Menu
+              </p>
+              <nav aria-label="Navegação principal" className="flex flex-col">
+                {NAV_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="border-b border-white/10 py-3.5 font-display text-[clamp(1.55rem,8vw,2rem)] font-black uppercase leading-none tracking-[-0.03em] text-white transition-[color,padding] duration-300 first:border-t hover:pl-2 hover:text-blue-300 focus-visible:pl-2 focus-visible:text-blue-300 focus-visible:outline-none"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+
+              <div className="mt-auto space-y-3 border-t border-white/10 pt-6">
                 <Link
-                  key={link.href}
-                  href={link.href}
+                  href="/contato"
                   onClick={() => setOpen(false)}
-                  className="font-display text-2xl uppercase text-foreground"
+                  className={cn(
+                    buttonVariants(),
+                    "min-h-12 w-full rounded-pill text-sm"
+                  )}
                 >
-                  {link.label}
+                  Falar com o estúdio
                 </Link>
-              ))}
-              <Link
-                href="/contato"
-                onClick={() => setOpen(false)}
-                className={cn(buttonVariants(), "mt-4 rounded-pill")}
-              >
-                Falar com o estúdio
-              </Link>
-              <LanguageSelector mobile />
-            </nav>
+                <LanguageSelector mobile />
+              </div>
+            </div>
           </SheetContent>
         </Sheet>
       </div>
