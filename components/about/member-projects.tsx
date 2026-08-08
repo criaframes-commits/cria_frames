@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Play } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowUpRight, Play } from "lucide-react";
 import { InlineProjectTeaser } from "@/components/projects/inline-project-teaser";
 import { ProjectViewer } from "@/components/projects/project-viewer";
 import type { PortfolioProject } from "@/lib/portfolio-projects";
@@ -22,6 +23,7 @@ export function MemberProjects({
   projects,
   members,
 }: MemberProjectsProps) {
+  const router = useRouter();
   const [selectedProject, setSelectedProject] =
     useState<PortfolioProject | null>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
@@ -90,9 +92,17 @@ export function MemberProjects({
             >
               <button
                 type="button"
-                aria-haspopup="dialog"
-                aria-label={`Assistir ao projeto ${project.title}`}
+                aria-haspopup={project.specialHref ? undefined : "dialog"}
+                aria-label={
+                  project.specialHref
+                    ? `Visitar projeto ${project.title}`
+                    : `Assistir ao projeto ${project.title}`
+                }
                 onClick={(event) => {
+                  if (project.specialHref) {
+                    router.push(project.specialHref);
+                    return;
+                  }
                   openedFromRef.current = event.currentTarget;
                   setSelectedProject(project);
                 }}
@@ -124,7 +134,11 @@ export function MemberProjects({
                       </span>
                     </span>
                     <span className="inline-flex h-10 w-10 shrink-0 translate-y-2 items-center justify-center rounded-md bg-blue-500 text-white opacity-0 transition-[opacity,transform,background,color] duration-300 group-hover/project:translate-y-0 group-hover/project:opacity-100 group-hover/project:bg-white group-hover/project:text-black-950 group-focus-visible/project:translate-y-0 group-focus-visible/project:opacity-100">
-                      <Play aria-hidden="true" className="ml-0.5 h-4 w-4 fill-current" />
+                      {project.specialHref ? (
+                        <ArrowUpRight aria-hidden="true" className="h-4 w-4" />
+                      ) : (
+                        <Play aria-hidden="true" className="ml-0.5 h-4 w-4 fill-current" />
+                      )}
                     </span>
                   </span>
                 </span>
@@ -138,7 +152,7 @@ export function MemberProjects({
 
       <ProjectViewer
         project={selectedProject}
-        projects={projects}
+        projects={projects.filter((project) => !project.specialHref)}
         members={members}
         currentMemberId={memberId}
         onSelect={setSelectedProject}

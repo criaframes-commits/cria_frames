@@ -339,7 +339,8 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
                   const projectMembers = members.filter((member) =>
                     item.memberIds.includes(member.id)
                   );
-                  const isSpecial = Boolean(item.specialHref);
+                  const hasDedicatedPage = Boolean(item.specialHref);
+                  const isFeatured = Boolean(item.featured);
 
                   return (
                     <li key={item.slug}>
@@ -362,16 +363,16 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
                         <h3 className="sr-only">{item.title}</h3>
                         <button
                           type="button"
-                          aria-haspopup={isSpecial ? undefined : "dialog"}
+                          aria-haspopup={hasDedicatedPage ? undefined : "dialog"}
                           aria-label={
-                            isSpecial
-                              ? `Conhecer o projeto especial ${item.title}`
+                            hasDedicatedPage
+                              ? `Conhecer o projeto ${item.title}`
                               : `Assistir ao projeto ${item.title}`
                           }
                           onClick={() => openProject(item)}
                           className={cn(
                             "group/project grid w-full overflow-hidden rounded-t-md border bg-black-900 text-left transition-[border-color,box-shadow,transform] duration-1000 ease-premium focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary md:min-h-[34rem]",
-                            isSpecial &&
+                            isFeatured &&
                               "rounded-md border-blue-500/48 md:min-h-[44rem]",
                             reversed
                               ? "md:grid-cols-[minmax(18rem,0.62fr)_minmax(0,1.38fr)]"
@@ -385,7 +386,7 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
                           <span
                             className={cn(
                               "relative block min-h-[22rem] overflow-hidden bg-black-950 md:min-h-full",
-                              isSpecial && "min-h-[28rem]",
+                              isFeatured && "min-h-[28rem]",
                               reversed && "md:order-2"
                             )}
                           >
@@ -442,7 +443,7 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
                                 {item.category}
                               </span>
                               <span className="text-[10px] tabular-nums uppercase tracking-[0.14em] text-white/40">
-                                {isSpecial ? "Projeto especial" : item.duration}
+                                {isFeatured ? "Projeto especial" : item.duration}
                               </span>
                             </span>
 
@@ -462,7 +463,7 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
                                 {String(filteredProjects.length).padStart(2, "0")}
                               </span>
                               <span className="text-xs font-semibold uppercase tracking-[0.13em] text-white transition-colors group-hover/project:text-blue-300">
-                                {isSpecial ? "Explorar projeto" : "Assistir"}
+                                {hasDedicatedPage ? "Explorar projeto" : "Assistir"}
                               </span>
                             </span>
                           </span>

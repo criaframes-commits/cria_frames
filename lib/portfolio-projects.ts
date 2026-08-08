@@ -8,6 +8,7 @@ export type PortfolioProject = {
   coverSrc: string;
   youtubeId?: string;
   specialHref?: string;
+  featured?: boolean;
   summary: string;
   context: string;
   memberIds: string[];
@@ -26,11 +27,26 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     duration: "01:23",
     coverSrc: "/curta-poster.jpg",
     specialHref: "/projetos/ronaldo-caiado",
+    featured: true,
     summary:
       "Um curta sobre a trajetória de Ronaldo Caiado, construído inteiramente com inteligência artificial e direção cinematográfica.",
     context:
       "Um projeto especial sobre a trajetória pública de Ronaldo Caiado, ex-governador de Goiás e candidato à Presidência. O filme combina pesquisa, roteiro, direção de arte e geração com inteligência artificial em uma narrativa concebida frame a frame.",
     memberIds: [],
+  },
+  {
+    slug: "site-cria-frames",
+    title: "Site Cria Frames",
+    category: "Especial",
+    year: "2026",
+    duration: "Web",
+    coverSrc: "/hero-poster.jpg",
+    specialHref: "/",
+    summary:
+      "O site institucional da Cria Frames, criado para transformar o portfólio do estúdio em uma experiência digital cinematográfica.",
+    context:
+      "Projeto digital desenvolvido para apresentar a Cria Frames, seus serviços, projetos e equipe com clareza, acessibilidade e uma direção visual coerente com o estúdio. A experiência combina catálogo escalável, interações responsivas, movimento e narrativa visual.",
+    memberIds: ["membro-04"],
   },
   {
     slug: "ai-when-its-directed",
