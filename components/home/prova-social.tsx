@@ -117,7 +117,7 @@ function FeedbackCard({
     <article
       data-feedback-card
       data-expanded={expanded ? "true" : "false"}
-      className="group/card relative flex h-60 min-h-60 w-[min(84vw,23rem)] shrink-0 flex-col overflow-hidden rounded-lg border border-border bg-card p-5 shadow-[0_24px_70px_rgba(0,0,0,0.18)] transition-[border-color,background-color] duration-300 ease-premium data-[expanded=true]:h-auto data-[expanded=true]:border-blue-500/45 data-[expanded=true]:bg-black-800 md:p-6"
+      className="group/card relative flex h-60 min-h-60 w-[min(84vw,23rem)] shrink-0 snap-center flex-col overflow-hidden rounded-lg border border-border bg-card p-5 shadow-[0_24px_70px_rgba(0,0,0,0.18)] transition-[border-color,background-color] duration-300 ease-premium data-[expanded=true]:h-auto data-[expanded=true]:border-blue-500/45 data-[expanded=true]:bg-black-800 md:p-6"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,rgba(61,110,255,0.16),transparent_42%)]" />
 
@@ -211,17 +211,21 @@ export function ProvaSocial() {
         </h2>
       </div>
 
-      <div className="mt-10 overflow-x-clip py-5 md:mt-12 md:py-6">
+      <div className="mt-10 overflow-x-auto overscroll-x-contain py-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mt-12 md:overflow-x-clip md:py-6">
         <div
           className={cn(
-            "flex w-max items-stretch animate-[marquee_104s_linear_infinite] hover:[animation-play-state:paused] focus-within:[animation-play-state:paused] motion-reduce:animate-none",
-            expandedCard && "[animation-play-state:paused]"
+            "flex w-max snap-x snap-mandatory items-stretch md:snap-none md:animate-[marquee_104s_linear_infinite] md:hover:[animation-play-state:paused] md:focus-within:[animation-play-state:paused] motion-reduce:animate-none",
+            expandedCard && "md:[animation-play-state:paused]"
           )}
         >
           {[0, 1].map((copyIndex) => (
             <div
               key={copyIndex}
-              className="flex min-w-[100vw] shrink-0 items-center justify-around gap-5 px-2.5"
+              className={
+                copyIndex === 0
+                  ? "flex shrink-0 items-center gap-5 px-4 md:min-w-[100vw] md:justify-around md:px-2.5"
+                  : "hidden min-w-[100vw] shrink-0 items-center justify-around gap-5 px-2.5 md:flex"
+              }
             >
               {FEEDBACKS.map((feedback) => {
                 const instanceKey = `${copyIndex}-${feedback.id}`;

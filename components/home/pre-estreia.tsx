@@ -1,16 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Play } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Play } from "lucide-react";
 
 /* ============================================================
-   SEÇÃO TEMPORÁRIA — PRÉ-ESTREIA DO CURTA
-   Remover este arquivo e o import em app/page.tsx assim que o
-   curta estrear. Nenhum outro componente depende dele.
+   DESTAQUE DE NOVIDADE — HOME
+   O conteúdo muda de pré-estreia para CTA após o lançamento.
+   Para uma nova campanha, atualize datas e conteúdo neste módulo.
    ============================================================ */
 
 // data/hora da estreia — ajustar aqui (formato ISO, fuso de Brasília)
 export const PREMIERE_DATE = new Date("2026-08-09T12:00:00-03:00");
+export const FEATURE_END_DATE = new Date("2026-09-09T12:00:00-03:00");
 
 type TimeLeft = { days: number; hours: number; minutes: number; seconds: number };
 
@@ -51,17 +53,23 @@ export function PreEstreia() {
   // null no 1º render evita mismatch de hidratação (server ≠ client)
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [featureExpired, setFeatureExpired] = useState(false);
   const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const trailerRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    const updateReleaseState = () => {
+      const now = Date.now();
+      setTimeLeft(getTimeLeft());
+      setFeatureExpired(now >= FEATURE_END_DATE.getTime());
+    };
     const initialFrame = requestAnimationFrame(() => {
       setMounted(true);
-      setTimeLeft(getTimeLeft());
+      updateReleaseState();
     });
-    const timer = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
+    const timer = setInterval(updateReleaseState, 1000);
     return () => {
       cancelAnimationFrame(initialFrame);
       clearInterval(timer);
@@ -146,8 +154,10 @@ export function PreEstreia() {
     };
   }, []);
 
-  // já estreou → seção some sozinha
-  if (mounted && !timeLeft) return null;
+  // O conteúdo atual sai após um mês; o módulo permanece para a próxima novidade.
+  if (mounted && featureExpired) return null;
+
+  const released = mounted && timeLeft === null;
 
   const playTrailer = () => {
     const trailer = trailerRef.current;
@@ -195,7 +205,7 @@ export function PreEstreia() {
             >
               <span className="h-2 w-2 rounded-full bg-blue-500 shadow-[0_0_18px_rgba(61,110,255,0.95)]" />
               <p className="font-body text-[11px] font-semibold uppercase tracking-[0.2em] text-accent-text md:text-xs">
-                Novo curta · Pré-estreia
+                {released ? "Novidade · Já disponível" : "Novo curta · Pré-estreia"}
               </p>
             </div>
 
@@ -237,15 +247,15 @@ export function PreEstreia() {
             >
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-accent-text">
-                  Estreia
+                  {released ? "Projeto especial" : "Estreia"}
                 </p>
                 <p className="mt-0.5 font-display text-lg font-black uppercase tracking-[-0.02em] text-foreground">
-                  9 ago 2026
+                  {released ? "Assista agora" : "9 ago 2026"}
                 </p>
               </div>
               <span className="h-8 w-px bg-blue-500/30" aria-hidden />
               <p className="font-display text-2xl font-black tabular-nums text-blue-300">
-                12H
+                {released ? "NOVO" : "12H"}
               </p>
             </div>
 
@@ -258,34 +268,46 @@ export function PreEstreia() {
               data-rotate="-2"
               className="mt-5 flex flex-wrap items-center gap-3 will-change-transform"
             >
-              <button
-                type="button"
-                onClick={playTrailer}
-                className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground shadow-[0_14px_40px_rgba(61,110,255,0.28)] transition-[transform,background,box-shadow] duration-300 ease-premium hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 hover:shadow-[0_18px_48px_rgba(61,110,255,0.42)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
-              >
-                <Play className="h-4 w-4 fill-current" aria-hidden />
-                Assistir ao trailer
-              </button>
+              {released ? (
+                <Link
+                  href="/projetos/ronaldo-caiado"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground shadow-[0_14px_40px_rgba(61,110,255,0.28)] transition-[transform,background,box-shadow] duration-300 ease-premium hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 hover:shadow-[0_18px_48px_rgba(61,110,255,0.42)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
+                >
+                  Conhecer o projeto
+                  <ArrowUpRight className="h-4 w-4" aria-hidden />
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  onClick={playTrailer}
+                  className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground shadow-[0_14px_40px_rgba(61,110,255,0.28)] transition-[transform,background,box-shadow] duration-300 ease-premium hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 hover:shadow-[0_18px_48px_rgba(61,110,255,0.42)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
+                >
+                  <Play className="h-4 w-4 fill-current" aria-hidden />
+                  Assistir ao trailer
+                </button>
+              )}
               <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 Uma produção Cria Frames
               </span>
             </div>
 
-            <div
-              data-curta-reveal
-              data-start="0.34"
-              data-end="0.96"
-              data-x="18"
-              data-y="62"
-              data-rotate="1.5"
-              className="mt-5 flex flex-wrap gap-2 will-change-transform"
-              aria-label="Contagem regressiva para a estreia"
-            >
-              <Unit value={timeLeft?.days ?? null} label="Dias" />
-              <Unit value={timeLeft?.hours ?? null} label="Horas" />
-              <Unit value={timeLeft?.minutes ?? null} label="Min" />
-              <Unit value={timeLeft?.seconds ?? null} label="Seg" />
-            </div>
+            {!released && (
+              <div
+                data-curta-reveal
+                data-start="0.34"
+                data-end="0.96"
+                data-x="18"
+                data-y="62"
+                data-rotate="1.5"
+                className="mt-5 flex flex-wrap gap-2 will-change-transform"
+                aria-label="Contagem regressiva para a estreia"
+              >
+                <Unit value={timeLeft?.days ?? null} label="Dias" />
+                <Unit value={timeLeft?.hours ?? null} label="Horas" />
+                <Unit value={timeLeft?.minutes ?? null} label="Min" />
+                <Unit value={timeLeft?.seconds ?? null} label="Seg" />
+              </div>
+            )}
           </div>
 
           <div
@@ -308,16 +330,25 @@ export function PreEstreia() {
               className="absolute inset-0 -z-10 translate-x-3 translate-y-3 rotate-[1.5deg] rounded-lg border border-blue-500/30 bg-blue-900/50"
             />
             <div className="relative aspect-video overflow-hidden rounded-lg border border-white/15 bg-black shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
-              {!isTrailerPlaying && (
-                <button
-                  type="button"
-                  onClick={playTrailer}
-                  aria-label="Reproduzir trailer"
-                  className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full border border-white/30 bg-white/90 text-black-950 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-[transform,background] duration-300 ease-premium hover:scale-105 hover:bg-blue-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  <Play className="h-3.5 w-3.5 translate-x-px fill-current" aria-hidden />
-                </button>
-              )}
+              {!isTrailerPlaying &&
+                (released ? (
+                  <Link
+                    href="/projetos/ronaldo-caiado"
+                    aria-label="Conhecer o projeto Ronaldo Caiado"
+                    className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full border border-white/30 bg-white/90 text-black-950 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-[transform,background] duration-300 ease-premium hover:scale-105 hover:bg-blue-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    <ArrowUpRight className="h-4 w-4" aria-hidden />
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={playTrailer}
+                    aria-label="Reproduzir trailer"
+                    className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full border border-white/30 bg-white/90 text-black-950 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-[transform,background] duration-300 ease-premium hover:scale-105 hover:bg-blue-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    <Play className="h-3.5 w-3.5 translate-x-px fill-current" aria-hidden />
+                  </button>
+                ))}
               <video
                 ref={trailerRef}
                 playsInline

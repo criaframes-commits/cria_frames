@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowDown,
   ArrowUpRight,
@@ -27,6 +28,7 @@ type ProjectsCatalogProps = {
 type ProjectCategory = (typeof PROJECT_CATEGORIES)[number];
 
 export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
+  const router = useRouter();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<ProjectCategory>("Todos");
   const [memberId, setMemberId] = useState("todos");
@@ -43,7 +45,8 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
   useEffect(() => {
     const syncProjectFromUrl = () => {
       const slug = decodeURIComponent(window.location.hash.slice(1));
-      setSelectedProject(projects.find((item) => item.slug === slug) ?? null);
+      const project = projects.find((item) => item.slug === slug);
+      setSelectedProject(project && !project.specialHref ? project : null);
     };
 
     syncProjectFromUrl();
@@ -143,6 +146,10 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
   }, [filteredProjects]);
 
   const openProject = (item: PortfolioProject) => {
+    if (item.specialHref) {
+      router.push(item.specialHref);
+      return;
+    }
     setSelectedProject(item);
     window.history.pushState(null, "", `#${item.slug}`);
   };
@@ -324,7 +331,7 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
             </div>
 
             {filteredProjects.length > 0 ? (
-              <ol className="space-y-8 md:space-y-12">
+              <ol className="space-y-14 sm:space-y-16 md:space-y-20">
                 {filteredProjects.map((item, index) => {
                   const active = resolvedActiveProjectId === item.slug;
                   const visible = visibleProjectIds.has(item.slug);
@@ -332,6 +339,7 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
                   const projectMembers = members.filter((member) =>
                     item.memberIds.includes(member.id)
                   );
+                  const isSpecial = Boolean(item.specialHref);
 
                   return (
                     <li key={item.slug}>
@@ -354,11 +362,17 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
                         <h3 className="sr-only">{item.title}</h3>
                         <button
                           type="button"
-                          aria-haspopup="dialog"
-                          aria-label={`Assistir ao projeto ${item.title}`}
+                          aria-haspopup={isSpecial ? undefined : "dialog"}
+                          aria-label={
+                            isSpecial
+                              ? `Conhecer o projeto especial ${item.title}`
+                              : `Assistir ao projeto ${item.title}`
+                          }
                           onClick={() => openProject(item)}
                           className={cn(
                             "group/project grid w-full overflow-hidden rounded-t-md border bg-black-900 text-left transition-[border-color,box-shadow,transform] duration-1000 ease-premium focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary md:min-h-[34rem]",
+                            isSpecial &&
+                              "rounded-md border-blue-500/48 md:min-h-[44rem]",
                             reversed
                               ? "md:grid-cols-[minmax(18rem,0.62fr)_minmax(0,1.38fr)]"
                               : "md:grid-cols-[minmax(0,1.38fr)_minmax(18rem,0.62fr)]",
@@ -371,6 +385,7 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
                           <span
                             className={cn(
                               "relative block min-h-[22rem] overflow-hidden bg-black-950 md:min-h-full",
+                              isSpecial && "min-h-[28rem]",
                               reversed && "md:order-2"
                             )}
                           >
@@ -427,7 +442,7 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
                                 {item.category}
                               </span>
                               <span className="text-[10px] tabular-nums uppercase tracking-[0.14em] text-white/40">
-                                {item.duration}
+                                {isSpecial ? "Projeto especial" : item.duration}
                               </span>
                             </span>
 
@@ -447,13 +462,13 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
                                 {String(filteredProjects.length).padStart(2, "0")}
                               </span>
                               <span className="text-xs font-semibold uppercase tracking-[0.13em] text-white transition-colors group-hover/project:text-blue-300">
-                                Assistir
+                                {isSpecial ? "Explorar projeto" : "Assistir"}
                               </span>
                             </span>
                           </span>
                         </button>
 
-                        <div
+                        {projectMembers.length > 0 && <div
                           className={cn(
                             "relative -mt-px flex flex-col gap-4 border bg-black-950 px-5 py-4 transition-[border-color,background-color] duration-700 sm:flex-row sm:items-center sm:justify-between md:px-8",
                             item.teaser ? "rounded-none" : "rounded-b-md",
@@ -482,7 +497,7 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
                               </li>
                             ))}
                           </ul>
-                        </div>
+                        </div>}
 
                         <InlineProjectTeaser
                           project={item}
@@ -515,7 +530,7 @@ export function ProjectsCatalog({ projects, members }: ProjectsCatalogProps) {
 
       <ProjectViewer
         project={selectedProject}
-        projects={filteredProjects}
+        projects={filteredProjects.filter((project) => !project.specialHref)}
         members={members}
         onSelect={navigateProject}
         onClose={closeProject}

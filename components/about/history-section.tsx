@@ -39,29 +39,42 @@ export function HistorySection() {
   const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    let frame = 0;
 
-        if (!visibleEntry) return;
-        const nextIndex = Number(
-          (visibleEntry.target as HTMLLIElement).dataset.historyIndex
+    const updateActiveItem = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        const readingLine = window.innerHeight * 0.5;
+        let closestIndex = 0;
+        let closestDistance = Number.POSITIVE_INFINITY;
+
+        itemRefs.current.forEach((item, index) => {
+          if (!item) return;
+          const bounds = item.getBoundingClientRect();
+          const itemCenter = bounds.top + bounds.height / 2;
+          const distance = Math.abs(itemCenter - readingLine);
+
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        });
+
+        setActiveIndex((current) =>
+          current === closestIndex ? current : closestIndex
         );
-        if (Number.isInteger(nextIndex)) setActiveIndex(nextIndex);
-      },
-      {
-        rootMargin: "-28% 0px -42% 0px",
-        threshold: [0.1, 0.35, 0.65],
-      }
-    );
+      });
+    };
 
-    const items = itemRefs.current.filter(
-      (item): item is HTMLLIElement => item !== null
-    );
-    items.forEach((item) => observer.observe(item));
-    return () => observer.disconnect();
+    updateActiveItem();
+    window.addEventListener("scroll", updateActiveItem, { passive: true });
+    window.addEventListener("resize", updateActiveItem);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateActiveItem);
+      window.removeEventListener("resize", updateActiveItem);
+    };
   }, []);
 
   const progress =

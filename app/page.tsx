@@ -10,11 +10,10 @@ export default function HomePage() {
   return (
     <main>
       <Hero />
-      {/* TEMPORÁRIO — remover este bloco e o import após a estreia do curta */}
       <PreEstreia />
       <ScrollHolofote
         heading="Projetos em destaque"
-        projects={PORTFOLIO_PROJECTS}
+        projects={PORTFOLIO_PROJECTS.filter((project) => !project.specialHref)}
         members={TEAM_MEMBERS}
       />
       <ProvaSocial />

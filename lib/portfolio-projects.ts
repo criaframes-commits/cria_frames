@@ -2,11 +2,12 @@ export type PortfolioProject = {
   slug: string;
   title: string;
   client?: string;
-  category: "Motion" | "Filme" | "Campanha";
+  category: "Motion" | "Filme" | "Campanha" | "Especial";
   year: string;
   duration: string;
   coverSrc: string;
-  youtubeId: string;
+  youtubeId?: string;
+  specialHref?: string;
   summary: string;
   context: string;
   memberIds: string[];
@@ -17,6 +18,20 @@ export type PortfolioProject = {
 };
 
 export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
+  {
+    slug: "ronaldo-caiado",
+    title: "Ronaldo Caiado",
+    category: "Especial",
+    year: "2026",
+    duration: "01:23",
+    coverSrc: "/curta-poster.jpg",
+    specialHref: "/projetos/ronaldo-caiado",
+    summary:
+      "Um curta sobre a trajetória de Ronaldo Caiado, construído inteiramente com inteligência artificial e direção cinematográfica.",
+    context:
+      "Um projeto especial sobre a trajetória pública de Ronaldo Caiado, ex-governador de Goiás e candidato à Presidência. O filme combina pesquisa, roteiro, direção de arte e geração com inteligência artificial em uma narrativa concebida frame a frame.",
+    memberIds: [],
+  },
   {
     slug: "ai-when-its-directed",
     title: "AI WHEN IT'S DIRECTED",
@@ -90,4 +105,5 @@ export const PROJECT_CATEGORIES = [
   "Motion",
   "Filme",
   "Campanha",
+  "Especial",
 ] as const;
