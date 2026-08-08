@@ -112,21 +112,46 @@ export function MemberProjects({
                 )}
               >
                 <span className="relative block aspect-video overflow-hidden bg-black">
-                  <Image
-                    src={project.coverSrc}
-                    alt=""
-                    fill
-                    loading={index < 2 ? "eager" : "lazy"}
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-contain brightness-[0.82] transition-[transform,filter] duration-700 ease-premium group-hover/project:scale-[1.04] group-hover/project:brightness-110 group-focus-visible/project:scale-[1.04] group-focus-visible/project:brightness-110 motion-reduce:transform-none"
-                  />
+                  {project.previewVideoSrc ? (
+                    <video
+                      src={project.previewVideoSrc}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      poster={project.coverSrc}
+                      aria-label={`Prévia visual do projeto ${project.title}`}
+                      className="pointer-events-none absolute inset-0 h-full w-full scale-[1.01] object-cover brightness-[0.7] transition-[transform,filter] duration-700 ease-premium group-hover/project:scale-[1.035] group-hover/project:brightness-95 group-focus-visible/project:brightness-95 motion-reduce:transform-none"
+                    />
+                  ) : (
+                    <Image
+                      src={project.coverSrc}
+                      alt=""
+                      fill
+                      loading={index < 2 ? "eager" : "lazy"}
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-contain brightness-[0.82] transition-[transform,filter] duration-700 ease-premium group-hover/project:scale-[1.04] group-hover/project:brightness-110 group-focus-visible/project:scale-[1.04] group-focus-visible/project:brightness-110 motion-reduce:transform-none"
+                    />
+                  )}
                   <span
                     aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/5 to-transparent"
+                    className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.28)_0%,transparent_42%,rgba(0,0,0,0.9)_100%)]"
                   />
+                  {project.previewVideoSrc && (
+                    <span className="absolute left-4 top-4 w-20 drop-shadow-[0_8px_24px_rgba(0,0,0,0.65)] md:left-6 md:top-5 md:w-28">
+                      <Image
+                        src="/cria-frames-logo-alfa.svg"
+                        alt=""
+                        width={196}
+                        height={136}
+                        className="h-auto w-full object-contain"
+                      />
+                    </span>
+                  )}
                   <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-5 p-5 md:p-6">
                     <span>
-                      <span className="block font-display text-xl font-bold uppercase tracking-[-0.02em] text-white md:text-2xl">
+                      <span className="block font-display text-lg font-bold uppercase tracking-[-0.02em] text-white md:text-xl">
                         {project.title}
                       </span>
                       <span className="mt-2 block text-[10px] font-semibold uppercase tracking-[0.14em] text-white/60">

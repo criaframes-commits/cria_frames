@@ -4,7 +4,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { MemberProjects } from "@/components/about/member-projects";
-import { PORTFOLIO_PROJECTS } from "@/lib/portfolio-projects";
+import {
+  MEMBER_PROFILE_PROJECTS,
+  PORTFOLIO_PROJECTS,
+} from "@/lib/portfolio-projects";
 import { TEAM_MEMBERS } from "@/lib/team-members";
 
 type MemberPageProps = {
@@ -40,9 +43,12 @@ export default async function MemberPage({ params }: MemberPageProps) {
   const member = TEAM_MEMBERS[memberIndex];
   const previousMember = TEAM_MEMBERS[memberIndex - 1] ?? null;
   const nextMember = TEAM_MEMBERS[memberIndex + 1] ?? null;
-  const projects = PORTFOLIO_PROJECTS.filter((project) =>
-    project.memberIds.includes(member.id)
-  );
+  const projects = [
+    ...PORTFOLIO_PROJECTS.filter((project) =>
+      project.memberIds.includes(member.id)
+    ),
+    ...(MEMBER_PROFILE_PROJECTS[member.id] ?? []),
+  ];
 
   const previousHref = previousMember
     ? `/sobre/equipe/${previousMember.id}`

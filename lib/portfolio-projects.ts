@@ -9,6 +9,7 @@ export type PortfolioProject = {
   youtubeId?: string;
   specialHref?: string;
   featured?: boolean;
+  previewVideoSrc?: string;
   summary: string;
   context: string;
   memberIds: string[];
@@ -40,20 +41,6 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
       label: "Trailer",
       availableFrom: "2026-08-09T12:00:00-03:00",
     },
-  },
-  {
-    slug: "site-cria-frames",
-    title: "Site Cria Frames",
-    category: "Especial",
-    year: "2026",
-    duration: "Web",
-    coverSrc: "/hero-poster.jpg",
-    specialHref: "/",
-    summary:
-      "O site institucional da Cria Frames, criado para transformar o portfólio do estúdio em uma experiência digital cinematográfica.",
-    context:
-      "Projeto digital desenvolvido para apresentar a Cria Frames, seus serviços, projetos e equipe com clareza, acessibilidade e uma direção visual coerente com o estúdio. A experiência combina catálogo escalável, interações responsivas, movimento e narrativa visual.",
-    memberIds: ["membro-04"],
   },
   {
     slug: "ai-when-its-directed",
@@ -122,6 +109,26 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     memberIds: ["membro-01"],
   },
 ];
+
+export const MEMBER_PROFILE_PROJECTS: Record<string, PortfolioProject[]> = {
+  "membro-04": [
+    {
+      slug: "site-cria-frames",
+      title: "Site Cria Frames",
+      category: "Especial",
+      year: "2026",
+      duration: "Web",
+      coverSrc: "/hero-poster.jpg",
+      previewVideoSrc: "/projetos/site-cria-frames/site-showreel.mp4",
+      specialHref: "/",
+      summary:
+        "O site institucional da Cria Frames, criado para transformar o portfólio do estúdio em uma experiência digital cinematográfica.",
+      context:
+        "Projeto digital desenvolvido para apresentar a Cria Frames, seus serviços, projetos e equipe com clareza, acessibilidade e uma direção visual coerente com o estúdio. A experiência combina catálogo escalável, interações responsivas, movimento e narrativa visual.",
+      memberIds: ["membro-04"],
+    },
+  ],
+};
 
 export const PROJECT_CATEGORIES = [
   "Todos",
