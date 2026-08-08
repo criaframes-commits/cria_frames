@@ -5,7 +5,7 @@ const FOOTER_LINKS: Record<string, { href: string; label: string }[]> = {
   Estúdio: [
     { href: "/sobre", label: "Sobre" },
     { href: "/servicos", label: "Serviços" },
-    { href: "/cases", label: "Cases" },
+    { href: "/projetos", label: "Projetos" },
   ],
   Contato: [
     { href: "/contato", label: "Fale conosco" },
@@ -14,6 +14,7 @@ const FOOTER_LINKS: Record<string, { href: string; label: string }[]> = {
   Social: [
     { href: "https://www.instagram.com/cria_frames/", label: "Instagram" },
     { href: "https://www.tiktok.com/@criaframes", label: "TikTok" },
+    { href: "https://www.youtube.com/@CriaFrames", label: "YouTube"},
     { href: "https://linkedin.com", label: "LinkedIn" },
   ],
 };

@@ -82,7 +82,7 @@ Resumo do que cada site contribui de mais forte, extraído dos relatórios anexa
 Isso não é o "fundo preto + 1 accent" genérico de design gerado por IA por padrão — é derivado matematicamente do pixel real da logo e da metáfora literal do objeto que ela representa (um refletor). O sistema teria ficado diferente se a logo fosse outra coisa.
 
 **Dois modos, um sistema:**
-- **Modo Cinema** (escuro) → hero, portfólio/reels, storytelling de marca, cases
+- **Modo Cinema** (escuro) → hero, portfólio/reels, storytelling de marca, projetos
 - **Modo Estúdio** (claro) → como funciona, planos/preços, formulário de contato, FAQ, prova social densa
 
 ---
@@ -231,7 +231,7 @@ A peça central do sistema. Vem direto da Utopai, mas ganha significado extra po
 
 - Lista vertical de cards (portfólio/reels).
 - Conforme o scroll, **um card por vez** recebe `opacity: 1` + `brightness: 1`; os demais vão para `opacity: 0.3` + `brightness: 0.55`.
-- Texto lateral (nome do case, cliente, resultado) faz crossfade sincronizado com o card ativo — nunca dois textos visíveis ao mesmo tempo.
+- Texto lateral (nome do projeto, cliente, resultado) faz crossfade sincronizado com o card ativo — nunca dois textos visíveis ao mesmo tempo.
 - Implementação: `IntersectionObserver` (zero dependência) ou `GSAP ScrollTrigger` se o time já usar GSAP em outro lugar do site.
 - Transição: `var(--duration-base)` com `var(--ease-out)`.
 
@@ -289,7 +289,7 @@ Regras de performance de código (Vercel React best practices, aplicadas):
 ## 8. Etapa 8 — Próximos passos
 
 1. **Validar esta base com o time** — travar paleta, tipografia e o Scroll Holofote antes de qualquer wireframe (evita retrabalho).
-2. **Wireframe de baixa fidelidade** das páginas-chave: Home (hero vídeo → Scroll Holofote de cases → prova social → CTA), Serviços, Planos/Preços, Contato.
+2. **Wireframe de baixa fidelidade** das páginas-chave: Home (hero vídeo → Scroll Holofote de projetos → prova social → CTA), Serviços, Planos/Preços, Contato.
 3. **Protótipo de alta fidelidade** de 2 telas críticas (Home + 1 página de conversão) para testar o sistema em contexto real antes de generalizar para o site inteiro.
 4. **Gerar `tokens.css`** a partir das tabelas da Seção 4 (posso gerar isso agora, se quiser, já como arquivo pronto pra importar no Tailwind).
 5. **Protótipo funcional do Scroll Holofote isolado** — validar performance/UX antes de plugar no site real.

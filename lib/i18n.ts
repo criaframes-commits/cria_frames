@@ -1,0 +1,532 @@
+export const SUPPORTED_LANGUAGES = [
+  { locale: "pt-BR", short: "PT", label: "Português", lang: "pt-BR" },
+  { locale: "en", short: "EN", label: "English", lang: "en" },
+  { locale: "es", short: "ES", label: "Español", lang: "es" },
+  { locale: "fr", short: "FR", label: "Français", lang: "fr" },
+] as const;
+
+export type Locale = (typeof SUPPORTED_LANGUAGES)[number]["locale"];
+
+type TranslationMap = Record<string, string>;
+
+const en: TranslationMap = {
+  "Cria Frames — início": "Cria Frames — home",
+  "Serviços": "Services",
+  "Projetos": "Projects",
+  "Sobre": "About",
+  "Contato": "Contact",
+  "Falar com o estúdio": "Talk to the studio",
+  "Abrir menu": "Open menu",
+  "Fechar": "Close",
+  "Assistir ao reel completo": "Watch the full reel",
+  "Estúdio de criação com IA": "AI-powered creative studio",
+  "Criamos o impossível": "We create the impossible",
+  "com IA, cinema e processo": "with AI, film and craft",
+  "Ver portfólio": "View portfolio",
+  "Novo curta · Pré-estreia": "New short film · Preview",
+  "Um filme inteiramente feito com IA.": "A film made entirely with AI.",
+  "Um filme": "A film",
+  "inteiramente feito com IA.": "made entirely with AI.",
+  "Estreia": "Premiere",
+  "9 ago 2026": "Aug 9, 2026",
+  "Assistir ao trailer": "Watch the trailer",
+  "Uma produção Cria Frames": "A Cria Frames production",
+  "Contagem regressiva para a estreia": "Countdown to the premiere",
+  "Dias": "Days",
+  "Horas": "Hours",
+  "Seg": "Sec",
+  "Reproduzir trailer": "Play trailer",
+  "Trailer do curta sobre Ronaldo Caiado": "Trailer for the short film about Ronaldo Caiado",
+  "Seu navegador não suporta a reprodução deste vídeo.": "Your browser does not support video playback.",
+  "Projetos em destaque": "Featured projects",
+  "Assistir ao projeto Aurora": "Watch the Aurora project",
+  "Assistir ao projeto Sinal": "Watch the Sinal project",
+  "Assistir ao projeto Origem": "Watch the Origem project",
+  "Assistir ao projeto Pulso": "Watch the Pulso project",
+  "Cliente A": "Client A",
+  "Cliente B": "Client B",
+  "Cliente C": "Client C",
+  "Cliente D": "Client D",
+  "Cliente E": "Client E",
+  "Cliente F": "Client F",
+  "Uma série de motion criada para apresentar uma nova linguagem de marca nas redes sociais. O projeto combinou direção de arte, geração de imagens e acabamento cinematográfico em um fluxo de produção inteiramente interno.": "A motion series created to introduce a new brand language on social media. The project combined art direction, image generation and cinematic finishing in a fully in-house production workflow.",
+  "Um filme de linguagem documental que explora memória, presença e transformação. A construção passou por roteiro, pesquisa visual, direção de personagens sintéticos e desenho de som original.": "A documentary-style film exploring memory, presence and transformation. Its development involved writing, visual research, synthetic character direction and original sound design.",
+  "Uma campanha integrada desenvolvida do conceito à entrega final. A mesma ideia central foi desdobrada em filme principal, cortes verticais e peças de motion sem perder unidade visual.": "An integrated campaign developed from concept to final delivery. The central idea expanded into a hero film, vertical edits and motion pieces without losing visual consistency.",
+  "Um lançamento de produto construído em ritmo acelerado, com apenas 48 horas entre briefing e entrega. A peça usa montagem, luz e movimento para transformar velocidade de produção em linguagem criativa.": "A fast-paced product launch created in just 48 hours from briefing to delivery. Editing, light and movement turn production speed into a creative language.",
+  "Quem cria com a gente, conta.": "Those who create with us have a story to tell.",
+  "Feedbacks": "Testimonials",
+  "Feedback": "Testimonial",
+  "Ler mais...": "Read more...",
+  "Ler menos": "Read less",
+  "Recolher": "Collapse",
+  "Direção de marketing": "Marketing director",
+  "Produção executiva": "Executive production",
+  "Direção criativa": "Creative direction",
+  "Fundador": "Founder",
+  "Liderança de conteúdo": "Head of content",
+  "Agência de publicidade": "Advertising agency",
+  "Criador de conteúdo IA": "AI content creator",
+  "“A Cria Frames entendeu a ideia desde o primeiro encontro e transformou um briefing complexo em uma narrativa clara, bonita e pronta para gerar resultado.”": "“Cria Frames understood the idea from our first meeting and turned a complex brief into a clear, beautiful story built to deliver results.”",
+  "“O que mais impressionou foi a combinação entre velocidade e cuidado. Tivemos acompanhamento durante todo o processo, decisões bem explicadas e uma entrega que manteve a personalidade da marca. Mesmo com um prazo curto e várias frentes acontecendo ao mesmo tempo, o projeto chegou consistente do roteiro à finalização.”": "“What impressed us most was the balance between speed and care. We were supported throughout the process, every decision was clearly explained, and the final work preserved the brand’s personality. Even with a tight schedule and several workstreams running at once, the project remained consistent from script to finish.”",
+  "“A equipe trouxe soluções que a gente ainda não tinha imaginado e soube usar IA sem deixar o trabalho com aparência genérica. O resultado ficou realmente nosso.”": "“The team brought solutions we had not imagined and knew how to use AI without making the work feel generic. The result truly felt like ours.”",
+  "“Do primeiro frame ao último, houve intenção. A Cria conseguiu equilibrar experimentação, linguagem de marca e acabamento com uma fluidez rara no processo criativo.”": "“From the first frame to the last, every choice had intention. Cria balanced experimentation, brand language and craft with a rare ease throughout the creative process.”",
+  "“Chegamos com uma referência abstrata e saímos com uma peça que comunica exatamente o que queríamos. O processo foi próximo, rápido e muito bem conduzido.”": "“We arrived with an abstract reference and left with a piece that communicates exactly what we wanted. The process was collaborative, fast and expertly led.”",
+  "“Além da qualidade visual, a parceria trouxe segurança para experimentar. Cada ajuste tinha propósito e o time sempre apresentava uma alternativa melhor, sem perder tempo nem descaracterizar a campanha. Foi uma construção colaborativa de verdade, com transparência em todas as etapas e um resultado acima do que imaginávamos no início.”": "“Beyond the visual quality, the partnership gave us confidence to experiment. Every adjustment had a purpose and the team always presented a stronger alternative without wasting time or diluting the campaign. It was genuinely collaborative, transparent at every stage, and the result surpassed what we initially imagined.”",
+  "Você pensa": "You imagine",
+  "A gente": "We",
+  "Conte o que você precisa. Respondemos com uma proposta em até 2 dias úteis.": "Tell us what you need. We will reply with a proposal within two business days.",
+  "Pedir orçamento": "Request a quote",
+  "Estúdio de criação com IA: vídeo, motion e campanhas completas.": "AI-powered creative studio for film, motion and complete campaigns.",
+  "Estúdio": "Studio",
+  "Fale conosco": "Contact us",
+  "Todos os direitos reservados.": "All rights reserved.",
+  "Cria Frames. Todos os direitos reservados.": "Cria Frames. All rights reserved.",
+
+  "Da ideia ao último frame.": "From the idea to the final frame.",
+  "Cada projeto pede um arranjo diferente. Escolha o que mais se aproxima da sua necessidade; o escopo se ajusta na conversa.": "Every project calls for a different setup. Choose what comes closest to your needs; we will shape the scope together.",
+  "Serviços em detalhe": "Services in detail",
+  "Serviço": "Service",
+  "Vídeo com IA": "AI video",
+  "Criamos narrativas audiovisuais do conceito à finalização. A IA amplia as possibilidades de produção; direção, ritmo e intenção continuam guiando cada escolha.": "We create audiovisual narratives from concept to final delivery. AI expands production possibilities; direction, rhythm and intention still guide every choice.",
+  "Entregas possíveis": "Possible deliverables",
+  "Conceito e roteiro": "Concept and script",
+  "Direção de IA": "AI direction",
+  "Geração de imagem e vídeo": "Image and video generation",
+  "Montagem e finalização": "Editing and finishing",
+  "Pode virar": "Possible formats",
+  "Filme de marca": "Brand film",
+  "Transformamos identidade, informação e conceito em movimento. O projeto pode nascer como uma peça única ou como um sistema preparado para diferentes formatos.": "We turn identity, information and ideas into motion. A project can begin as a single piece or as a system designed for multiple formats.",
+  "Direção de arte": "Art direction",
+  "Animação 2D e 3D": "2D and 3D animation",
+  "Abertura": "Title sequence",
+  "Peças para redes": "Social media assets",
+  "Campanha completa": "Full campaign",
+  "Pensamos a campanha como um conjunto, não como uma soma de entregas. Conceito, produção e desdobramentos avançam juntos para manter consistência em todos os pontos de contato.": "We see a campaign as a whole, not as a collection of deliverables. Concept, production and adaptations move together to keep every touchpoint consistent.",
+  "Conceito criativo": "Creative concept",
+  "Plano de peças": "Content plan",
+  "Produção multiformato": "Multi-format production",
+  "Desdobramentos": "Adaptations",
+  "Lançamento": "Launch",
+  "Campanha institucional": "Institutional campaign",
+  "Conteúdo always-on": "Always-on content",
+  "Consultoria criativa": "Creative consulting",
+  "Entramos antes da produção para organizar linguagem, ferramentas e fluxo. É uma forma direta de testar caminhos e tomar decisões com mais clareza.": "We join before production to organize language, tools and workflow. It is a direct way to test directions and make clearer decisions.",
+  "Diagnóstico criativo": "Creative assessment",
+  "Workshop com a equipe": "Team workshop",
+  "Prototipagem visual": "Visual prototyping",
+  "Plano de produção": "Production plan",
+  "Sprint criativo": "Creative sprint",
+  "Pesquisa de linguagem": "Visual language research",
+  "Fluxo com IA": "AI workflow",
+  "Como funciona": "How it works",
+  "Do briefing à entrega.": "From briefing to delivery.",
+  "Um processo visível, com decisões claras e espaço para o projeto evoluir sem perder o rumo.": "A transparent process with clear decisions and room for the project to evolve without losing direction.",
+  "Briefing": "Briefing",
+  "A gente entende objetivo, público, contexto e o que precisa ser entregue.": "We understand the goal, audience, context and what needs to be delivered.",
+  "Produção": "Production",
+  "Conceito aprovado, o projeto entra em roteiro, direção e execução.": "Once the concept is approved, the project moves into writing, direction and production.",
+  "Revisão": "Review",
+  "Você acompanha os marcos certos e concentra o retorno em rodadas claras.": "You follow the right milestones and consolidate feedback into clear review rounds.",
+  "Entrega": "Delivery",
+  "Finalizamos e organizamos os arquivos nos formatos combinados.": "We finish and organize every file in the agreed formats.",
+  "Próximo passo": "Next step",
+  "Conta a ideia. A gente desenha o caminho.": "Tell us the idea. We will design the way forward.",
+  "Dúvidas comuns.": "Common questions.",
+  "Que tipo de projeto vocês produzem?": "What kind of projects do you produce?",
+  "Filmes de marca, campanhas, conteúdos para redes, motion design e projetos especiais. O formato nasce do objetivo — não de um pacote fechado.": "Brand films, campaigns, social content, motion design and special projects. The format comes from the goal — not from a fixed package.",
+  "Preciso chegar com o roteiro pronto?": "Do I need a finished script?",
+  "Não. Podemos entrar desde a ideia e construir conceito, roteiro e linguagem com você. Se já existe um roteiro, partimos dele e organizamos a produção.": "No. We can join at the idea stage and build the concept, script and language with you. If you already have a script, we start there and organize production.",
+  "Como a IA entra no processo?": "How does AI fit into the process?",
+  "Ela pode apoiar pesquisa, prototipagem, geração de imagens, movimento e acabamento. Usamos apenas onde melhora a solução; a direção criativa continua conduzindo tudo.": "It can support research, prototyping, image generation, motion and finishing. We use it only where it improves the solution; creative direction remains in control.",
+  "Quanto tempo leva para produzir?": "How long does production take?",
+  "Depende do escopo, da quantidade de peças e das aprovações. Depois do briefing, enviamos um cronograma com etapas e datas claras antes de começar.": "It depends on scope, number of assets and approvals. After the briefing, we send a schedule with clear stages and dates before work begins.",
+  "Vocês trabalham com equipes de outras cidades?": "Do you work with teams in other cities?",
+  "Sim. Briefing, acompanhamento e aprovações podem acontecer de forma remota, com produção presencial organizada quando o projeto pedir.": "Yes. Briefings, reviews and approvals can happen remotely, with on-site production arranged whenever the project requires it.",
+
+  "Portfólio": "Portfolio",
+  "Nosso trabalho.": "Our work.",
+  "Filmes, campanhas e experimentos feitos pela Cria Frames. Um arquivo para explorar com calma e assistir em tela cheia.": "Films, campaigns and experiments made by Cria Frames. An archive to explore at your own pace and watch in full screen.",
+  "projetos no arquivo": "projects in the archive",
+  "Explorar catálogo": "Explore the catalog",
+  "Catálogo de projetos": "Project catalog",
+  "Filtrar por categoria": "Filter by category",
+  "Todos": "All",
+  "Filme": "Film",
+  "Campanha": "Campaign",
+  "Filtrar por integrante da equipe": "Filter by team member",
+  "Toda a equipe": "Entire team",
+  "Buscar projetos": "Search projects",
+  "Buscar projeto": "Search project",
+  "Arquivo": "Archive",
+  "projeto": "project",
+  "projetos": "projects",
+  "Projeto": "Project",
+  "Assistir": "Watch",
+  "Fechar projeto": "Close project",
+  "Por trás do projeto": "Behind the project",
+  "Equipe do projeto": "Project team",
+  "Participantes do projeto": "Project participants",
+  "Participaram deste projeto": "Project contributors",
+  "Ver teaser": "Watch teaser",
+  "Fechar teaser": "Close teaser",
+  "Ver trailer": "Watch trailer",
+  "Fechar trailer": "Close trailer",
+  "Reprodução inline": "Inline playback",
+  "Seu navegador não oferece suporte à reprodução de vídeo.": "Your browser does not support video playback.",
+  "1 integrante": "1 team member",
+  "Perfil atual": "Current profile",
+  "Navegação entre projetos": "Project navigation",
+  "Anterior": "Previous",
+  "Próximo": "Next",
+  "Voltar": "Back",
+
+  "Quem faz a Cria": "The people behind Cria",
+  "Criamos o": "We create the",
+  "impossível": "impossible",
+  "porque dominamos o processo.": "because we master the process.",
+  "Somos direção, produção, arte, motion e pós trabalhando na mesma mesa. A tecnologia entra no processo; o olhar continua sendo nosso.": "Direction, production, art, motion and post-production all work at the same table. Technology joins the process; the point of view remains ours.",
+  "como método.": "as a method.",
+  "Audiovisual": "Audiovisual",
+  "como linguagem.": "as a language.",
+  "Criação": "Creativity",
+  "como resultado.": "as the outcome.",
+  "Nossa história": "Our story",
+  "O caminho também é criação.": "The journey is part of the creation.",
+  "A Cria não nasceu pronta. Ela foi tomando forma conforme o processo ficou mais próximo, mais inquieto e mais nosso.": "Cria was not born fully formed. It took shape as the process became closer, bolder and more distinctly ours.",
+  "A inquietação": "The restlessness",
+  "Antes da Cria.": "Before Cria.",
+  "Primeiro veio a vontade de produzir imagens com mais liberdade e menos distância entre ideia e execução.": "First came the desire to create images with more freedom and less distance between idea and execution.",
+  "O encontro": "Coming together",
+  "Uma mesa só.": "One table.",
+  "Direção, produção, arte, motion e pós passaram a pensar juntas — desde o primeiro rascunho.": "Direction, production, art, motion and post began thinking together — from the very first sketch.",
+  "O método": "The method",
+  "Tecnologia com direção.": "Technology with direction.",
+  "A IA entrou no processo como ferramenta de criação. O repertório, as escolhas e o acabamento continuam humanos.": "AI entered the process as a creative tool. Taste, choices and craft remain human.",
+  "Agora": "Now",
+  "O estúdio": "The studio",
+  "A Cria, hoje.": "Cria today.",
+  "Um time que reúne linguagens e técnicas para conduzir cada projeto do conceito à tela.": "A team combining languages and techniques to take every project from concept to screen.",
+  "Como pensamos": "How we think",
+  "O processo faz parte da criação.": "The process is part of the creation.",
+  "Não separamos técnica de ideia. Cada etapa existe para proteger a intenção do projeto até o último frame.": "We do not separate craft from ideas. Every stage protects the project’s intention through the final frame.",
+  "Ideia": "Idea",
+  "Tudo começa por uma ideia capaz de sustentar o filme.": "Everything starts with an idea strong enough to carry the film.",
+  "Pré-produção": "Pre-production",
+  "Planejamos antes de gerar, filmar ou animar.": "We plan before generating, filming or animating.",
+  "Cada frame responde a uma escolha de direção.": "Every frame reflects a directorial choice.",
+  "Pós-produção": "Post-production",
+  "O acabamento é o que faz a imagem permanecer.": "Craft is what makes an image last.",
+  "Conteúdo": "Content",
+  "A linguagem muda de formato sem perder identidade.": "The language changes format without losing its identity.",
+  "Impacto": "Impact",
+  "Criar só faz sentido quando provoca alguma coisa.": "Creation only matters when it makes people feel something.",
+  "Equipe": "Team",
+  "A equipe.": "The team.",
+  "Arraste para explorar": "Drag to explore",
+  "Ver membros anteriores": "View previous members",
+  "Ver próximos membros": "View next members",
+  "Projetos selecionados": "Selected projects",
+  "Ver projetos": "View projects",
+  "Redes": "Socials",
+  "Links em atualização.": "Links coming soon.",
+  "Trabalhos na Cria.": "Work at Cria.",
+  "Navegação anterior e próximo entre membros": "Previous and next team member navigation",
+  "Próximo projeto": "Next project",
+  "Tem uma ideia?": "Have an idea?",
+  "Traz pra mesa.": "Bring it to the table.",
+  "Conta o que você quer colocar no mundo. A conversa começa por aí.": "Tell us what you want to put into the world. The conversation starts there.",
+
+  "Contato · Orçamento": "Contact · Quote",
+  "Seu próximo projeto": "Your next project",
+  "começa aqui.": "starts here.",
+  "Conte o que você precisa produzir. A gente organiza o caminho e responde com os próximos passos para tirar a ideia do papel.": "Tell us what you need to produce. We will organize the path and reply with the next steps to bring the idea to life.",
+  "Pode chegar com": "You can come with",
+  "Uma ideia, um roteiro, referências ou um briefing completo.": "An idea, a script, references or a complete brief.",
+  "Se ainda houver perguntas, tudo bem. A primeira conversa serve justamente para organizar o projeto.": "It is fine if you still have questions. The first conversation is precisely where we organize the project.",
+  "Briefing sem compromisso": "No-obligation briefing",
+  "Escopo pensado para o projeto": "A scope designed for your project",
+  "Resposta em até 2 dias úteis": "Reply within two business days",
+  "Pedido de orçamento": "Quote request",
+  "Vamos entender o projeto.": "Let’s understand the project.",
+  "Preencha o essencial. Quanto mais contexto você compartilhar, mais objetiva será a primeira resposta.": "Share the essentials. The more context you provide, the more focused our first reply will be.",
+  "Nome": "Name",
+  "Empresa": "Company",
+  "opcional": "optional",
+  "Tipo de projeto": "Project type",
+  "Selecione uma opção": "Select an option",
+  "Filme de marca ou campanha": "Brand film or campaign",
+  "Conteúdo para redes sociais": "Social media content",
+  "Projeto audiovisual com IA": "AI audiovisual project",
+  "Outro formato": "Other format",
+  "Investimento estimado": "Estimated investment",
+  "Selecione uma faixa": "Select a range",
+  "Até R$ 10 mil": "Up to BRL 10k",
+  "De R$ 10 mil a R$ 25 mil": "BRL 10k to 25k",
+  "De R$ 25 mil a R$ 50 mil": "BRL 25k to 50k",
+  "De R$ 50 mil a R$ 100 mil": "BRL 50k to 100k",
+  "Acima de R$ 100 mil": "Above BRL 100k",
+  "Ainda não definido": "Not defined yet",
+  "Conte sobre o projeto": "Tell us about the project",
+  "O que precisa ser produzido, objetivo, prazo e referências que já existem.": "What needs to be produced, the goal, deadline and any existing references.",
+  "Não precisa chegar com tudo definido. O essencial já inicia a conversa.": "You do not need to have everything defined. The essentials are enough to start the conversation.",
+  "Solicitar orçamento": "Request a quote",
+  "Ao continuar, seu aplicativo de e-mail abrirá com o briefing preenchido.": "When you continue, your email app will open with the completed brief.",
+  "Informações de contato": "Contact information",
+  "Fale direto": "Get in touch directly",
+  "Prefere começar pelo e-mail?": "Prefer to start by email?",
+  "Prazo de resposta": "Response time",
+  "Até 2 dias úteis": "Within two business days",
+  "O que acontece depois": "What happens next",
+  "Entendemos a necessidade": "We understand your needs",
+  "Alinhamos formato, prazo e investimento": "We align format, timeline and investment",
+  "Você recebe uma proposta clara": "You receive a clear proposal",
+  "Atendemos projetos em todo o Brasil, com reuniões remotas e produção presencial quando o trabalho pedir.": "We work on projects across Brazil, with remote meetings and on-site production whenever the work requires it.",
+  "Informe seu nome.": "Enter your name.",
+  "Informe seu e-mail.": "Enter your email address.",
+  "Digite um e-mail válido.": "Enter a valid email address.",
+  "Escolha o tipo de projeto.": "Choose a project type.",
+  "Escolha uma faixa de investimento.": "Choose an investment range.",
+  "Conte brevemente o que você precisa produzir.": "Briefly tell us what you need to produce.",
+  "Inclua um pouco mais de contexto (mínimo de 20 caracteres).": "Add a little more context (at least 20 characters).",
+  "Briefing preparado. Seu aplicativo de e-mail será aberto para concluir o envio.": "Brief ready. Your email app will open so you can finish sending it.",
+  "Membro 01": "Team member 01", "Membro 02": "Team member 02", "Membro 03": "Team member 03", "Membro 04": "Team member 04", "Membro 05": "Team member 05",
+  "Transforma o briefing em conceito e acompanha a linguagem do projeto do primeiro estudo ao último frame.": "Turns the brief into a concept and guides the project language from the first study to the final frame.",
+  "Organiza equipe, agenda e orçamento para o trabalho avançar com clareza, sem ruído entre criação e entrega.": "Organizes the team, schedule and budget so the work moves forward clearly, without friction between creation and delivery.",
+  "Define composição, cor e acabamento para que cada projeto tenha uma linguagem própria e reconhecível.": "Defines composition, color and finish so each project has a distinctive, recognizable language.",
+  "Testa ferramentas e desenha movimentos para resolver cada cena com precisão técnica e intenção visual.": "Tests tools and designs motion to solve each scene with technical precision and visual intention.",
+  "Encontra o ritmo do filme e cuida da continuidade, do som e da finalização antes de cada entrega.": "Finds the film’s rhythm and handles continuity, sound and finishing before every delivery.",
+  "Atua na direção criativa dos projetos, conectando estratégia, roteiro e linguagem visual. Na página definitiva, este espaço recebe a trajetória, o repertório e a forma de trabalhar de cada integrante.": "Leads creative direction across projects, connecting strategy, writing and visual language. In the final page, this space will present each member’s journey, references and way of working.",
+  "Conduz o trabalho entre briefing e entrega, alinhando equipe, cronograma e recursos. Este perfil está preparado para receber uma apresentação pessoal mais completa quando o conteúdo final estiver disponível.": "Guides the work from briefing to delivery, aligning team, schedule and resources. This profile is ready for a fuller personal introduction once the final content is available.",
+  "Desenvolve a direção de arte do conceito ao acabamento, traduzindo referências em composição, cor e textura. A seleção abaixo reúne os trabalhos associados a essa frente dentro do estúdio.": "Develops art direction from concept to finish, translating references into composition, color and texture. The selection below brings together work connected to this role at the studio.",
+  "Pesquisa ferramentas, desenvolve movimento e transforma estudos em cenas prontas para produção. O foco está em usar tecnologia com controle visual, ritmo e coerência entre os frames.": "Researches tools, develops movement and turns studies into production-ready scenes. The focus is using technology with visual control, rhythm and consistency from frame to frame.",
+  "Cuida da montagem e da finalização, encontrando o ritmo de cada filme e garantindo continuidade entre imagem e som. Os projetos abaixo mostram essa participação dentro da Cria Frames.": "Handles editing and finishing, finding each film’s rhythm and ensuring continuity between image and sound. The projects below show this contribution at Cria Frames.",
+  "Conceito": "Concept", "Direção": "Direction", "Narrativa": "Narrative", "Processo": "Process", "Operação": "Operations", "Visual": "Visual", "Design": "Design", "Imagem": "Image", "Pesquisa": "Research", "Montagem": "Editing", "Finalização": "Finishing", "Som": "Sound",
+  "Ver projetos de Membro 01": "View projects by team member 01", "Ver projetos de Membro 02": "View projects by team member 02", "Ver projetos de Membro 03": "View projects by team member 03", "Ver projetos de Membro 04": "View projects by team member 04", "Ver projetos de Membro 05": "View projects by team member 05",
+  "Pré-produção · Suporte e TI": "Pre-production · Support and IT", "Comercial e administração financeira": "Commercial and financial management",
+  "Linguagem visual": "Visual language", "Planejamento": "Planning", "Suporte": "Support", "TI": "IT", "Comercial": "Commercial", "Relacionamento": "Client relations", "Financeiro": "Finance",
+  "Transforma briefings em conceitos fortes e conduz a linguagem criativa dos projetos do primeiro rascunho ao último frame.": "Turns briefs into strong concepts and guides each project’s creative language from the first draft to the final frame.",
+  "João Victor Duarte atua na direção criativa da Cria Frames. Conecta estratégia, roteiro e linguagem visual para transformar cada briefing em uma ideia clara, acompanhando as decisões criativas do conceito ao acabamento final.": "João Victor Duarte works in creative direction at Cria Frames. He connects strategy, writing and visual language to turn each brief into a clear idea, guiding creative decisions from concept through final finishing.",
+  "Desenvolve conceitos e narrativas visuais, alinhando intenção, estética e consistência em cada etapa da produção.": "Develops concepts and visual narratives, aligning intention, aesthetics and consistency throughout every stage of production.",
+  "Amanda Bueno Santos integra a direção criativa da Cria Frames. Atua na construção de conceitos, narrativas e referências visuais, garantindo que cada escolha responda ao objetivo do projeto e preserve sua identidade até a entrega.": "Amanda Bueno Santos is part of Cria Frames’ creative direction team. She develops concepts, narratives and visual references, ensuring every choice serves the project’s goal and preserves its identity through delivery.",
+  "Prepara o terreno de cada produção, organizando pesquisa, referências e necessidades antes das câmeras e dos frames entrarem em cena.": "Prepares the ground for each production by organizing research, references and requirements before cameras and frames come into play.",
+  "Luan Othávio faz parte da pré-produção da Cria Frames. Organiza pesquisa, referências, materiais e necessidades de execução para que a equipe chegue à produção com decisões claras e um caminho viável.": "Luan Othávio is part of pre-production at Cria Frames. He organizes research, references, materials and production requirements so the team enters production with clear decisions and a viable path.",
+  "Conecta pré-produção e tecnologia, organizando recursos, antecipando gargalos e dando suporte para o fluxo criativo avançar sem ruído.": "Connects pre-production and technology by organizing resources, anticipating bottlenecks and supporting a smooth creative workflow.",
+  "Julia Pinheiro atua na pré-produção e também responde pelas frentes de suporte e TI da Cria Frames. Prepara recursos, organiza ferramentas e resolve os pontos técnicos que mantêm a equipe conectada e o processo funcionando com estabilidade.": "Julia Pinheiro works in pre-production and also leads support and IT at Cria Frames. She prepares resources, organizes tools and resolves the technical needs that keep the team connected and the process running reliably.",
+  "Conduz o relacionamento comercial e organiza a frente financeira, aproximando cada oportunidade da estrutura necessária para acontecer.": "Leads commercial relationships and organizes the financial operation, connecting every opportunity with the structure it needs to happen.",
+  "Gabriela Duarte é representante comercial e administradora financeira da Cria Frames. Faz a ponte entre clientes e equipe, acompanha oportunidades e cuida da organização financeira para que cada projeto avance com clareza, responsabilidade e boas condições de execução.": "Gabriela Duarte is Cria Frames’ commercial representative and financial administrator. She connects clients and the team, follows opportunities and manages finances so every project can move forward with clarity, responsibility and the right conditions for execution.",
+  "Um manifesto visual sobre o que acontece quando a inteligência artificial deixa de operar no acaso e passa a responder a uma direção.": "A visual manifesto about what happens when artificial intelligence stops operating by chance and starts responding to direction.",
+  "Um manifesto visual sobre o que acontece quando a inteligência artificial deixa de operar no acaso e passa a responder a uma direção. Conceito, decupagem, enquadramento e ritmo conduzem cada cena para transformar geração em linguagem.": "A visual manifesto about what happens when artificial intelligence stops operating by chance and starts responding to direction. Concept, shot breakdown, framing and rhythm guide each scene, turning generation into language.",
+  "Um recorte das narrativas, personagens e mundos que a Cria Frames construiu com IA, cinema e direção cena a cena.": "A selection of the narratives, characters and worlds Cria Frames has built with AI, filmmaking and scene-by-scene direction.",
+  "Esse é o primeiro estúdio audiovisual de inteligência artificial do Centro-Oeste brasileiro. Aqui você vê um recorte do que construímos até agora — narrativas, personagens e mundos criados inteiramente com IA, desde o roteiro até a finalização. Cada projeto nasce de um método próprio: pré-produção real, decupagem, referência visual e direção cena a cena — não geração aleatória. A CRIA existe para provar que cinema e publicidade de qualidade não precisam de milhões de reais nem de um estúdio de Hollywood para nascer. Precisam de método, visão e as ferramentas certas. De Goiânia para o mundo.": "This is the first artificial-intelligence audiovisual studio in Brazil’s Central-West region. Here you can see a selection of what we have built so far — narratives, characters and worlds created entirely with AI, from script to final delivery. Every project follows its own method: real pre-production, shot breakdown, visual references and scene-by-scene direction — never random generation. CRIA exists to prove that quality filmmaking and advertising do not need millions of reais or a Hollywood studio to be born. They need method, vision and the right tools. From Goiânia to the world.",
+  "Nosso primeiro curta construído do zero, realizado quando a Cria ainda estava em fase de desenvolvimento.": "Our first short film built from scratch, created while Cria was still in development.",
+  "Nosso primeiro curta construído do zero. O filme foi realizado quando a Cria ainda estava em fase de desenvolvimento e marca o começo do método que hoje orienta nossas produções.": "Our first short film built from scratch. It was created while Cria was still in development and marks the beginning of the method that now guides our productions.",
+  "Um dos primeiros curtas que produzimos, ainda na fase de testes da Cria Frames.": "One of the first short films we produced, while Cria Frames was still in its testing phase.",
+  "Um dos primeiros curtas que produzimos, ainda na fase de testes da Cria Frames. O projeto registra um momento de experimentação em que linguagem, ritmo e direção começaram a encontrar a forma do estúdio.": "One of the first short films we produced, while Cria Frames was still in its testing phase. The project captures a period of experimentation when language, rhythm and direction began to shape the studio’s identity.",
+};
+
+const es: TranslationMap = {
+  ...en,
+  "Cria Frames — início": "Cria Frames — inicio",
+  "Abrir menu": "Abrir menú", "Fechar": "Cerrar",
+  "Serviços": "Servicios", "Projetos": "Proyectos", "Sobre": "Nosotros", "Contato": "Contacto", "Falar com o estúdio": "Hablar con el estudio",
+  "Assistir ao reel completo": "Ver el reel completo", "Estúdio de criação com IA": "Estudio creativo con IA", "Criamos o impossível": "Creamos lo imposible", "com IA, cinema e processo": "con IA, cine y proceso", "Ver portfólio": "Ver portafolio",
+  "Novo curta · Pré-estreia": "Nuevo cortometraje · Preestreno", "Um filme inteiramente feito com IA.": "Una película hecha íntegramente con IA.", "Um filme": "Una película", "inteiramente feito com IA.": "hecha íntegramente con IA.", "Estreia": "Estreno", "9 ago 2026": "9 ago 2026", "Assistir ao trailer": "Ver el tráiler", "Uma produção Cria Frames": "Una producción de Cria Frames", "Contagem regressiva para a estreia": "Cuenta atrás para el estreno", "Dias": "Días", "Horas": "Horas", "Seg": "Seg", "Reproduzir trailer": "Reproducir tráiler", "Seu navegador não suporta a reprodução deste vídeo.": "Tu navegador no permite reproducir este vídeo.",
+  "Projetos em destaque": "Proyectos destacados", "Cliente A": "Cliente A", "Cliente B": "Cliente B", "Cliente C": "Cliente C", "Cliente D": "Cliente D", "Cliente E": "Cliente E", "Cliente F": "Cliente F",
+  "Quem cria com a gente, conta.": "Quien crea con nosotros, lo cuenta.", "Feedbacks": "Testimonios", "Feedback": "Testimonio", "Ler mais...": "Leer más...", "Ler menos": "Leer menos", "Recolher": "Contraer", "Direção de marketing": "Dirección de marketing", "Produção executiva": "Producción ejecutiva", "Direção criativa": "Dirección creativa", "Fundador": "Fundador", "Liderança de conteúdo": "Dirección de contenidos", "Agência de publicidade": "Agencia de publicidad", "Criador de conteúdo IA": "Creador de contenido con IA",
+  "Você pensa": "Tú lo piensas", "A gente": "Nosotros", "Conte o que você precisa. Respondemos com uma proposta em até 2 dias úteis.": "Cuéntanos qué necesitas. Te responderemos con una propuesta en un máximo de 2 días hábiles.", "Pedir orçamento": "Solicitar presupuesto", "Estúdio de criação com IA: vídeo, motion e campanhas completas.": "Estudio creativo con IA: vídeo, motion y campañas completas.", "Estúdio": "Estudio", "Fale conosco": "Contáctanos", "Todos os direitos reservados.": "Todos los derechos reservados.", "Cria Frames. Todos os direitos reservados.": "Cria Frames. Todos los derechos reservados.",
+  "Da ideia ao último frame.": "De la idea al último fotograma.", "Cada projeto pede um arranjo diferente. Escolha o que mais se aproxima da sua necessidade; o escopo se ajusta na conversa.": "Cada proyecto necesita una configuración diferente. Elige lo que más se acerque a tu necesidad; ajustaremos el alcance juntos.", "Serviços em detalhe": "Servicios en detalle", "Serviço": "Servicio", "Vídeo com IA": "Vídeo con IA", "Criamos narrativas audiovisuais do conceito à finalização. A IA amplia as possibilidades de produção; direção, ritmo e intenção continuam guiando cada escolha.": "Creamos narrativas audiovisuales desde el concepto hasta la finalización. La IA amplía las posibilidades de producción; la dirección, el ritmo y la intención siguen guiando cada decisión.", "Entregas possíveis": "Entregables posibles", "Conceito e roteiro": "Concepto y guion", "Direção de IA": "Dirección de IA", "Geração de imagem e vídeo": "Generación de imagen y vídeo", "Montagem e finalização": "Edición y finalización", "Pode virar": "Formatos posibles", "Filme de marca": "Película de marca",
+  "Transformamos identidade, informação e conceito em movimento. O projeto pode nascer como uma peça única ou como um sistema preparado para diferentes formatos.": "Transformamos identidad, información y concepto en movimiento. El proyecto puede nacer como una pieza única o como un sistema preparado para distintos formatos.", "Direção de arte": "Dirección de arte", "Animação 2D e 3D": "Animación 2D y 3D", "Abertura": "Cabecera", "Peças para redes": "Piezas para redes", "Campanha completa": "Campaña completa", "Conceito criativo": "Concepto creativo", "Plano de peças": "Plan de piezas", "Produção multiformato": "Producción multiformato", "Desdobramentos": "Adaptaciones", "Lançamento": "Lanzamiento", "Campanha institucional": "Campaña institucional", "Consultoria criativa": "Consultoría creativa", "Diagnóstico criativo": "Diagnóstico creativo", "Workshop com a equipe": "Taller con el equipo", "Prototipagem visual": "Prototipado visual", "Plano de produção": "Plan de producción", "Sprint criativo": "Sprint creativo", "Pesquisa de linguagem": "Investigación de lenguaje", "Fluxo com IA": "Flujo con IA",
+  "Como funciona": "Cómo funciona", "Do briefing à entrega.": "Del briefing a la entrega.", "Um processo visível, com decisões claras e espaço para o projeto evoluir sem perder o rumo.": "Un proceso visible, con decisiones claras y espacio para que el proyecto evolucione sin perder el rumbo.", "A gente entende objetivo, público, contexto e o que precisa ser entregue.": "Entendemos el objetivo, el público, el contexto y lo que debe entregarse.", "Produção": "Producción", "Conceito aprovado, o projeto entra em roteiro, direção e execução.": "Con el concepto aprobado, el proyecto pasa a guion, dirección y ejecución.", "Revisão": "Revisión", "Você acompanha os marcos certos e concentra o retorno em rodadas claras.": "Sigues los hitos adecuados y concentras los comentarios en rondas claras.", "Entrega": "Entrega", "Finalizamos e organizamos os arquivos nos formatos combinados.": "Finalizamos y organizamos los archivos en los formatos acordados.", "Próximo passo": "Siguiente paso", "Conta a ideia. A gente desenha o caminho.": "Cuéntanos la idea. Nosotros trazamos el camino.", "Dúvidas comuns.": "Preguntas frecuentes.",
+  "Que tipo de projeto vocês produzem?": "¿Qué tipo de proyectos producen?", "Preciso chegar com o roteiro pronto?": "¿Necesito tener el guion terminado?", "Como a IA entra no processo?": "¿Cómo entra la IA en el proceso?", "Quanto tempo leva para produzir?": "¿Cuánto tarda la producción?", "Vocês trabalham com equipes de outras cidades?": "¿Trabajan con equipos de otras ciudades?",
+  "Portfólio": "Portafolio", "Nosso trabalho.": "Nuestro trabajo.", "Filmes, campanhas e experimentos feitos pela Cria Frames. Um arquivo para explorar com calma e assistir em tela cheia.": "Películas, campañas y experimentos creados por Cria Frames. Un archivo para explorar con calma y ver a pantalla completa.", "projetos no arquivo": "proyectos en el archivo", "Explorar catálogo": "Explorar catálogo", "Catálogo de projetos": "Catálogo de proyectos", "Filtrar por categoria": "Filtrar por categoría", "Todos": "Todos", "Filme": "Película", "Campanha": "Campaña", "Filtrar por integrante da equipe": "Filtrar por miembro del equipo", "Toda a equipe": "Todo el equipo", "Buscar projetos": "Buscar proyectos", "Buscar projeto": "Buscar proyecto", "Arquivo": "Archivo", "projeto": "proyecto", "projetos": "proyectos", "Projeto": "Proyecto", "Assistir": "Ver", "Fechar projeto": "Cerrar proyecto", "Por trás do projeto": "Detrás del proyecto", "Navegação entre projetos": "Navegación entre proyectos", "Anterior": "Anterior", "Próximo": "Siguiente", "Voltar": "Volver",
+  "Equipe do projeto": "Equipo del proyecto", "Participantes do projeto": "Participantes del proyecto", "Participaram deste projeto": "Participaron en este proyecto", "1 integrante": "1 integrante", "Perfil atual": "Perfil actual", "Ver teaser": "Ver teaser", "Fechar teaser": "Cerrar teaser", "Ver trailer": "Ver tráiler", "Fechar trailer": "Cerrar tráiler", "Reprodução inline": "Reproducción integrada", "Seu navegador não oferece suporte à reprodução de vídeo.": "Tu navegador no permite reproducir este vídeo.",
+  "Quem faz a Cria": "Quién hace Cria", "Criamos o": "Creamos lo", "impossível": "imposible", "porque dominamos o processo.": "porque dominamos el proceso.", "Somos direção, produção, arte, motion e pós trabalhando na mesma mesa. A tecnologia entra no processo; o olhar continua sendo nosso.": "Somos dirección, producción, arte, motion y posproducción trabajando en la misma mesa. La tecnología entra en el proceso; la mirada sigue siendo nuestra.", "como método.": "como método.", "Audiovisual": "Audiovisual", "como linguagem.": "como lenguaje.", "Criação": "Creación", "como resultado.": "como resultado.", "Nossa história": "Nuestra historia", "O caminho também é criação.": "El camino también es creación.", "Como pensamos": "Cómo pensamos", "O processo faz parte da criação.": "El proceso forma parte de la creación.", "Ideia": "Idea", "Pré-produção": "Preproducción", "Pós-produção": "Posproducción", "Conteúdo": "Contenido", "Impacto": "Impacto", "Equipe": "Equipo", "A equipe.": "El equipo.", "Arraste para explorar": "Arrastra para explorar", "Ver membros anteriores": "Ver miembros anteriores", "Ver próximos membros": "Ver próximos miembros", "Projetos selecionados": "Proyectos seleccionados", "Ver projetos": "Ver proyectos", "Redes": "Redes", "Links em atualização.": "Enlaces en actualización.", "Trabalhos na Cria.": "Trabajos en Cria.", "Próximo projeto": "Próximo proyecto", "Tem uma ideia?": "¿Tienes una idea?", "Traz pra mesa.": "Tráela a la mesa.", "Conta o que você quer colocar no mundo. A conversa começa por aí.": "Cuéntanos qué quieres poner en el mundo. La conversación empieza ahí.",
+  "Contato · Orçamento": "Contacto · Presupuesto", "Seu próximo projeto": "Tu próximo proyecto", "começa aqui.": "empieza aquí.", "Conte o que você precisa produzir. A gente organiza o caminho e responde com os próximos passos para tirar a ideia do papel.": "Cuéntanos qué necesitas producir. Organizamos el camino y respondemos con los próximos pasos para convertir la idea en realidad.", "Pode chegar com": "Puedes llegar con", "Uma ideia, um roteiro, referências ou um briefing completo.": "Una idea, un guion, referencias o un briefing completo.", "Se ainda houver perguntas, tudo bem. A primeira conversa serve justamente para organizar o projeto.": "No pasa nada si aún tienes preguntas. La primera conversación sirve precisamente para organizar el proyecto.", "Briefing sem compromisso": "Briefing sin compromiso", "Escopo pensado para o projeto": "Alcance pensado para el proyecto", "Resposta em até 2 dias úteis": "Respuesta en un máximo de 2 días hábiles", "Pedido de orçamento": "Solicitud de presupuesto", "Vamos entender o projeto.": "Entendamos el proyecto.", "Preencha o essencial. Quanto mais contexto você compartilhar, mais objetiva será a primeira resposta.": "Completa lo esencial. Cuanto más contexto compartas, más concreta será nuestra primera respuesta.", "Nome": "Nombre", "Empresa": "Empresa", "opcional": "opcional", "Tipo de projeto": "Tipo de proyecto", "Selecione uma opção": "Selecciona una opción", "Filme de marca ou campanha": "Película de marca o campaña", "Conteúdo para redes sociais": "Contenido para redes sociales", "Projeto audiovisual com IA": "Proyecto audiovisual con IA", "Outro formato": "Otro formato", "Investimento estimado": "Inversión estimada", "Selecione uma faixa": "Selecciona un rango", "Até R$ 10 mil": "Hasta R$ 10 mil", "Acima de R$ 100 mil": "Más de R$ 100 mil", "Ainda não definido": "Aún no definido", "Conte sobre o projeto": "Cuéntanos sobre el proyecto", "Não precisa chegar com tudo definido. O essencial já inicia a conversa.": "No necesitas tenerlo todo definido. Lo esencial basta para iniciar la conversación.", "Solicitar orçamento": "Solicitar presupuesto", "Informações de contato": "Información de contacto", "Fale direto": "Contacto directo", "Prefere começar pelo e-mail?": "¿Prefieres empezar por correo?", "Prazo de resposta": "Plazo de respuesta", "Até 2 dias úteis": "Hasta 2 días hábiles", "O que acontece depois": "Qué sucede después", "Entendemos a necessidade": "Entendemos la necesidad", "Alinhamos formato, prazo e investimento": "Alineamos formato, plazo e inversión", "Você recebe uma proposta clara": "Recibes una propuesta clara",
+  "Trailer do curta sobre Ronaldo Caiado": "Tráiler del cortometraje sobre Ronaldo Caiado", "Assistir ao projeto Aurora": "Ver el proyecto Aurora", "Assistir ao projeto Sinal": "Ver el proyecto Sinal", "Assistir ao projeto Origem": "Ver el proyecto Origem", "Assistir ao projeto Pulso": "Ver el proyecto Pulso",
+  "Uma série de motion criada para apresentar uma nova linguagem de marca nas redes sociais. O projeto combinou direção de arte, geração de imagens e acabamento cinematográfico em um fluxo de produção inteiramente interno.": "Una serie de motion creada para presentar un nuevo lenguaje de marca en redes sociales. El proyecto combinó dirección de arte, generación de imágenes y acabado cinematográfico en un flujo de producción totalmente interno.",
+  "Um filme de linguagem documental que explora memória, presença e transformação. A construção passou por roteiro, pesquisa visual, direção de personagens sintéticos e desenho de som original.": "Una película de lenguaje documental que explora memoria, presencia y transformación. Su desarrollo incluyó guion, investigación visual, dirección de personajes sintéticos y diseño de sonido original.",
+  "Uma campanha integrada desenvolvida do conceito à entrega final. A mesma ideia central foi desdobrada em filme principal, cortes verticais e peças de motion sem perder unidade visual.": "Una campaña integrada desarrollada desde el concepto hasta la entrega final. La idea central se expandió a una película principal, versiones verticales y piezas de motion sin perder unidad visual.",
+  "Um lançamento de produto construído em ritmo acelerado, com apenas 48 horas entre briefing e entrega. A peça usa montagem, luz e movimento para transformar velocidade de produção em linguagem criativa.": "Un lanzamiento de producto creado a ritmo acelerado, con solo 48 horas entre el briefing y la entrega. La pieza usa montaje, luz y movimiento para convertir la velocidad de producción en lenguaje creativo.",
+  "“A Cria Frames entendeu a ideia desde o primeiro encontro e transformou um briefing complexo em uma narrativa clara, bonita e pronta para gerar resultado.”": "“Cria Frames entendió la idea desde la primera reunión y convirtió un briefing complejo en una narrativa clara, hermosa y preparada para generar resultados.”",
+  "“O que mais impressionou foi a combinação entre velocidade e cuidado. Tivemos acompanhamento durante todo o processo, decisões bem explicadas e uma entrega que manteve a personalidade da marca. Mesmo com um prazo curto e várias frentes acontecendo ao mesmo tempo, o projeto chegou consistente do roteiro à finalização.”": "“Lo que más nos impresionó fue la combinación de velocidad y cuidado. Tuvimos acompañamiento durante todo el proceso, decisiones bien explicadas y una entrega que mantuvo la personalidad de la marca. Incluso con un plazo corto y varios frentes a la vez, el proyecto fue consistente del guion a la finalización.”",
+  "“A equipe trouxe soluções que a gente ainda não tinha imaginado e soube usar IA sem deixar o trabalho com aparência genérica. O resultado ficou realmente nosso.”": "“El equipo aportó soluciones que aún no habíamos imaginado y supo usar la IA sin que el trabajo pareciera genérico. El resultado se sintió realmente nuestro.”",
+  "“Do primeiro frame ao último, houve intenção. A Cria conseguiu equilibrar experimentação, linguagem de marca e acabamento com uma fluidez rara no processo criativo.”": "“Del primer fotograma al último hubo intención. Cria equilibró experimentación, lenguaje de marca y acabado con una fluidez poco común en el proceso creativo.”",
+  "“Chegamos com uma referência abstrata e saímos com uma peça que comunica exatamente o que queríamos. O processo foi próximo, rápido e muito bem conduzido.”": "“Llegamos con una referencia abstracta y salimos con una pieza que comunica exactamente lo que queríamos. El proceso fue cercano, rápido y muy bien dirigido.”",
+  "“Além da qualidade visual, a parceria trouxe segurança para experimentar. Cada ajuste tinha propósito e o time sempre apresentava uma alternativa melhor, sem perder tempo nem descaracterizar a campanha. Foi uma construção colaborativa de verdade, com transparência em todas as etapas e um resultado acima do que imaginávamos no início.”": "“Además de la calidad visual, la colaboración nos dio seguridad para experimentar. Cada ajuste tenía un propósito y el equipo siempre proponía una alternativa mejor sin perder tiempo ni diluir la campaña. Fue una construcción realmente colaborativa, transparente en cada etapa y con un resultado superior a lo que imaginábamos.”",
+  "Pensamos a campanha como um conjunto, não como uma soma de entregas. Conceito, produção e desdobramentos avançam juntos para manter consistência em todos os pontos de contato.": "Pensamos la campaña como un todo, no como una suma de entregas. Concepto, producción y adaptaciones avanzan juntos para mantener la coherencia en todos los puntos de contacto.",
+  "Entramos antes da produção para organizar linguagem, ferramentas e fluxo. É uma forma direta de testar caminhos e tomar decisões com mais clareza.": "Entramos antes de la producción para organizar lenguaje, herramientas y flujo. Es una forma directa de probar caminos y tomar decisiones con mayor claridad.",
+  "Filmes de marca, campanhas, conteúdos para redes, motion design e projetos especiais. O formato nasce do objetivo — não de um pacote fechado.": "Películas de marca, campañas, contenidos para redes, motion design y proyectos especiales. El formato nace del objetivo, no de un paquete cerrado.",
+  "Não. Podemos entrar desde a ideia e construir conceito, roteiro e linguagem com você. Se já existe um roteiro, partimos dele e organizamos a produção.": "No. Podemos entrar desde la idea y construir contigo el concepto, el guion y el lenguaje. Si ya existe un guion, partimos de él y organizamos la producción.",
+  "Ela pode apoiar pesquisa, prototipagem, geração de imagens, movimento e acabamento. Usamos apenas onde melhora a solução; a direção criativa continua conduzindo tudo.": "Puede apoyar la investigación, el prototipado, la generación de imágenes, el movimiento y el acabado. La usamos solo cuando mejora la solución; la dirección creativa sigue guiándolo todo.",
+  "Depende do escopo, da quantidade de peças e das aprovações. Depois do briefing, enviamos um cronograma com etapas e datas claras antes de começar.": "Depende del alcance, la cantidad de piezas y las aprobaciones. Después del briefing enviamos un calendario con etapas y fechas claras antes de empezar.",
+  "Sim. Briefing, acompanhamento e aprovações podem acontecer de forma remota, com produção presencial organizada quando o projeto pedir.": "Sí. El briefing, el seguimiento y las aprobaciones pueden hacerse a distancia, con producción presencial cuando el proyecto lo requiera.",
+  "A Cria não nasceu pronta. Ela foi tomando forma conforme o processo ficou mais próximo, mais inquieto e mais nosso.": "Cria no nació terminada. Fue tomando forma a medida que el proceso se volvió más cercano, más inquieto y más nuestro.", "A inquietação": "La inquietud", "Antes da Cria.": "Antes de Cria.", "Primeiro veio a vontade de produzir imagens com mais liberdade e menos distância entre ideia e execução.": "Primero surgió el deseo de producir imágenes con más libertad y menos distancia entre la idea y la ejecución.", "O encontro": "El encuentro", "Uma mesa só.": "Una sola mesa.", "Direção, produção, arte, motion e pós passaram a pensar juntas — desde o primeiro rascunho.": "Dirección, producción, arte, motion y posproducción empezaron a pensar juntas desde el primer boceto.", "O método": "El método", "Tecnologia com direção.": "Tecnología con dirección.", "A IA entrou no processo como ferramenta de criação. O repertório, as escolhas e o acabamento continuam humanos.": "La IA entró en el proceso como herramienta creativa. El criterio, las decisiones y el acabado siguen siendo humanos.", "Agora": "Ahora", "O estúdio": "El estudio", "A Cria, hoje.": "Cria, hoy.", "Um time que reúne linguagens e técnicas para conduzir cada projeto do conceito à tela.": "Un equipo que reúne lenguajes y técnicas para llevar cada proyecto del concepto a la pantalla.",
+  "Não separamos técnica de ideia. Cada etapa existe para proteger a intenção do projeto até o último frame.": "No separamos la técnica de la idea. Cada etapa existe para proteger la intención del proyecto hasta el último fotograma.", "Tudo começa por uma ideia capaz de sustentar o filme.": "Todo empieza con una idea capaz de sostener la película.", "Planejamos antes de gerar, filmar ou animar.": "Planificamos antes de generar, filmar o animar.", "Cada frame responde a uma escolha de direção.": "Cada fotograma responde a una decisión de dirección.", "O acabamento é o que faz a imagem permanecer.": "El acabado es lo que hace que la imagen perdure.", "A linguagem muda de formato sem perder identidade.": "El lenguaje cambia de formato sin perder identidad.", "Criar só faz sentido quando provoca alguma coisa.": "Crear solo tiene sentido cuando provoca algo.",
+  "Navegação anterior e próximo entre membros": "Navegación anterior y siguiente entre miembros", "De R$ 10 mil a R$ 25 mil": "De R$ 10 mil a R$ 25 mil", "De R$ 25 mil a R$ 50 mil": "De R$ 25 mil a R$ 50 mil", "De R$ 50 mil a R$ 100 mil": "De R$ 50 mil a R$ 100 mil", "O que precisa ser produzido, objetivo, prazo e referências que já existem.": "Qué debe producirse, el objetivo, el plazo y las referencias existentes.", "Ao continuar, seu aplicativo de e-mail abrirá com o briefing preenchido.": "Al continuar, tu aplicación de correo se abrirá con el briefing completo.", "Atendemos projetos em todo o Brasil, com reuniões remotas e produção presencial quando o trabalho pedir.": "Trabajamos en proyectos en todo Brasil, con reuniones remotas y producción presencial cuando el trabajo lo requiera.",
+  "Informe seu nome.": "Escribe tu nombre.", "Informe seu e-mail.": "Escribe tu correo electrónico.", "Digite um e-mail válido.": "Escribe un correo válido.", "Escolha o tipo de projeto.": "Elige el tipo de proyecto.", "Escolha uma faixa de investimento.": "Elige un rango de inversión.", "Conte brevemente o que você precisa produzir.": "Cuéntanos brevemente qué necesitas producir.", "Inclua um pouco mais de contexto (mínimo de 20 caracteres).": "Añade un poco más de contexto (mínimo 20 caracteres).", "Briefing preparado. Seu aplicativo de e-mail será aberto para concluir o envio.": "Briefing preparado. Tu aplicación de correo se abrirá para completar el envío.",
+  "Membro 01": "Miembro 01", "Membro 02": "Miembro 02", "Membro 03": "Miembro 03", "Membro 04": "Miembro 04", "Membro 05": "Miembro 05", "Transforma o briefing em conceito e acompanha a linguagem do projeto do primeiro estudo ao último frame.": "Transforma el briefing en concepto y guía el lenguaje del proyecto desde el primer estudio hasta el último fotograma.", "Organiza equipe, agenda e orçamento para o trabalho avançar com clareza, sem ruído entre criação e entrega.": "Organiza equipo, calendario y presupuesto para que el trabajo avance con claridad, sin fricciones entre creación y entrega.", "Define composição, cor e acabamento para que cada projeto tenha uma linguagem própria e reconhecível.": "Define composición, color y acabado para que cada proyecto tenga un lenguaje propio y reconocible.", "Testa ferramentas e desenha movimentos para resolver cada cena com precisão técnica e intenção visual.": "Prueba herramientas y diseña movimientos para resolver cada escena con precisión técnica e intención visual.", "Encontra o ritmo do filme e cuida da continuidade, do som e da finalização antes de cada entrega.": "Encuentra el ritmo de la película y cuida la continuidad, el sonido y la finalización antes de cada entrega.",
+  "Conceito": "Concepto", "Direção": "Dirección", "Narrativa": "Narrativa", "Processo": "Proceso", "Operação": "Operación", "Visual": "Visual", "Design": "Diseño", "Imagem": "Imagen", "Pesquisa": "Investigación", "Montagem": "Montaje", "Finalização": "Finalización", "Som": "Sonido",
+  "Conteúdo always-on": "Contenido always-on",
+  "Atua na direção criativa dos projetos, conectando estratégia, roteiro e linguagem visual. Na página definitiva, este espaço recebe a trajetória, o repertório e a forma de trabalhar de cada integrante.": "Trabaja en la dirección creativa de los proyectos, conectando estrategia, guion y lenguaje visual. En la página definitiva, este espacio presentará la trayectoria, las referencias y la forma de trabajar de cada integrante.", "Conduz o trabalho entre briefing e entrega, alinhando equipe, cronograma e recursos. Este perfil está preparado para receber uma apresentação pessoal mais completa quando o conteúdo final estiver disponível.": "Conduce el trabajo entre el briefing y la entrega, alineando equipo, calendario y recursos. Este perfil está preparado para recibir una presentación personal más completa cuando esté disponible el contenido final.", "Desenvolve a direção de arte do conceito ao acabamento, traduzindo referências em composição, cor e textura. A seleção abaixo reúne os trabalhos associados a essa frente dentro do estúdio.": "Desarrolla la dirección de arte desde el concepto hasta el acabado, traduciendo referencias en composición, color y textura. La selección reúne los trabajos vinculados a esta área dentro del estudio.", "Pesquisa ferramentas, desenvolve movimento e transforma estudos em cenas prontas para produção. O foco está em usar tecnologia com controle visual, ritmo e coerência entre os frames.": "Investiga herramientas, desarrolla movimiento y convierte estudios en escenas listas para producción. El foco está en usar la tecnología con control visual, ritmo y coherencia entre fotogramas.", "Cuida da montagem e da finalização, encontrando o ritmo de cada filme e garantindo continuidade entre imagem e som. Os projetos abaixo mostram essa participação dentro da Cria Frames.": "Se ocupa del montaje y la finalización, encontrando el ritmo de cada película y garantizando la continuidad entre imagen y sonido. Los proyectos muestran esta participación dentro de Cria Frames.",
+  "Ver projetos de Membro 01": "Ver proyectos del miembro 01", "Ver projetos de Membro 02": "Ver proyectos del miembro 02", "Ver projetos de Membro 03": "Ver proyectos del miembro 03", "Ver projetos de Membro 04": "Ver proyectos del miembro 04", "Ver projetos de Membro 05": "Ver proyectos del miembro 05",
+  "Pré-produção · Suporte e TI": "Preproducción · Soporte y TI", "Comercial e administração financeira": "Comercial y administración financiera", "Linguagem visual": "Lenguaje visual", "Planejamento": "Planificación", "Suporte": "Soporte", "TI": "TI", "Comercial": "Comercial", "Relacionamento": "Relación con clientes", "Financeiro": "Finanzas",
+  "Transforma briefings em conceitos fortes e conduz a linguagem criativa dos projetos do primeiro rascunho ao último frame.": "Convierte briefings en conceptos sólidos y dirige el lenguaje creativo de cada proyecto desde el primer boceto hasta el último fotograma.", "João Victor Duarte atua na direção criativa da Cria Frames. Conecta estratégia, roteiro e linguagem visual para transformar cada briefing em uma ideia clara, acompanhando as decisões criativas do conceito ao acabamento final.": "João Victor Duarte trabaja en la dirección creativa de Cria Frames. Conecta estrategia, guion y lenguaje visual para convertir cada briefing en una idea clara, acompañando las decisiones creativas desde el concepto hasta el acabado final.",
+  "Desenvolve conceitos e narrativas visuais, alinhando intenção, estética e consistência em cada etapa da produção.": "Desarrolla conceptos y narrativas visuales, alineando intención, estética y consistencia en cada etapa de la producción.", "Amanda Bueno Santos integra a direção criativa da Cria Frames. Atua na construção de conceitos, narrativas e referências visuais, garantindo que cada escolha responda ao objetivo do projeto e preserve sua identidade até a entrega.": "Amanda Bueno Santos forma parte de la dirección creativa de Cria Frames. Desarrolla conceptos, narrativas y referencias visuales, asegurando que cada decisión responda al objetivo del proyecto y preserve su identidad hasta la entrega.",
+  "Prepara o terreno de cada produção, organizando pesquisa, referências e necessidades antes das câmeras e dos frames entrarem em cena.": "Prepara el terreno de cada producción, organizando investigación, referencias y necesidades antes de que entren en escena las cámaras y los fotogramas.", "Luan Othávio faz parte da pré-produção da Cria Frames. Organiza pesquisa, referências, materiais e necessidades de execução para que a equipe chegue à produção com decisões claras e um caminho viável.": "Luan Othávio forma parte de la preproducción de Cria Frames. Organiza investigación, referencias, materiales y necesidades de ejecución para que el equipo llegue a producción con decisiones claras y un camino viable.",
+  "Conecta pré-produção e tecnologia, organizando recursos, antecipando gargalos e dando suporte para o fluxo criativo avançar sem ruído.": "Conecta preproducción y tecnología, organiza recursos, anticipa obstáculos y da soporte para que el flujo creativo avance sin fricciones.", "Julia Pinheiro atua na pré-produção e também responde pelas frentes de suporte e TI da Cria Frames. Prepara recursos, organiza ferramentas e resolve os pontos técnicos que mantêm a equipe conectada e o processo funcionando com estabilidade.": "Julia Pinheiro trabaja en preproducción y también está a cargo de soporte y TI en Cria Frames. Prepara recursos, organiza herramientas y resuelve los aspectos técnicos que mantienen al equipo conectado y el proceso funcionando con estabilidad.",
+  "Conduz o relacionamento comercial e organiza a frente financeira, aproximando cada oportunidade da estrutura necessária para acontecer.": "Gestiona las relaciones comerciales y organiza el área financiera, acercando cada oportunidad a la estructura necesaria para hacerla realidad.", "Gabriela Duarte é representante comercial e administradora financeira da Cria Frames. Faz a ponte entre clientes e equipe, acompanha oportunidades e cuida da organização financeira para que cada projeto avance com clareza, responsabilidade e boas condições de execução.": "Gabriela Duarte es representante comercial y administradora financiera de Cria Frames. Conecta a clientes y equipo, acompaña oportunidades y cuida la organización financiera para que cada proyecto avance con claridad, responsabilidad y buenas condiciones de ejecución.",
+  "Um manifesto visual sobre o que acontece quando a inteligência artificial deixa de operar no acaso e passa a responder a uma direção.": "Un manifiesto visual sobre lo que ocurre cuando la inteligencia artificial deja de operar al azar y comienza a responder a una dirección.", "Um manifesto visual sobre o que acontece quando a inteligência artificial deixa de operar no acaso e passa a responder a uma direção. Conceito, decupagem, enquadramento e ritmo conduzem cada cena para transformar geração em linguagem.": "Un manifiesto visual sobre lo que ocurre cuando la inteligencia artificial deja de operar al azar y comienza a responder a una dirección. Concepto, desglose de planos, encuadre y ritmo guían cada escena para convertir la generación en lenguaje.",
+  "Um recorte das narrativas, personagens e mundos que a Cria Frames construiu com IA, cinema e direção cena a cena.": "Una selección de las narrativas, personajes y mundos que Cria Frames ha construido con IA, cine y dirección escena por escena.", "Esse é o primeiro estúdio audiovisual de inteligência artificial do Centro-Oeste brasileiro. Aqui você vê um recorte do que construímos até agora — narrativas, personagens e mundos criados inteiramente com IA, desde o roteiro até a finalização. Cada projeto nasce de um método próprio: pré-produção real, decupagem, referência visual e direção cena a cena — não geração aleatória. A CRIA existe para provar que cinema e publicidade de qualidade não precisam de milhões de reais nem de um estúdio de Hollywood para nascer. Precisam de método, visão e as ferramentas certas. De Goiânia para o mundo.": "Este es el primer estudio audiovisual de inteligencia artificial del Centro-Oeste de Brasil. Aquí puedes ver una selección de lo que hemos construido hasta ahora: narrativas, personajes y mundos creados íntegramente con IA, desde el guion hasta la finalización. Cada proyecto nace de un método propio: preproducción real, desglose de planos, referencias visuales y dirección escena por escena, no generación aleatoria. CRIA existe para demostrar que el cine y la publicidad de calidad no necesitan millones de reales ni un estudio de Hollywood para nacer. Necesitan método, visión y las herramientas adecuadas. De Goiânia para el mundo.",
+  "Nosso primeiro curta construído do zero, realizado quando a Cria ainda estava em fase de desenvolvimento.": "Nuestro primer cortometraje construido desde cero, realizado cuando Cria todavía estaba en desarrollo.", "Nosso primeiro curta construído do zero. O filme foi realizado quando a Cria ainda estava em fase de desenvolvimento e marca o começo do método que hoje orienta nossas produções.": "Nuestro primer cortometraje construido desde cero. Fue realizado cuando Cria todavía estaba en desarrollo y marca el inicio del método que hoy guía nuestras producciones.",
+  "Um dos primeiros curtas que produzimos, ainda na fase de testes da Cria Frames.": "Uno de los primeros cortometrajes que produjimos, cuando Cria Frames todavía estaba en fase de pruebas.", "Um dos primeiros curtas que produzimos, ainda na fase de testes da Cria Frames. O projeto registra um momento de experimentação em que linguagem, ritmo e direção começaram a encontrar a forma do estúdio.": "Uno de los primeros cortometrajes que produjimos, cuando Cria Frames todavía estaba en fase de pruebas. El proyecto registra un momento de experimentación en el que el lenguaje, el ritmo y la dirección comenzaron a dar forma al estudio.",
+};
+
+const fr: TranslationMap = {
+  ...en,
+  "Cria Frames — início": "Cria Frames — accueil", "Serviços": "Services", "Projetos": "Projets", "Sobre": "À propos", "Contato": "Contact", "Falar com o estúdio": "Parler au studio", "Abrir menu": "Ouvrir le menu", "Fechar": "Fermer",
+  "Assistir ao reel completo": "Voir le showreel", "Estúdio de criação com IA": "Studio créatif propulsé par l’IA", "Criamos o impossível": "Nous créons l’impossible", "com IA, cinema e processo": "avec l’IA, le cinéma et le savoir-faire", "Ver portfólio": "Voir le portfolio",
+  "Novo curta · Pré-estreia": "Nouveau court-métrage · Avant-première", "Um filme inteiramente feito com IA.": "Un film entièrement réalisé avec l’IA.", "Um filme": "Un film", "inteiramente feito com IA.": "entièrement réalisé avec l’IA.", "Estreia": "Première", "9 ago 2026": "9 août 2026", "Assistir ao trailer": "Voir la bande-annonce", "Uma produção Cria Frames": "Une production Cria Frames", "Contagem regressiva para a estreia": "Compte à rebours avant la première", "Dias": "Jours", "Horas": "Heures", "Seg": "Sec", "Reproduzir trailer": "Lire la bande-annonce", "Seu navegador não suporta a reprodução deste vídeo.": "Votre navigateur ne permet pas de lire cette vidéo.",
+  "Projetos em destaque": "Projets à la une", "Cliente A": "Client A", "Cliente B": "Client B", "Cliente C": "Client C", "Cliente D": "Client D", "Cliente E": "Client E", "Cliente F": "Client F", "Quem cria com a gente, conta.": "Ceux qui créent avec nous témoignent.", "Feedbacks": "Témoignages", "Feedback": "Témoignage", "Ler mais...": "Lire la suite...", "Ler menos": "Réduire", "Recolher": "Réduire", "Direção de marketing": "Direction marketing", "Produção executiva": "Production exécutive", "Direção criativa": "Direction créative", "Fundador": "Fondateur", "Liderança de conteúdo": "Direction des contenus", "Agência de publicidade": "Agence de publicité", "Criador de conteúdo IA": "Créateur de contenu IA",
+  "Você pensa": "Vous imaginez", "A gente": "Nous", "Conte o que você precisa. Respondemos com uma proposta em até 2 dias úteis.": "Dites-nous ce dont vous avez besoin. Nous vous répondrons avec une proposition sous deux jours ouvrés.", "Pedir orçamento": "Demander un devis", "Estúdio de criação com IA: vídeo, motion e campanhas completas.": "Studio créatif avec IA : vidéo, motion et campagnes complètes.", "Estúdio": "Studio", "Fale conosco": "Nous contacter", "Todos os direitos reservados.": "Tous droits réservés.", "Cria Frames. Todos os direitos reservados.": "Cria Frames. Tous droits réservés.",
+  "Da ideia ao último frame.": "De l’idée au dernier plan.", "Cada projeto pede um arranjo diferente. Escolha o que mais se aproxima da sua necessidade; o escopo se ajusta na conversa.": "Chaque projet demande une configuration différente. Choisissez ce qui correspond le mieux à votre besoin ; nous ajusterons le périmètre ensemble.", "Serviços em detalhe": "Services en détail", "Serviço": "Service", "Vídeo com IA": "Vidéo avec IA", "Criamos narrativas audiovisuais do conceito à finalização. A IA amplia as possibilidades de produção; direção, ritmo e intenção continuam guiando cada escolha.": "Nous créons des récits audiovisuels du concept à la finalisation. L’IA élargit les possibilités de production ; la direction, le rythme et l’intention guident toujours chaque choix.", "Entregas possíveis": "Livrables possibles", "Conceito e roteiro": "Concept et scénario", "Direção de IA": "Direction IA", "Geração de imagem e vídeo": "Génération d’images et de vidéos", "Montagem e finalização": "Montage et finalisation", "Pode virar": "Formats possibles", "Filme de marca": "Film de marque", "Direção de arte": "Direction artistique", "Animação 2D e 3D": "Animation 2D et 3D", "Abertura": "Générique", "Peças para redes": "Contenus pour les réseaux", "Campanha completa": "Campagne complète", "Conceito criativo": "Concept créatif", "Plano de peças": "Plan de contenus", "Produção multiformato": "Production multiformat", "Desdobramentos": "Déclinaisons", "Lançamento": "Lancement", "Campanha institucional": "Campagne institutionnelle", "Consultoria criativa": "Conseil créatif", "Diagnóstico criativo": "Diagnostic créatif", "Workshop com a equipe": "Atelier avec l’équipe", "Prototipagem visual": "Prototypage visuel", "Plano de produção": "Plan de production", "Sprint criativo": "Sprint créatif", "Pesquisa de linguagem": "Recherche visuelle", "Fluxo com IA": "Flux de travail avec IA",
+  "Como funciona": "Comment ça marche", "Do briefing à entrega.": "Du brief à la livraison.", "Um processo visível, com decisões claras e espaço para o projeto evoluir sem perder o rumo.": "Un processus transparent, des décisions claires et la liberté de faire évoluer le projet sans perdre sa direction.", "A gente entende objetivo, público, contexto e o que precisa ser entregue.": "Nous clarifions l’objectif, le public, le contexte et les livrables.", "Produção": "Production", "Conceito aprovado, o projeto entra em roteiro, direção e execução.": "Une fois le concept validé, le projet passe à l’écriture, à la direction et à la production.", "Revisão": "Révision", "Você acompanha os marcos certos e concentra o retorno em rodadas claras.": "Vous suivez les étapes clés et regroupez vos retours en cycles clairs.", "Entrega": "Livraison", "Finalizamos e organizamos os arquivos nos formatos combinados.": "Nous finalisons et organisons les fichiers dans les formats convenus.", "Próximo passo": "Étape suivante", "Conta a ideia. A gente desenha o caminho.": "Parlez-nous de l’idée. Nous tracerons la voie.", "Dúvidas comuns.": "Questions fréquentes.", "Que tipo de projeto vocês produzem?": "Quels types de projets produisez-vous ?", "Preciso chegar com o roteiro pronto?": "Dois-je avoir un scénario finalisé ?", "Como a IA entra no processo?": "Comment l’IA intervient-elle ?", "Quanto tempo leva para produzir?": "Combien de temps dure la production ?", "Vocês trabalham com equipes de outras cidades?": "Travaillez-vous avec des équipes dans d’autres villes ?",
+  "Portfólio": "Portfolio", "Nosso trabalho.": "Notre travail.", "Filmes, campanhas e experimentos feitos pela Cria Frames. Um arquivo para explorar com calma e assistir em tela cheia.": "Films, campagnes et expérimentations signés Cria Frames. Une archive à explorer à votre rythme et à regarder en plein écran.", "projetos no arquivo": "projets dans les archives", "Explorar catálogo": "Explorer le catalogue", "Catálogo de projetos": "Catalogue de projets", "Filtrar por categoria": "Filtrer par catégorie", "Todos": "Tous", "Filme": "Film", "Campanha": "Campagne", "Filtrar por integrante da equipe": "Filtrer par membre de l’équipe", "Toda a equipe": "Toute l’équipe", "Buscar projetos": "Rechercher des projets", "Buscar projeto": "Rechercher un projet", "Arquivo": "Archives", "projeto": "projet", "projetos": "projets", "Projeto": "Projet", "Assistir": "Voir", "Fechar projeto": "Fermer le projet", "Por trás do projeto": "Dans les coulisses", "Navegação entre projetos": "Navigation entre les projets", "Anterior": "Précédent", "Próximo": "Suivant", "Voltar": "Retour",
+  "Equipe do projeto": "Équipe du projet", "Participantes do projeto": "Participants au projet", "Participaram deste projeto": "Ont participé à ce projet", "1 integrante": "1 membre", "Perfil atual": "Profil actuel", "Ver teaser": "Voir le teaser", "Fechar teaser": "Fermer le teaser", "Ver trailer": "Voir la bande-annonce", "Fechar trailer": "Fermer la bande-annonce", "Reprodução inline": "Lecture intégrée", "Seu navegador não oferece suporte à reprodução de vídeo.": "Votre navigateur ne permet pas de lire cette vidéo.",
+  "Quem faz a Cria": "L’équipe derrière Cria", "Criamos o": "Nous créons l’", "impossível": "impossible", "porque dominamos o processo.": "parce que nous maîtrisons le processus.", "Somos direção, produção, arte, motion e pós trabalhando na mesma mesa. A tecnologia entra no processo; o olhar continua sendo nosso.": "Direction, production, art, motion et postproduction travaillent à la même table. La technologie rejoint le processus ; le regard reste le nôtre.", "como método.": "comme méthode.", "Audiovisual": "Audiovisuel", "como linguagem.": "comme langage.", "Criação": "Création", "como resultado.": "comme résultat.", "Nossa história": "Notre histoire", "O caminho também é criação.": "Le chemin fait aussi partie de la création.", "Como pensamos": "Notre approche", "O processo faz parte da criação.": "Le processus fait partie de la création.", "Ideia": "Idée", "Pré-produção": "Préproduction", "Pós-produção": "Postproduction", "Conteúdo": "Contenu", "Impacto": "Impact", "Equipe": "Équipe", "A equipe.": "L’équipe.", "Arraste para explorar": "Faites glisser pour explorer", "Ver membros anteriores": "Voir les membres précédents", "Ver próximos membros": "Voir les membres suivants", "Projetos selecionados": "Projets sélectionnés", "Ver projetos": "Voir les projets", "Redes": "Réseaux", "Links em atualização.": "Liens bientôt disponibles.", "Trabalhos na Cria.": "Projets chez Cria.", "Próximo projeto": "Prochain projet", "Tem uma ideia?": "Vous avez une idée ?", "Traz pra mesa.": "Apportez-la à la table.", "Conta o que você quer colocar no mundo. A conversa começa por aí.": "Dites-nous ce que vous voulez mettre au monde. La conversation commence ici.",
+  "Contato · Orçamento": "Contact · Devis", "Seu próximo projeto": "Votre prochain projet", "começa aqui.": "commence ici.", "Conte o que você precisa produzir. A gente organiza o caminho e responde com os próximos passos para tirar a ideia do papel.": "Dites-nous ce que vous souhaitez produire. Nous organisons le parcours et vous répondons avec les prochaines étapes pour donner vie à l’idée.", "Pode chegar com": "Vous pouvez venir avec", "Uma ideia, um roteiro, referências ou um briefing completo.": "Une idée, un scénario, des références ou un brief complet.", "Se ainda houver perguntas, tudo bem. A primeira conversa serve justamente para organizar o projeto.": "Il est normal d’avoir encore des questions. Le premier échange sert justement à structurer le projet.", "Briefing sem compromisso": "Brief sans engagement", "Escopo pensado para o projeto": "Périmètre adapté au projet", "Resposta em até 2 dias úteis": "Réponse sous deux jours ouvrés", "Pedido de orçamento": "Demande de devis", "Vamos entender o projeto.": "Comprenons votre projet.", "Preencha o essencial. Quanto mais contexto você compartilhar, mais objetiva será a primeira resposta.": "Indiquez l’essentiel. Plus vous partagez de contexte, plus notre première réponse sera précise.", "Nome": "Nom", "Empresa": "Entreprise", "opcional": "facultatif", "Tipo de projeto": "Type de projet", "Selecione uma opção": "Sélectionnez une option", "Filme de marca ou campanha": "Film de marque ou campagne", "Conteúdo para redes sociais": "Contenu pour les réseaux sociaux", "Projeto audiovisual com IA": "Projet audiovisuel avec IA", "Outro formato": "Autre format", "Investimento estimado": "Budget estimé", "Selecione uma faixa": "Sélectionnez une tranche", "Até R$ 10 mil": "Jusqu’à 10 000 R$", "Acima de R$ 100 mil": "Plus de 100 000 R$", "Ainda não definido": "Pas encore défini", "Conte sobre o projeto": "Parlez-nous du projet", "Não precisa chegar com tudo definido. O essencial já inicia a conversa.": "Vous n’avez pas besoin d’avoir tout défini. L’essentiel suffit pour commencer.", "Solicitar orçamento": "Demander un devis", "Informações de contato": "Coordonnées", "Fale direto": "Contact direct", "Prefere começar pelo e-mail?": "Vous préférez commencer par e-mail ?", "Prazo de resposta": "Délai de réponse", "Até 2 dias úteis": "Sous deux jours ouvrés", "O que acontece depois": "La suite", "Entendemos a necessidade": "Nous comprenons votre besoin", "Alinhamos formato, prazo e investimento": "Nous alignons le format, le calendrier et le budget", "Você recebe uma proposta clara": "Vous recevez une proposition claire",
+  "Trailer do curta sobre Ronaldo Caiado": "Bande-annonce du court-métrage sur Ronaldo Caiado", "Assistir ao projeto Aurora": "Voir le projet Aurora", "Assistir ao projeto Sinal": "Voir le projet Sinal", "Assistir ao projeto Origem": "Voir le projet Origem", "Assistir ao projeto Pulso": "Voir le projet Pulso",
+  "Uma série de motion criada para apresentar uma nova linguagem de marca nas redes sociais. O projeto combinou direção de arte, geração de imagens e acabamento cinematográfico em um fluxo de produção inteiramente interno.": "Une série en motion design créée pour présenter un nouveau langage de marque sur les réseaux sociaux. Le projet associe direction artistique, génération d’images et finition cinématographique dans un flux de production entièrement interne.",
+  "Um filme de linguagem documental que explora memória, presença e transformação. A construção passou por roteiro, pesquisa visual, direção de personagens sintéticos e desenho de som original.": "Un film au langage documentaire qui explore la mémoire, la présence et la transformation. Sa création a réuni scénario, recherche visuelle, direction de personnages synthétiques et design sonore original.",
+  "Uma campanha integrada desenvolvida do conceito à entrega final. A mesma ideia central foi desdobrada em filme principal, cortes verticais e peças de motion sem perder unidade visual.": "Une campagne intégrée développée du concept à la livraison finale. L’idée centrale se décline en film principal, formats verticaux et contenus en motion design sans perdre son unité visuelle.",
+  "Um lançamento de produto construído em ritmo acelerado, com apenas 48 horas entre briefing e entrega. A peça usa montagem, luz e movimento para transformar velocidade de produção em linguagem criativa.": "Un lancement de produit mené à un rythme soutenu, avec seulement 48 heures entre le brief et la livraison. Le montage, la lumière et le mouvement transforment la vitesse de production en langage créatif.",
+  "“A Cria Frames entendeu a ideia desde o primeiro encontro e transformou um briefing complexo em uma narrativa clara, bonita e pronta para gerar resultado.”": "« Cria Frames a compris l’idée dès notre première rencontre et a transformé un brief complexe en un récit clair, beau et conçu pour produire des résultats. »",
+  "“O que mais impressionou foi a combinação entre velocidade e cuidado. Tivemos acompanhamento durante todo o processo, decisões bem explicadas e uma entrega que manteve a personalidade da marca. Mesmo com um prazo curto e várias frentes acontecendo ao mesmo tempo, o projeto chegou consistente do roteiro à finalização.”": "« Ce qui nous a le plus impressionnés, c’est l’équilibre entre rapidité et attention. Nous avons été accompagnés tout au long du processus, chaque décision était claire et le résultat a préservé la personnalité de la marque. Malgré un délai court et plusieurs chantiers simultanés, le projet est resté cohérent du scénario à la finition. »",
+  "“A equipe trouxe soluções que a gente ainda não tinha imaginado e soube usar IA sem deixar o trabalho com aparência genérica. O resultado ficou realmente nosso.”": "« L’équipe a proposé des solutions auxquelles nous n’avions pas encore pensé et a su utiliser l’IA sans donner au travail un aspect générique. Le résultat nous ressemble vraiment. »",
+  "“Do primeiro frame ao último, houve intenção. A Cria conseguiu equilibrar experimentação, linguagem de marca e acabamento com uma fluidez rara no processo criativo.”": "« Du premier au dernier plan, chaque choix avait une intention. Cria a équilibré expérimentation, langage de marque et finition avec une fluidité rare dans le processus créatif. »",
+  "“Chegamos com uma referência abstrata e saímos com uma peça que comunica exatamente o que queríamos. O processo foi próximo, rápido e muito bem conduzido.”": "« Nous sommes arrivés avec une référence abstraite et repartis avec une pièce qui exprime exactement ce que nous voulions. Le processus a été proche, rapide et parfaitement mené. »",
+  "“Além da qualidade visual, a parceria trouxe segurança para experimentar. Cada ajuste tinha propósito e o time sempre apresentava uma alternativa melhor, sem perder tempo nem descaracterizar a campanha. Foi uma construção colaborativa de verdade, com transparência em todas as etapas e um resultado acima do que imaginávamos no início.”": "« Au-delà de la qualité visuelle, cette collaboration nous a donné la confiance nécessaire pour expérimenter. Chaque ajustement avait un but et l’équipe proposait toujours une meilleure option sans perdre de temps ni dénaturer la campagne. La construction a été réellement collaborative et transparente à chaque étape, pour un résultat supérieur à nos attentes. »",
+  "Transformamos identidade, informação e conceito em movimento. O projeto pode nascer como uma peça única ou como um sistema preparado para diferentes formatos.": "Nous transformons identité, information et concept en mouvement. Le projet peut naître comme une pièce unique ou comme un système conçu pour différents formats.", "Pensamos a campanha como um conjunto, não como uma soma de entregas. Conceito, produção e desdobramentos avançam juntos para manter consistência em todos os pontos de contato.": "Nous pensons la campagne comme un ensemble, pas comme une addition de livrables. Concept, production et déclinaisons avancent ensemble pour préserver la cohérence à chaque point de contact.", "Entramos antes da produção para organizar linguagem, ferramentas e fluxo. É uma forma direta de testar caminhos e tomar decisões com mais clareza.": "Nous intervenons avant la production pour structurer le langage, les outils et le flux de travail. C’est une manière directe de tester des pistes et de décider avec davantage de clarté.",
+  "Filmes de marca, campanhas, conteúdos para redes, motion design e projetos especiais. O formato nasce do objetivo — não de um pacote fechado.": "Films de marque, campagnes, contenus pour les réseaux, motion design et projets spéciaux. Le format naît de l’objectif, pas d’une offre figée.", "Não. Podemos entrar desde a ideia e construir conceito, roteiro e linguagem com você. Se já existe um roteiro, partimos dele e organizamos a produção.": "Non. Nous pouvons intervenir dès l’idée et construire avec vous le concept, le scénario et le langage. Si un scénario existe déjà, nous partons de cette base et organisons la production.", "Ela pode apoiar pesquisa, prototipagem, geração de imagens, movimento e acabamento. Usamos apenas onde melhora a solução; a direção criativa continua conduzindo tudo.": "Elle peut soutenir la recherche, le prototypage, la génération d’images, le mouvement et la finition. Nous l’utilisons uniquement lorsqu’elle améliore la solution ; la direction créative reste aux commandes.", "Depende do escopo, da quantidade de peças e das aprovações. Depois do briefing, enviamos um cronograma com etapas e datas claras antes de começar.": "Cela dépend du périmètre, du nombre de livrables et des validations. Après le brief, nous envoyons un calendrier avec des étapes et des dates claires avant de commencer.", "Sim. Briefing, acompanhamento e aprovações podem acontecer de forma remota, com produção presencial organizada quando o projeto pedir.": "Oui. Le brief, le suivi et les validations peuvent se faire à distance, avec une production sur place lorsque le projet le demande.",
+  "A Cria não nasceu pronta. Ela foi tomando forma conforme o processo ficou mais próximo, mais inquieto e mais nosso.": "Cria n’est pas née toute faite. Elle a pris forme à mesure que le processus devenait plus proche, plus audacieux et plus personnel.", "A inquietação": "L’élan", "Antes da Cria.": "Avant Cria.", "Primeiro veio a vontade de produzir imagens com mais liberdade e menos distância entre ideia e execução.": "Il y a d’abord eu l’envie de produire des images avec plus de liberté et moins de distance entre l’idée et l’exécution.", "O encontro": "La rencontre", "Uma mesa só.": "Une seule table.", "Direção, produção, arte, motion e pós passaram a pensar juntas — desde o primeiro rascunho.": "Direction, production, art, motion et postproduction ont commencé à penser ensemble dès la première esquisse.", "O método": "La méthode", "Tecnologia com direção.": "La technologie, dirigée.", "A IA entrou no processo como ferramenta de criação. O repertório, as escolhas e o acabamento continuam humanos.": "L’IA a rejoint le processus comme outil de création. La culture, les choix et la finition restent humains.", "Agora": "Aujourd’hui", "O estúdio": "Le studio", "A Cria, hoje.": "Cria aujourd’hui.", "Um time que reúne linguagens e técnicas para conduzir cada projeto do conceito à tela.": "Une équipe qui réunit langages et techniques pour mener chaque projet du concept à l’écran.",
+  "Não separamos técnica de ideia. Cada etapa existe para proteger a intenção do projeto até o último frame.": "Nous ne séparons pas la technique de l’idée. Chaque étape protège l’intention du projet jusqu’au dernier plan.", "Tudo começa por uma ideia capaz de sustentar o filme.": "Tout commence par une idée assez forte pour porter le film.", "Planejamos antes de gerar, filmar ou animar.": "Nous planifions avant de générer, filmer ou animer.", "Cada frame responde a uma escolha de direção.": "Chaque plan répond à un choix de direction.", "O acabamento é o que faz a imagem permanecer.": "La finition est ce qui fait durer une image.", "A linguagem muda de formato sem perder identidade.": "Le langage change de format sans perdre son identité.", "Criar só faz sentido quando provoca alguma coisa.": "Créer n’a de sens que lorsque cela provoque quelque chose.",
+  "Navegação anterior e próximo entre membros": "Navigation entre les membres précédents et suivants", "De R$ 10 mil a R$ 25 mil": "De 10 000 à 25 000 R$", "De R$ 25 mil a R$ 50 mil": "De 25 000 à 50 000 R$", "De R$ 50 mil a R$ 100 mil": "De 50 000 à 100 000 R$", "O que precisa ser produzido, objetivo, prazo e referências que já existem.": "Ce qui doit être produit, l’objectif, le délai et les références existantes.", "Ao continuar, seu aplicativo de e-mail abrirá com o briefing preenchido.": "En continuant, votre application e-mail s’ouvrira avec le brief complété.", "Atendemos projetos em todo o Brasil, com reuniões remotas e produção presencial quando o trabalho pedir.": "Nous travaillons sur des projets dans tout le Brésil, avec des réunions à distance et une production sur place lorsque le travail l’exige.",
+  "Informe seu nome.": "Indiquez votre nom.", "Informe seu e-mail.": "Indiquez votre adresse e-mail.", "Digite um e-mail válido.": "Saisissez une adresse e-mail valide.", "Escolha o tipo de projeto.": "Choisissez le type de projet.", "Escolha uma faixa de investimento.": "Choisissez une tranche de budget.", "Conte brevemente o que você precisa produzir.": "Décrivez brièvement ce que vous souhaitez produire.", "Inclua um pouco mais de contexto (mínimo de 20 caracteres).": "Ajoutez un peu plus de contexte (20 caractères minimum).", "Briefing preparado. Seu aplicativo de e-mail será aberto para concluir o envio.": "Brief prêt. Votre application e-mail va s’ouvrir pour finaliser l’envoi.",
+  "Membro 01": "Membre 01", "Membro 02": "Membre 02", "Membro 03": "Membre 03", "Membro 04": "Membre 04", "Membro 05": "Membre 05", "Transforma o briefing em conceito e acompanha a linguagem do projeto do primeiro estudo ao último frame.": "Transforme le brief en concept et guide le langage du projet de la première étude au dernier plan.", "Organiza equipe, agenda e orçamento para o trabalho avançar com clareza, sem ruído entre criação e entrega.": "Organise l’équipe, le calendrier et le budget pour faire avancer le travail clairement, sans friction entre création et livraison.", "Define composição, cor e acabamento para que cada projeto tenha uma linguagem própria e reconhecível.": "Définit la composition, la couleur et la finition afin que chaque projet possède un langage distinctif et reconnaissable.", "Testa ferramentas e desenha movimentos para resolver cada cena com precisão técnica e intenção visual.": "Teste les outils et conçoit le mouvement pour résoudre chaque scène avec précision technique et intention visuelle.", "Encontra o ritmo do filme e cuida da continuidade, do som e da finalização antes de cada entrega.": "Trouve le rythme du film et veille à la continuité, au son et à la finition avant chaque livraison.",
+  "Conceito": "Concept", "Direção": "Direction", "Narrativa": "Narration", "Processo": "Processus", "Operação": "Opérations", "Visual": "Visuel", "Design": "Design", "Imagem": "Image", "Pesquisa": "Recherche", "Montagem": "Montage", "Finalização": "Finalisation", "Som": "Son",
+  "Conteúdo always-on": "Contenu always-on",
+  "Atua na direção criativa dos projetos, conectando estratégia, roteiro e linguagem visual. Na página definitiva, este espaço recebe a trajetória, o repertório e a forma de trabalhar de cada integrante.": "Assure la direction créative des projets en reliant stratégie, scénario et langage visuel. Dans la page finale, cet espace présentera le parcours, les références et la manière de travailler de chaque membre.", "Conduz o trabalho entre briefing e entrega, alinhando equipe, cronograma e recursos. Este perfil está preparado para receber uma apresentação pessoal mais completa quando o conteúdo final estiver disponível.": "Pilote le travail du brief à la livraison en alignant l’équipe, le calendrier et les ressources. Ce profil est prêt à accueillir une présentation personnelle plus complète lorsque le contenu final sera disponible.", "Desenvolve a direção de arte do conceito ao acabamento, traduzindo referências em composição, cor e textura. A seleção abaixo reúne os trabalhos associados a essa frente dentro do estúdio.": "Développe la direction artistique du concept à la finition, en traduisant les références en composition, couleur et texture. La sélection ci-dessous rassemble les travaux liés à ce rôle au sein du studio.", "Pesquisa ferramentas, desenvolve movimento e transforma estudos em cenas prontas para produção. O foco está em usar tecnologia com controle visual, ritmo e coerência entre os frames.": "Explore les outils, développe le mouvement et transforme les études en scènes prêtes pour la production. L’objectif est d’utiliser la technologie avec contrôle visuel, rythme et cohérence entre les plans.", "Cuida da montagem e da finalização, encontrando o ritmo de cada filme e garantindo continuidade entre imagem e som. Os projetos abaixo mostram essa participação dentro da Cria Frames.": "Prend en charge le montage et la finition, trouve le rythme de chaque film et garantit la continuité entre l’image et le son. Les projets ci-dessous illustrent cette contribution chez Cria Frames.",
+  "Ver projetos de Membro 01": "Voir les projets du membre 01", "Ver projetos de Membro 02": "Voir les projets du membre 02", "Ver projetos de Membro 03": "Voir les projets du membre 03", "Ver projetos de Membro 04": "Voir les projets du membre 04", "Ver projetos de Membro 05": "Voir les projets du membre 05",
+  "Pré-produção · Suporte e TI": "Préproduction · Support et informatique", "Comercial e administração financeira": "Commercial et gestion financière", "Linguagem visual": "Langage visuel", "Planejamento": "Planification", "Suporte": "Support", "TI": "Informatique", "Comercial": "Commercial", "Relacionamento": "Relations clients", "Financeiro": "Finance",
+  "Transforma briefings em conceitos fortes e conduz a linguagem criativa dos projetos do primeiro rascunho ao último frame.": "Transforme les briefs en concepts forts et guide le langage créatif de chaque projet, de la première esquisse au dernier plan.", "João Victor Duarte atua na direção criativa da Cria Frames. Conecta estratégia, roteiro e linguagem visual para transformar cada briefing em uma ideia clara, acompanhando as decisões criativas do conceito ao acabamento final.": "João Victor Duarte assure la direction créative chez Cria Frames. Il relie stratégie, scénario et langage visuel pour transformer chaque brief en une idée claire, en accompagnant les décisions créatives du concept à la finition.",
+  "Desenvolve conceitos e narrativas visuais, alinhando intenção, estética e consistência em cada etapa da produção.": "Développe des concepts et des récits visuels en alignant intention, esthétique et cohérence à chaque étape de la production.", "Amanda Bueno Santos integra a direção criativa da Cria Frames. Atua na construção de conceitos, narrativas e referências visuais, garantindo que cada escolha responda ao objetivo do projeto e preserve sua identidade até a entrega.": "Amanda Bueno Santos fait partie de la direction créative de Cria Frames. Elle construit concepts, récits et références visuelles, en veillant à ce que chaque choix serve l’objectif du projet et préserve son identité jusqu’à la livraison.",
+  "Prepara o terreno de cada produção, organizando pesquisa, referências e necessidades antes das câmeras e dos frames entrarem em cena.": "Prépare chaque production en organisant la recherche, les références et les besoins avant l’entrée en scène des caméras et des images.", "Luan Othávio faz parte da pré-produção da Cria Frames. Organiza pesquisa, referências, materiais e necessidades de execução para que a equipe chegue à produção com decisões claras e um caminho viável.": "Luan Othávio fait partie de la préproduction de Cria Frames. Il organise la recherche, les références, les éléments et les besoins d’exécution afin que l’équipe aborde la production avec des décisions claires et une voie réalisable.",
+  "Conecta pré-produção e tecnologia, organizando recursos, antecipando gargalos e dando suporte para o fluxo criativo avançar sem ruído.": "Relie préproduction et technologie, organise les ressources, anticipe les blocages et soutient un flux créatif fluide.", "Julia Pinheiro atua na pré-produção e também responde pelas frentes de suporte e TI da Cria Frames. Prepara recursos, organiza ferramentas e resolve os pontos técnicos que mantêm a equipe conectada e o processo funcionando com estabilidade.": "Julia Pinheiro travaille en préproduction et prend également en charge le support et l’informatique chez Cria Frames. Elle prépare les ressources, organise les outils et résout les besoins techniques qui maintiennent l’équipe connectée et le processus stable.",
+  "Conduz o relacionamento comercial e organiza a frente financeira, aproximando cada oportunidade da estrutura necessária para acontecer.": "Pilote les relations commerciales et organise le volet financier, en reliant chaque opportunité à la structure nécessaire pour la concrétiser.", "Gabriela Duarte é representante comercial e administradora financeira da Cria Frames. Faz a ponte entre clientes e equipe, acompanha oportunidades e cuida da organização financeira para que cada projeto avance com clareza, responsabilidade e boas condições de execução.": "Gabriela Duarte est représentante commerciale et administratrice financière de Cria Frames. Elle fait le lien entre les clients et l’équipe, suit les opportunités et gère l’organisation financière afin que chaque projet avance avec clarté, responsabilité et de bonnes conditions d’exécution.",
+  "Um manifesto visual sobre o que acontece quando a inteligência artificial deixa de operar no acaso e passa a responder a uma direção.": "Un manifeste visuel sur ce qui se produit lorsque l’intelligence artificielle cesse d’opérer au hasard et commence à répondre à une direction.", "Um manifesto visual sobre o que acontece quando a inteligência artificial deixa de operar no acaso e passa a responder a uma direção. Conceito, decupagem, enquadramento e ritmo conduzem cada cena para transformar geração em linguagem.": "Un manifeste visuel sur ce qui se produit lorsque l’intelligence artificielle cesse d’opérer au hasard et commence à répondre à une direction. Concept, découpage, cadrage et rythme guident chaque scène pour transformer la génération en langage.",
+  "Um recorte das narrativas, personagens e mundos que a Cria Frames construiu com IA, cinema e direção cena a cena.": "Une sélection des récits, personnages et mondes que Cria Frames a construits avec l’IA, le cinéma et une direction plan par plan.", "Esse é o primeiro estúdio audiovisual de inteligência artificial do Centro-Oeste brasileiro. Aqui você vê um recorte do que construímos até agora — narrativas, personagens e mundos criados inteiramente com IA, desde o roteiro até a finalização. Cada projeto nasce de um método próprio: pré-produção real, decupagem, referência visual e direção cena a cena — não geração aleatória. A CRIA existe para provar que cinema e publicidade de qualidade não precisam de milhões de reais nem de um estúdio de Hollywood para nascer. Precisam de método, visão e as ferramentas certas. De Goiânia para o mundo.": "Voici le premier studio audiovisuel d’intelligence artificielle du Centre-Ouest brésilien. Vous découvrez ici une sélection de ce que nous avons construit jusqu’à présent : récits, personnages et mondes créés entièrement avec l’IA, du scénario à la finition. Chaque projet suit une méthode propre : véritable préproduction, découpage, références visuelles et direction plan par plan, jamais de génération aléatoire. CRIA existe pour prouver qu’un cinéma et une publicité de qualité n’ont pas besoin de millions de reais ni d’un studio hollywoodien pour naître. Ils ont besoin de méthode, de vision et des bons outils. De Goiânia au monde.",
+  "Nosso primeiro curta construído do zero, realizado quando a Cria ainda estava em fase de desenvolvimento.": "Notre premier court-métrage construit de zéro, réalisé alors que Cria était encore en développement.", "Nosso primeiro curta construído do zero. O filme foi realizado quando a Cria ainda estava em fase de desenvolvimento e marca o começo do método que hoje orienta nossas produções.": "Notre premier court-métrage construit de zéro. Réalisé alors que Cria était encore en développement, il marque le début de la méthode qui guide aujourd’hui nos productions.",
+  "Um dos primeiros curtas que produzimos, ainda na fase de testes da Cria Frames.": "L’un des premiers courts-métrages que nous avons produits, alors que Cria Frames était encore en phase de test.", "Um dos primeiros curtas que produzimos, ainda na fase de testes da Cria Frames. O projeto registra um momento de experimentação em que linguagem, ritmo e direção começaram a encontrar a forma do estúdio.": "L’un des premiers courts-métrages que nous avons produits, alors que Cria Frames était encore en phase de test. Le projet témoigne d’une période d’expérimentation où le langage, le rythme et la direction ont commencé à façonner l’identité du studio.",
+};
+
+export const TRANSLATIONS: Record<Locale, TranslationMap> = {
+  "pt-BR": {},
+  en,
+  es,
+  fr,
+};
+
+export function isLocale(value: string | null): value is Locale {
+  return SUPPORTED_LANGUAGES.some((language) => language.locale === value);
+}
+
+export function translateText(value: string, locale: Locale) {
+  if (locale === "pt-BR") return value;
+
+  const normalized = value.replace(/\s+/g, " ").trim();
+  if (!normalized) return value;
+
+  const translated =
+    TRANSLATIONS[locale][normalized] ??
+    TRANSLATIONS[locale][`“${normalized}”`]?.replace(/^“|”$/g, "");
+  if (translated) {
+    const leading = value.match(/^\s*/)?.[0] ?? "";
+    const trailing = value.match(/\s*$/)?.[0] ?? "";
+    return `${leading}${translated}${trailing}`;
+  }
+
+  const projectCount = normalized.match(/^(\d+) projetos no arquivo$/);
+  if (projectCount) {
+    const labels = { en: "projects in the archive", es: "proyectos en el archivo", fr: "projets dans les archives" };
+    return `${projectCount[1]} ${labels[locale]}`;
+  }
+
+  const memberCount = normalized.match(/^(\d+) integrantes$/);
+  if (memberCount) {
+    const labels = { en: "team members", es: "integrantes", fr: "membres" };
+    return `${memberCount[1]} ${labels[locale]}`;
+  }
+
+  const profileLink = normalized.match(/^Ver perfil de (.+)$/);
+  if (profileLink) {
+    const labels = { en: "View profile of", es: "Ver el perfil de", fr: "Voir le profil de" };
+    const translatedName =
+      TRANSLATIONS[locale][profileLink[1]] ?? profileLink[1];
+    return `${labels[locale]} ${translatedName}`;
+  }
+
+  const watchProject = normalized.match(/^Assistir ao projeto (.+)$/);
+  if (watchProject) {
+    const labels = {
+      en: "Watch project",
+      es: "Ver el proyecto",
+      fr: "Voir le projet",
+    };
+    return `${labels[locale]} ${watchProject[1]}`;
+  }
+
+  const projectPlayer = normalized.match(/^Projeto (.+)$/);
+  if (projectPlayer) {
+    const labels = { en: "Project", es: "Proyecto", fr: "Projet" };
+    return `${labels[locale]} ${projectPlayer[1]}`;
+  }
+
+  const memberProjectsLink = normalized.match(/^Ver projetos de (.+)$/);
+  if (memberProjectsLink) {
+    const labels = {
+      en: "View projects by",
+      es: "Ver proyectos de",
+      fr: "Voir les projets de",
+    };
+    return `${labels[locale]} ${memberProjectsLink[1]}`;
+  }
+
+  const portraitLabel = normalized.match(/^Retrato de (.+)$/);
+  if (portraitLabel) {
+    const labels = { en: "Portrait of", es: "Retrato de", fr: "Portrait de" };
+    return `${labels[locale]} ${portraitLabel[1]}`;
+  }
+
+  const projectTeaser = normalized.match(/^(Teaser|Trailer) do projeto (.+)$/);
+  if (projectTeaser) {
+    const labels = {
+      en: projectTeaser[1] === "Trailer" ? "Trailer for project" : "Teaser for project",
+      es: projectTeaser[1] === "Trailer" ? "Tráiler del proyecto" : "Teaser del proyecto",
+      fr: projectTeaser[1] === "Trailer" ? "Bande-annonce du projet" : "Teaser du projet",
+    };
+    return `${labels[locale]} ${projectTeaser[2]}`;
+  }
+
+  const copyright = normalized.match(
+    /^(© \d{4} Cria Frames\.) Todos os direitos reservados\.$/
+  );
+  if (copyright) {
+    const labels = {
+      en: "All rights reserved.",
+      es: "Todos los derechos reservados.",
+      fr: "Tous droits réservés.",
+    };
+    return `${copyright[1]} ${labels[locale]}`;
+  }
+
+  return value;
+}

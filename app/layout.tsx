@@ -2,11 +2,8 @@ import type { Metadata } from "next";
 import { archivo, inter } from "@/lib/fonts";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { LanguageProvider } from "@/components/i18n/language-provider";
 import "./globals.css";
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: "Cria Frames — Estúdio de criação com IA",
@@ -19,11 +16,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={cn(archivo.variable, inter.variable, "font-sans", geist.variable)}>
-      <body className="bg-background text-foreground antialiased">
-        <Header />
-        {children}
-        <Footer />
+    <html lang="pt-BR" className={`${archivo.variable} ${inter.variable}`}>
+      <body
+        suppressHydrationWarning
+        className="bg-background text-foreground antialiased"
+      >
+        <LanguageProvider>
+          <Header />
+          {children}
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

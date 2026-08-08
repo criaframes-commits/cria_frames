@@ -25,7 +25,7 @@ já foi decidido em `/docs`.
   (--blue-300). Validar com `theme-light`/`theme-dark` corretos por seção.
 - **Scroll Holofote é único.** O padrão da Seção 4.6 (1 card iluminado por vez, resto
   escurecido) aparece uma vez no site — na Home. A única exceção documentada é a
-  página do case do curta (evento único, fora da navegação permanente). Não reusar
+  página do projeto do curta (evento único, fora da navegação permanente). Não reusar
   esse padrão em nenhuma outra listagem.
 - **Motion**: durações e easings sempre de `tokens.css` (`--duration-*`, `--ease-out`).
   Sem overshoot/bounce. Todo efeito scroll-linked precisa de fallback em
@@ -46,13 +46,13 @@ já foi decidido em `/docs`.
 4. Home completa, seguindo a ordem do wireframe: Hero → (seção temporária do curta,
    se estiver no período de pré-estreia) → Scroll Holofote → prova social → CTA.
 5. Serviços, Sobre, Contato.
-6. Página do case do curta, com o roteamento condicionado à data de estreia (ver
+6. Página do projeto do curta, com o roteamento condicionado à data de estreia (ver
    nota abaixo).
 7. QA de acessibilidade + performance antes de qualquer deploy pra produção.
 
-## Roteamento condicionado à data (case do curta)
+## Roteamento condicionado à data (projeto do curta)
 
-A rota do case só deve renderizar o conteúdo completo quando `hoje >= dataEstreia`.
+A rota do projeto só deve renderizar o conteúdo completo quando `hoje >= dataEstreia`.
 Antes disso: a rota redireciona pra âncora da seção de contagem regressiva na Home
 (`/#pre-estreia`), e o item some do array de links do nav. Depois da estreia, a
 seção de contagem regressiva e o link "🔒" saem do código — não fica órfão no ar.

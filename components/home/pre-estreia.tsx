@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { BellRing, CalendarDays, Play } from "lucide-react";
+import { Play } from "lucide-react";
 
 /* ============================================================
    SEÇÃO TEMPORÁRIA — PRÉ-ESTREIA DO CURTA
@@ -11,7 +10,7 @@ import { BellRing, CalendarDays, Play } from "lucide-react";
    ============================================================ */
 
 // data/hora da estreia — ajustar aqui (formato ISO, fuso de Brasília)
-export const PREMIERE_DATE = new Date("2026-08-16T20:00:00-03:00");
+export const PREMIERE_DATE = new Date("2026-08-09T12:00:00-03:00");
 
 type TimeLeft = { days: number; hours: number; minutes: number; seconds: number };
 
@@ -28,21 +27,33 @@ function getTimeLeft(): TimeLeft | null {
 
 function Unit({ value, label }: { value: number | null; label: string }) {
   return (
-    <div className="w-[72px] rounded-md border border-border bg-black-950 px-2 py-3 text-center md:w-20">
-      <div className="font-display text-2xl font-black tabular-nums text-foreground md:text-3xl">
+    <div className="min-w-14 rounded-md border border-white/10 bg-black-950/70 px-2 py-2 text-center backdrop-blur-sm md:min-w-16">
+      <div className="font-display text-xl font-black tabular-nums text-foreground md:text-2xl">
         {value === null ? "--" : String(value).padStart(2, "0")}
       </div>
-      <div className="mt-1 text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
+      <div className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
         {label}
       </div>
     </div>
   );
 }
 
+function clamp(value: number, min = 0, max = 1) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function smoothStep(value: number) {
+  const progress = clamp(value);
+  return progress * progress * (3 - 2 * progress);
+}
+
 export function PreEstreia() {
   // null no 1º render evita mismatch de hidratação (server ≠ client)
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const trailerRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -57,105 +68,219 @@ export function PreEstreia() {
     };
   }, []);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    const panel = panelRef.current;
+    if (!section || !panel) return;
+
+    const elements = Array.from(
+      section.querySelectorAll<HTMLElement>("[data-curta-reveal]")
+    );
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let animationFrame = 0;
+    let currentProgress = 0;
+    let targetProgress = 0;
+
+    const readProgress = () => {
+      const rect = section.getBoundingClientRect();
+      const travel = Math.max(window.innerHeight * 1.02, 1);
+      return reducedMotion.matches
+        ? 1
+        : clamp((window.innerHeight - rect.top) / travel);
+    };
+
+    const paint = (sectionProgress: number) => {
+      const panelProgress = smoothStep(clamp(sectionProgress / 0.94));
+      const panelRemaining = 1 - panelProgress;
+      panel.style.transform = `translate3d(0, ${panelRemaining * 140}px, 0) scale(${0.988 + panelProgress * 0.012})`;
+
+      elements.forEach((element) => {
+        const start = Number(element.dataset.start ?? 0);
+        const end = Number(element.dataset.end ?? 1);
+        const localProgress = smoothStep(
+          (sectionProgress - start) / Math.max(end - start, 0.01)
+        );
+        const remaining = 1 - localProgress;
+        const x = Number(element.dataset.x ?? 0) * remaining;
+        const y = Number(element.dataset.y ?? 90) * remaining;
+        const rotate = Number(element.dataset.rotate ?? 0) * remaining;
+        const scaleFrom = Number(element.dataset.scale ?? 0.96);
+        const scale = scaleFrom + (1 - scaleFrom) * localProgress;
+
+        element.style.opacity = String(localProgress);
+        element.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rotate}deg) scale(${scale})`;
+      });
+    };
+
+    const render = () => {
+      const distance = targetProgress - currentProgress;
+      currentProgress += distance * (reducedMotion.matches ? 1 : 0.13);
+      paint(currentProgress);
+
+      if (Math.abs(distance) > 0.0005) {
+        animationFrame = requestAnimationFrame(render);
+      } else {
+        currentProgress = targetProgress;
+        paint(currentProgress);
+        animationFrame = 0;
+      }
+    };
+
+    const requestUpdate = () => {
+      targetProgress = readProgress();
+      if (!animationFrame) animationFrame = requestAnimationFrame(render);
+    };
+
+    targetProgress = readProgress();
+    currentProgress = targetProgress;
+    paint(currentProgress);
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    reducedMotion.addEventListener("change", requestUpdate);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      reducedMotion.removeEventListener("change", requestUpdate);
+    };
+  }, []);
+
   // já estreou → seção some sozinha
   if (mounted && !timeLeft) return null;
 
   const playTrailer = () => {
-    trailerRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    void trailerRef.current?.play();
+    const trailer = trailerRef.current;
+    if (!trailer) return;
+    trailer.scrollIntoView({ behavior: "smooth", block: "center" });
+    trailer.controls = true;
+    void trailer.play();
   };
 
   return (
     <section
+      ref={sectionRef}
       id="pre-estreia"
       aria-labelledby="titulo-curta-caiado"
-      className="relative isolate overflow-hidden border-y border-border bg-black-900 scroll-mt-24"
+      className="relative z-20 -mt-[clamp(3.5rem,8vw,6rem)] min-h-[calc(100svh-var(--site-header-height))] scroll-mt-[var(--site-header-height)]"
     >
       <div
-        aria-hidden
-        className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-blue-500/15 blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="absolute -bottom-32 right-0 h-[28rem] w-[28rem] rounded-full bg-blue-700/10 blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-10 -z-10 -translate-x-1/2 whitespace-nowrap font-display text-[clamp(5rem,17vw,15rem)] font-black uppercase leading-none tracking-[-0.06em] text-white/[0.025]"
+        ref={panelRef}
+        className="relative isolate flex min-h-[calc(100svh-var(--site-header-height))] origin-top items-center overflow-hidden rounded-t-[clamp(1.5rem,3vw,2.75rem)] border-t border-white/10 bg-black-900 shadow-[0_-28px_80px_rgba(0,0,0,0.48)] will-change-transform"
       >
-        Caiado
-      </div>
-      <div
-        aria-hidden
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"
-      />
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_14%_20%,rgba(61,110,255,0.2),transparent_34%),radial-gradient(circle_at_88%_75%,rgba(0,68,189,0.18),transparent_38%)]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-black-950/70 to-transparent"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"
+        />
 
-      <div className="relative mx-auto max-w-container px-4 py-20 md:px-6 md:py-28 lg:py-32">
-        <div className="grid items-center gap-12 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16">
-          <div>
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-flex min-h-8 items-center gap-2 rounded-pill border border-blue-500/30 bg-blue-500/10 px-4 font-body text-[11px] font-semibold uppercase tracking-[0.16em] text-accent-text">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                Pré-estreia
-              </span>
-              <span className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground">
-                <CalendarDays className="h-4 w-4 text-accent-text" aria-hidden />
-                16 ago 2026 · 20h
-              </span>
+        <div className="relative mx-auto w-full max-w-container px-4 py-14 md:px-6 md:py-16 lg:py-8">
+        <div className="grid items-center gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:gap-12 xl:gap-16">
+          <div className="relative z-10">
+            <div
+              data-curta-reveal
+              data-start="0.02"
+              data-end="0.56"
+              data-x="-34"
+              data-y="92"
+              data-rotate="-4"
+              className="flex items-center gap-3 will-change-transform"
+            >
+              <span className="h-2 w-2 rounded-full bg-blue-500 shadow-[0_0_18px_rgba(61,110,255,0.95)]" />
+              <p className="font-body text-[11px] font-semibold uppercase tracking-[0.2em] text-accent-text md:text-xs">
+                Novo curta · Pré-estreia
+              </p>
             </div>
 
-            <p className="mt-8 font-body text-caption font-semibold uppercase tracking-[0.18em] text-accent-text">
-              Cria Frames apresenta
-            </p>
             <h2
               id="titulo-curta-caiado"
-              className="mt-3 font-display text-[clamp(3.4rem,7vw,6.75rem)] font-black uppercase leading-[0.86] tracking-[-0.04em] text-foreground"
+              data-curta-reveal
+              data-start="0.1"
+              data-end="0.68"
+              data-x="26"
+              data-y="118"
+              data-rotate="3.5"
+              data-scale="0.92"
+              className="mt-4 max-w-[9ch] font-display text-[clamp(2.75rem,5.2vw,4.5rem)] font-black uppercase leading-[0.86] tracking-[-0.05em] text-foreground will-change-transform"
             >
               Ronaldo
-              <span className="block text-accent-text">Caiado</span>
+              <span className="block text-blue-300">Caiado</span>
             </h2>
 
-            <p className="mt-7 max-w-[30ch] font-display text-[clamp(1.35rem,2.2vw,2rem)] font-bold uppercase leading-tight text-foreground">
-              Uma trajetória que parte de Goiás e mira o Brasil.
-            </p>
-            <p className="mt-4 max-w-[56ch] leading-relaxed text-muted-foreground">
-              Um curta sobre a história do ex-governador de Goiás e candidato à
-              Presidência da República, criado com inteligência artificial, do
-              roteiro à finalização.
+            <p
+              data-curta-reveal
+              data-start="0.16"
+              data-end="0.76"
+              data-x="-22"
+              data-y="105"
+              data-rotate="-2.4"
+              className="mt-5 max-w-[31ch] border-l-2 border-blue-500 pl-4 font-display text-base font-bold uppercase leading-tight tracking-[-0.01em] text-foreground will-change-transform md:text-lg"
+            >
+              Um filme <span className="text-blue-300">inteiramente feito com IA.</span>
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-2">
-              {["História real", "Goiás", "Brasil", "Produção com IA"].map(
-                (tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-pill border border-border bg-black-950/60 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground"
-                  >
-                    {tag}
-                  </span>
-                )
-              )}
+            <div
+              data-curta-reveal
+              data-start="0.22"
+              data-end="0.84"
+              data-x="34"
+              data-y="96"
+              data-rotate="2.8"
+              className="mt-6 flex max-w-md items-center justify-between gap-5 rounded-md border border-blue-500/30 bg-blue-500/10 px-4 py-3 will-change-transform"
+            >
+              <div>
+                <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-accent-text">
+                  Estreia
+                </p>
+                <p className="mt-0.5 font-display text-lg font-black uppercase tracking-[-0.02em] text-foreground">
+                  9 ago 2026
+                </p>
+              </div>
+              <span className="h-8 w-px bg-blue-500/30" aria-hidden />
+              <p className="font-display text-2xl font-black tabular-nums text-blue-300">
+                12H
+              </p>
             </div>
 
-            <div className="mt-9 flex flex-wrap gap-3">
+            <div
+              data-curta-reveal
+              data-start="0.28"
+              data-end="0.9"
+              data-x="-26"
+              data-y="78"
+              data-rotate="-2"
+              className="mt-5 flex flex-wrap items-center gap-3 will-change-transform"
+            >
               <button
                 type="button"
                 onClick={playTrailer}
-                className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground transition-[transform,background] duration-200 ease-premium hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
+                className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground shadow-[0_14px_40px_rgba(61,110,255,0.28)] transition-[transform,background,box-shadow] duration-300 ease-premium hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 hover:shadow-[0_18px_48px_rgba(61,110,255,0.42)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
               >
                 <Play className="h-4 w-4 fill-current" aria-hidden />
                 Assistir ao trailer
               </button>
-              <Link
-                href="mailto:oi@criaframes.com?subject=Lembrete%20da%20estreia%20do%20curta%20Ronaldo%20Caiado"
-                className="inline-flex min-h-11 items-center gap-2 rounded-pill border border-border px-7 text-sm font-semibold text-foreground transition-colors duration-200 hover:border-blue-500/50 hover:bg-blue-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
-              >
-                <BellRing className="h-4 w-4" aria-hidden />
-                Ativar lembrete
-              </Link>
+              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                Uma produção Cria Frames
+              </span>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div
+              data-curta-reveal
+              data-start="0.34"
+              data-end="0.96"
+              data-x="18"
+              data-y="62"
+              data-rotate="1.5"
+              className="mt-5 flex flex-wrap gap-2 will-change-transform"
+              aria-label="Contagem regressiva para a estreia"
+            >
               <Unit value={timeLeft?.days ?? null} label="Dias" />
               <Unit value={timeLeft?.hours ?? null} label="Horas" />
               <Unit value={timeLeft?.minutes ?? null} label="Min" />
@@ -163,49 +288,54 @@ export function PreEstreia() {
             </div>
           </div>
 
-          <div id="trailer-caiado" className="relative scroll-mt-28">
-            <div className="absolute -inset-4 rounded-lg bg-blue-500/10 blur-2xl" aria-hidden />
-            <div className="relative overflow-hidden rounded-lg border border-blue-500/25 bg-black-950 shadow-2xl">
-              <div className="flex items-center justify-between border-b border-border bg-black-950/90 px-4 py-3">
-                <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-accent-text">
-                  Trailer oficial
-                </span>
-                <span className="text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
-                  Filme original
-                </span>
-              </div>
-
-              <div className="relative aspect-[4/5] overflow-hidden bg-black sm:aspect-video">
-                <div
-                  aria-hidden
-                  className="absolute -inset-8 scale-110 bg-[url('/curta-poster.jpg')] bg-cover bg-center opacity-45 blur-2xl"
-                />
-                <div aria-hidden className="absolute inset-0 bg-black/40" />
-                <video
-                  ref={trailerRef}
-                  controls
-                  playsInline
-                  poster="/curta-poster.jpg"
-                  preload="metadata"
-                  className="relative z-10 h-full w-full object-contain"
-                  aria-label="Trailer do curta sobre Ronaldo Caiado"
+          <div
+            id="trailer-caiado"
+            data-curta-reveal
+            data-start="0.08"
+            data-end="0.9"
+            data-x="46"
+            data-y="170"
+            data-rotate="4.5"
+            data-scale="0.88"
+            className="relative scroll-mt-28 will-change-transform"
+          >
+            <div
+              aria-hidden
+              className="absolute -inset-4 -z-10 rounded-lg bg-blue-500/15 blur-3xl"
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 -z-10 translate-x-3 translate-y-3 rotate-[1.5deg] rounded-lg border border-blue-500/30 bg-blue-900/50"
+            />
+            <div className="relative aspect-video overflow-hidden rounded-lg border border-white/15 bg-black shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
+              {!isTrailerPlaying && (
+                <button
+                  type="button"
+                  onClick={playTrailer}
+                  aria-label="Reproduzir trailer"
+                  className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full border border-white/30 bg-white/90 text-black-950 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-[transform,background] duration-300 ease-premium hover:scale-105 hover:bg-blue-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
-                  <source src="/curta-trailer.mp4" type="video/mp4" />
-                  Seu navegador não suporta a reprodução deste vídeo.
-                </video>
-              </div>
-
-              <div className="flex items-center justify-between gap-4 border-t border-border bg-black-950/90 px-4 py-3 text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
-                <span>Cria Frames AI Studio</span>
-                <span className="text-accent-text">Em breve</span>
-              </div>
+                  <Play className="h-3.5 w-3.5 translate-x-px fill-current" aria-hidden />
+                </button>
+              )}
+              <video
+                ref={trailerRef}
+                playsInline
+                poster="/curta-poster.jpg"
+                preload="metadata"
+                className="h-full w-full object-cover"
+                aria-label="Trailer do curta sobre Ronaldo Caiado"
+                onPlay={() => setIsTrailerPlaying(true)}
+                onPause={() => setIsTrailerPlaying(false)}
+                onEnded={() => setIsTrailerPlaying(false)}
+              >
+                <source src="/curta-trailer.mp4" type="video/mp4" />
+                Seu navegador não suporta a reprodução deste vídeo.
+              </video>
             </div>
-            <p className="mx-auto mt-5 max-w-[52ch] text-center text-xs leading-relaxed text-muted-foreground">
-              Uma narrativa visual criada com IA para revisitar uma trajetória
-              política que atravessa décadas da história brasileira.
-            </p>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

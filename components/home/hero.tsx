@@ -80,7 +80,7 @@ export function Hero() {
     <DialogPrimitive.Root>
       <section
         ref={sectionRef}
-        className="relative min-h-[92vh] overflow-hidden [@media(pointer:fine)]:cursor-none"
+        className="relative min-h-[calc(100svh-var(--site-header-height))] overflow-hidden [@media(pointer:fine)]:cursor-none"
       >
         <video
           ref={videoRef}
@@ -109,7 +109,7 @@ export function Hero() {
           className="absolute inset-0 z-10 focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-accent-text [@media(pointer:fine)]:cursor-none"
         />
 
-        <div className="pointer-events-none relative z-20 flex min-h-[92vh] items-end">
+        <div className="pointer-events-none relative z-20 flex min-h-[calc(100svh-var(--site-header-height))] items-end">
           <div className="mx-auto w-full max-w-container px-4 pb-16 md:px-6 md:pb-20">
             <div className="pointer-events-auto max-w-2xl [@media(pointer:fine)]:cursor-none">
               <span className="hero-fade hero-fade-1 inline-flex items-center gap-2 font-body text-caption font-medium uppercase tracking-[0.25em] text-accent-text before:content-['—'] after:content-['—'] before:opacity-50 after:opacity-50">
@@ -117,7 +117,7 @@ export function Hero() {
               </span>
 
               <h1 className="mt-5">
-                <span className="hero-fade hero-fade-2 block font-display text-[clamp(2.25rem,1.8rem+2.4vw,3.75rem)] font-extrabold uppercase leading-[1.02] tracking-[-0.02em] text-white">
+                <span className="hero-fade hero-fade-2 block font-display text-hero-title font-extrabold uppercase leading-[0.98] tracking-[-0.035em] text-white">
                   Criamos o impossível
                 </span>
                 <span className="hero-fade hero-fade-3 mt-2 block font-body text-[clamp(0.95rem,0.85rem+0.5vw,1.25rem)] font-light uppercase tracking-[0.3em] text-white/80">
@@ -127,7 +127,7 @@ export function Hero() {
 
               <div className="hero-fade hero-fade-4 mt-9 flex flex-wrap items-center gap-3">
                 <Link
-                  href="/cases"
+                  href="/projetos"
                   className="inline-flex min-h-11 items-center rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground transition-[transform,background] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950"
                 >
                   Ver portfólio
@@ -153,7 +153,7 @@ export function Hero() {
         }`}
       >
         <span className="font-body text-[11px] font-bold uppercase tracking-[0.2em] text-white">
-          Watch
+          Assistir
         </span>
       </div>
 

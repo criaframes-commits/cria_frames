@@ -7,52 +7,74 @@ import { cn } from "@/lib/utils";
 type Feedback = {
   id: string;
   author: string;
-  role: string;
+  role?: string;
   quote: string;
 };
 
 const FEEDBACKS: Feedback[] = [
   {
     id: "feedback-01",
-    author: "Cliente A",
-    role: "Direção de marketing",
-    quote:
-      "A Cria Frames entendeu a ideia desde o primeiro encontro e transformou um briefing complexo em uma narrativa clara, bonita e pronta para gerar resultado.",
+    author: "Dayana Vieira",
+    quote: "Incrível!!! Vcs arrasam!!! 🔥🔥 🚀 🚀",
   },
   {
     id: "feedback-02",
-    author: "Cliente B",
-    role: "Produção executiva",
-    quote:
-      "O que mais impressionou foi a combinação entre velocidade e cuidado. Tivemos acompanhamento durante todo o processo, decisões bem explicadas e uma entrega que manteve a personalidade da marca. Mesmo com um prazo curto e várias frentes acontecendo ao mesmo tempo, o projeto chegou consistente do roteiro à finalização.",
+    author: "Geovanna",
+    quote: "Padrão Cria! 👏🏽👏🏽👏🏽🔥",
   },
   {
     id: "feedback-03",
-    author: "Cliente C",
-    role: "Brand manager",
-    quote:
-      "A equipe trouxe soluções que a gente ainda não tinha imaginado e soube usar IA sem deixar o trabalho com aparência genérica. O resultado ficou realmente nosso.",
+    author: "Wanessa Maria de Carvalho",
+    quote: "Ficou perfeito e emocionou a todos…parabéns",
   },
   {
     id: "feedback-04",
-    author: "Cliente D",
-    role: "Direção criativa",
+    author: "Ntake Creative Media",
+    role: "Agência de publicidade",
     quote:
-      "Do primeiro frame ao último, houve intenção. A Cria conseguiu equilibrar experimentação, linguagem de marca e acabamento com uma fluidez rara no processo criativo.",
+      "Excelente direção, Seedance 2.5 pode melhorar muito o skin tone dessas cenas, a versão nova é espetacular…",
   },
   {
     id: "feedback-05",
-    author: "Cliente E",
-    role: "Fundador",
-    quote:
-      "Chegamos com uma referência abstrata e saímos com uma peça que comunica exatamente o que queríamos. O processo foi próximo, rápido e muito bem conduzido.",
+    author: "Filippe Alves Duarte",
+    quote: "👏👏👏👏 Trabalho top demais",
   },
   {
     id: "feedback-06",
-    author: "Cliente F",
-    role: "Liderança de conteúdo",
-    quote:
-      "Além da qualidade visual, a parceria trouxe segurança para experimentar. Cada ajuste tinha propósito e o time sempre apresentava uma alternativa melhor, sem perder tempo nem descaracterizar a campanha. Foi uma construção colaborativa de verdade, com transparência em todas as etapas e um resultado acima do que imaginávamos no início.",
+    author: "Cecília de Lima",
+    quote: "Perfeito, em todos os detalhes 👏👏",
+  },
+  {
+    id: "feedback-07",
+    author: "Tatiane Roque Brito",
+    quote: "Ficou muito bom, vcs estão de parabéns 👏🏻👏🏻",
+  },
+  {
+    id: "feedback-08",
+    author: "Isabela Matrak",
+    quote: "Ficou fenomenal ⭐️⭐️⭐️⭐️⭐️",
+  },
+  {
+    id: "feedback-09",
+    author: "Geovanna Zafred",
+    quote: "Parabéns aos envolvidos 👏👏 Ficou incrível!!",
+  },
+  {
+    id: "feedback-10",
+    author: "Felipe Santos",
+    quote: "Isso ficou incrível!!👏👏🔥",
+  },
+  {
+    id: "feedback-11",
+    author: "Gabriel Resani",
+    role: "Criador de conteúdo IA",
+    quote: "muito bom 👏",
+  },
+  {
+    id: "feedback-12",
+    author: "Lívia Costa Andrade",
+    role: "Criador de conteúdo IA",
+    quote: "👏👏👏👏👏Ficou Lindo!!",
   },
 ];
 
@@ -93,8 +115,9 @@ function FeedbackCard({
 
   return (
     <article
+      data-feedback-card
       data-expanded={expanded ? "true" : "false"}
-      className="group/card relative flex min-h-72 w-[min(84vw,23rem)] shrink-0 flex-col overflow-hidden rounded-lg border border-border bg-card p-6 shadow-[0_24px_70px_rgba(0,0,0,0.18)] transition-[border-color,background-color] duration-300 ease-premium data-[expanded=true]:border-blue-500/45 data-[expanded=true]:bg-black-800 md:p-7"
+      className="group/card relative flex h-60 min-h-60 w-[min(84vw,23rem)] shrink-0 flex-col overflow-hidden rounded-lg border border-border bg-card p-5 shadow-[0_24px_70px_rgba(0,0,0,0.18)] transition-[border-color,background-color] duration-300 ease-premium data-[expanded=true]:h-auto data-[expanded=true]:border-blue-500/45 data-[expanded=true]:bg-black-800 md:p-6"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,rgba(61,110,255,0.16),transparent_42%)]" />
 
@@ -105,43 +128,49 @@ function FeedbackCard({
         </span>
       </div>
 
-      <div className="relative mt-6 flex flex-1 flex-col">
+      <div className="relative mt-3 flex min-h-0 flex-1 flex-col">
         <p
           id={contentId}
           ref={quoteRef}
           data-expanded={expanded ? "true" : "false"}
-          className="max-h-[7.5rem] overflow-hidden text-[0.95rem] leading-6 text-foreground transition-[max-height] duration-500 ease-premium data-[expanded=true]:max-h-80 data-[expanded=true]:overflow-y-auto data-[expanded=true]:pr-2"
+          className="max-h-11 overflow-hidden text-[0.95rem] leading-[1.375rem] text-foreground transition-[max-height] duration-500 ease-premium data-[expanded=true]:max-h-80 data-[expanded=true]:overflow-y-auto data-[expanded=true]:pr-2"
         >
           “{feedback.quote}”
         </p>
 
-        {canExpand && (
-          <button
-            type="button"
-            aria-expanded={expanded}
-            aria-controls={contentId}
-            onClick={() => onToggle(instanceKey)}
-            className="mt-3 inline-flex w-fit items-center gap-1.5 font-body text-xs font-semibold text-blue-300 transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300"
-          >
-            {expanded ? "Recolher" : "Ler mais..."}
-            <ChevronDown
-              aria-hidden="true"
-              className={cn(
-                "h-3.5 w-3.5 transition-transform duration-300",
-                expanded && "rotate-180"
-              )}
-            />
-          </button>
-        )}
+        <div className="mt-2 min-h-5">
+          {canExpand && (
+            <button
+              type="button"
+              aria-expanded={expanded}
+              aria-controls={contentId}
+              onClick={() => onToggle(instanceKey)}
+              className="inline-flex w-fit items-center gap-1.5 font-body text-xs font-semibold text-blue-300 transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300"
+            >
+              {expanded ? "Recolher" : "Ler mais..."}
+              <ChevronDown
+                aria-hidden="true"
+                className={cn(
+                  "h-3.5 w-3.5 transition-transform duration-300",
+                  expanded && "rotate-180"
+                )}
+              />
+            </button>
+          )}
+        </div>
       </div>
 
-      <footer className="relative mt-7 border-t border-border pt-5">
-        <p className="font-display text-sm font-extrabold uppercase tracking-[0.04em] text-foreground">
-          {feedback.author}
-        </p>
-        <p className="mt-1 text-xs uppercase tracking-[0.12em] text-muted-foreground">
-          {feedback.role}
-        </p>
+      <footer className="relative mt-3 flex min-h-[3.25rem] items-center border-t border-border pt-3">
+        <div className="min-w-0">
+          <p className="font-display text-sm font-extrabold uppercase tracking-[0.04em] text-foreground">
+            {feedback.author}
+          </p>
+          {feedback.role && (
+            <p className="mt-1 text-xs uppercase tracking-[0.12em] text-muted-foreground">
+              {feedback.role}
+            </p>
+          )}
+        </div>
       </footer>
     </article>
   );
@@ -159,7 +188,7 @@ export function ProvaSocial() {
   return (
     <section
       aria-labelledby="feedbacks-heading"
-      className="relative mt-20 bg-background py-24 md:mt-32 md:py-32"
+      className="relative mt-16 bg-background py-20 md:mt-24 md:py-24"
     >
       <div
         aria-hidden="true"
@@ -182,10 +211,10 @@ export function ProvaSocial() {
         </h2>
       </div>
 
-      <div className="mt-12 overflow-x-clip py-6 md:mt-16 md:py-8">
+      <div className="mt-10 overflow-x-clip py-5 md:mt-12 md:py-6">
         <div
           className={cn(
-            "flex w-max items-stretch animate-[marquee_52s_linear_infinite] hover:[animation-play-state:paused] focus-within:[animation-play-state:paused] motion-reduce:animate-none",
+            "flex w-max items-stretch animate-[marquee_104s_linear_infinite] hover:[animation-play-state:paused] focus-within:[animation-play-state:paused] motion-reduce:animate-none",
             expandedCard && "[animation-play-state:paused]"
           )}
         >

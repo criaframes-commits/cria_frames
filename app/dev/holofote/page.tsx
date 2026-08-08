@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export type HolofoteCase = {
+export type HolofoteProject = {
   id: string;
   title: string;
   client: string;
@@ -11,31 +11,34 @@ export type HolofoteCase = {
 
 type ScrollHolofoteProps = {
   id?: string;
-  cases: HolofoteCase[];
+  projects: HolofoteProject[];
 };
 
-const DEV_CASES: HolofoteCase[] = [
+const DEV_PROJECTS: HolofoteProject[] = [
   {
-    id: "dev-case-01",
+    id: "dev-project-01",
     title: "Aurora",
     client: "Cliente A",
     description: "Série de motion gerada por IA para redes sociais.",
   },
   {
-    id: "dev-case-02",
+    id: "dev-project-02",
     title: "Sinal",
     client: "Cliente B",
     description: "Vídeo institucional com atores sintéticos e trilha original.",
   },
   {
-    id: "dev-case-03",
+    id: "dev-project-03",
     title: "Origem",
     client: "Cliente C",
     description: "Campanha completa, do roteiro à edição, criada com IA.",
   },
 ];
 
-export function ScrollHolofote({ id = "cases", cases }: ScrollHolofoteProps) {
+export function ScrollHolofote({
+  id = "projetos",
+  projects,
+}: ScrollHolofoteProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -64,17 +67,17 @@ export function ScrollHolofote({ id = "cases", cases }: ScrollHolofoteProps) {
 
     rowRefs.current.forEach((el) => el && observer.observe(el));
     return () => observer.disconnect();
-  }, [cases.length]);
+  }, [projects.length]);
 
   return (
-    <section id={id} aria-label="Cases" className="relative scroll-mt-24">
+    <section id={id} aria-label="Projetos" className="relative scroll-mt-24">
       <div className="mx-auto max-w-container px-4 py-20 md:px-6 md:py-28">
         <div className="grid grid-cols-1 gap-x-10 md:grid-cols-[minmax(0,1fr)_minmax(0,520px)_minmax(0,1fr)]">
-          {/* COLUNA ESQUERDA — título grande, sticky, crossfade entre os cases */}
+          {/* COLUNA ESQUERDA — título grande, sticky, crossfade entre os projetos */}
           <div className="hidden md:block">
             <div className="sticky top-1/2 -translate-y-1/2">
               <div className="relative h-32">
-                {cases.map((item, index) => (
+                {projects.map((item, index) => (
                   <h2
                     key={item.id}
                     data-active={index === activeIndex}
@@ -88,10 +91,10 @@ export function ScrollHolofote({ id = "cases", cases }: ScrollHolofoteProps) {
             </div>
           </div>
 
-          {/* COLUNA CENTRAL + DIREITA — uma linha por case.
+          {/* COLUNA CENTRAL + DIREITA — uma linha por projeto.
               Card e texto coexistem na página e esmaecem/acendem juntos. */}
           <div className="contents">
-            {cases.map((item, index) => (
+            {projects.map((item, index) => (
               <div
                 key={item.id}
                 ref={(el) => {
@@ -132,7 +135,7 @@ export function ScrollHolofote({ id = "cases", cases }: ScrollHolofoteProps) {
 export default function HolofoteDevPage() {
   return (
     <main>
-      <ScrollHolofote cases={DEV_CASES} />
+      <ScrollHolofote projects={DEV_PROJECTS} />
     </main>
   );
 }
