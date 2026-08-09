@@ -141,7 +141,7 @@ export function MemberProjects({
                   {project.previewVideoSrc && (
                     <span className="absolute left-4 top-4 w-20 drop-shadow-[0_8px_24px_rgba(0,0,0,0.65)] md:left-6 md:top-5 md:w-28">
                       <Image
-                        src="/cria-frames-logo-alfa.svg"
+                        src="/cria-frames-logo-branca.svg"
                         alt=""
                         width={196}
                         height={136}

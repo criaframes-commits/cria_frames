@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Play } from "lucide-react";
+import { CaiadoAuthorshipNotice } from "@/components/projects/caiado-authorship-notice";
 import {
   CAIADO_FEATURE_END_DATE,
   CAIADO_PREMIERE_DATE,
@@ -29,11 +30,11 @@ function getTimeLeft(): TimeLeft | null {
 
 function Unit({ value, label }: { value: number | null; label: string }) {
   return (
-    <div className="min-w-14 rounded-md border border-white/10 bg-black-950/70 px-2 py-2 text-center backdrop-blur-sm md:min-w-16">
-      <div className="font-display text-xl font-black tabular-nums text-foreground md:text-2xl">
+    <div className="min-w-16 rounded-lg border border-blue-500/40 bg-blue-950/45 px-3 py-2.5 text-center shadow-[0_12px_32px_rgba(0,68,189,0.16)] backdrop-blur-md md:min-w-[4.75rem]">
+      <div className="font-display text-2xl font-black tabular-nums text-white md:text-3xl">
         {value === null ? "--" : String(value).padStart(2, "0")}
       </div>
-      <div className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+      <div className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-blue-100/60">
         {label}
       </div>
     </div>
@@ -247,10 +248,10 @@ export function PreEstreia() {
             >
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-accent-text">
-                  {released ? "Projeto especial" : "Estreia"}
+                  {released ? "Projeto especial" : "Estreia · Amanhã"}
                 </p>
                 <p className="mt-0.5 font-display text-lg font-black uppercase tracking-[-0.02em] text-foreground">
-                  {released ? "Assista agora" : "9 ago 2026"}
+                  {released ? "Assista agora" : "10 ago 2026"}
                 </p>
               </div>
               <span className="h-8 w-px bg-blue-500/30" aria-hidden />
@@ -286,9 +287,6 @@ export function PreEstreia() {
                   Assistir ao trailer
                 </button>
               )}
-              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-                Uma produção Cria Frames
-              </span>
             </div>
 
             {!released && (
@@ -299,15 +297,32 @@ export function PreEstreia() {
                 data-x="18"
                 data-y="62"
                 data-rotate="1.5"
-                className="mt-5 flex flex-wrap gap-2 will-change-transform"
+                className="mt-5 will-change-transform"
                 aria-label="Contagem regressiva para a estreia"
               >
-                <Unit value={timeLeft?.days ?? null} label="Dias" />
-                <Unit value={timeLeft?.hours ?? null} label="Horas" />
-                <Unit value={timeLeft?.minutes ?? null} label="Min" />
-                <Unit value={timeLeft?.seconds ?? null} label="Seg" />
+                <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.17em] text-blue-300">
+                  Falta pouco · Amanhã às 12h
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Unit value={timeLeft?.days ?? null} label="Dias" />
+                  <Unit value={timeLeft?.hours ?? null} label="Horas" />
+                  <Unit value={timeLeft?.minutes ?? null} label="Min" />
+                  <Unit value={timeLeft?.seconds ?? null} label="Seg" />
+                </div>
               </div>
             )}
+
+            <div
+              data-curta-reveal
+              data-start="0.38"
+              data-end="0.98"
+              data-x="14"
+              data-y="48"
+              data-rotate="0.8"
+              className="mt-3 will-change-transform"
+            >
+              <CaiadoAuthorshipNotice compact />
+            </div>
           </div>
 
           <div

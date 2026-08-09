@@ -8,6 +8,7 @@ import {
   CaiadoHeroWatchLink,
   CaiadoProcessVideo,
 } from "@/components/projects/caiado-media";
+import { CaiadoAuthorshipNotice } from "@/components/projects/caiado-authorship-notice";
 import { ProjectShareButton } from "@/components/projects/project-share-button";
 import { CAIADO_ASSETS } from "@/lib/caiado-project";
 
@@ -89,6 +90,7 @@ export default function RonaldoCaiadoProjectPage() {
                 criado com inteligência artificial, direção e processo.
               </p>
               <CaiadoHeroWatchLink />
+              <CaiadoAuthorshipNotice className="mt-6" />
             </div>
           </div>
         </div>
@@ -190,7 +192,7 @@ export default function RonaldoCaiadoProjectPage() {
           <dl className="mt-8 grid border-l border-t border-white/12 sm:grid-cols-2 lg:grid-cols-4">
             {[
               ["Formato", "Curta-metragem"],
-              ["Lançamento", "9 de agosto de 2026"],
+              ["Lançamento", "10 de agosto de 2026"],
               ["Produção", "Cria Frames"],
               ["Tecnologia", "Inteligência artificial"],
             ].map(([term, description]) => (

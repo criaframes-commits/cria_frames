@@ -39,7 +39,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     teaser: {
       src: "/curta-trailer.mp4",
       label: "Trailer",
-      availableFrom: "2026-08-09T12:00:00-03:00",
+      availableFrom: "2026-08-10T12:00:00-03:00",
     },
   },
   {

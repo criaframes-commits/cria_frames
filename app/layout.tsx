@@ -8,6 +8,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Cria Frames — Estúdio de criação com IA",
   description: "Vídeo, motion e campanhas completas criadas com inteligência artificial.",
+  icons: {
+    icon: [{ url: "/cria-frames-logo-branca.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({
