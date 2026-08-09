@@ -7,7 +7,7 @@ export const CAIADO_FEATURE_END_DATE = new Date(
 );
 
 // Cole entre as aspas o link completo do curta publicado no YouTube.
-export const CAIADO_FULL_FILM_YOUTUBE_URL = "";
+export const CAIADO_FULL_FILM_YOUTUBE_URL = "https://youtu.be/0MMWWu1OuDI";
 
 export const CAIADO_ASSETS = {
   poster: "/curta-poster.jpg",
