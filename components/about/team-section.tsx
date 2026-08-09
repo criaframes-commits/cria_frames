@@ -217,6 +217,7 @@ export function TeamSection({ members }: TeamSectionProps) {
                       src={member.imageSrc}
                       alt=""
                       fill
+                      loading={index === 0 ? "eager" : "lazy"}
                       draggable={false}
                       sizes="(min-width: 768px) 31rem, 96vw"
                       style={{ objectPosition: member.imagePosition }}
