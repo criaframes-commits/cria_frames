@@ -11,6 +11,7 @@ import {
   SITE_TITLE,
   SITE_URL,
 } from "@/lib/metadata";
+import { GLOBAL_JSON_LD, serializeJsonLd } from "@/lib/structured-data";
 import "./globals.css";
 
 const GOOGLE_ANALYTICS_ID = "G-5QH899RXH5";
@@ -93,6 +94,10 @@ export default function RootLayout({
         suppressHydrationWarning
         className="bg-background text-foreground antialiased"
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(GLOBAL_JSON_LD) }}
+        />
         <LanguageProvider>
           <Header />
           {children}
