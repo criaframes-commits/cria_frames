@@ -301,7 +301,7 @@ export function PreEstreia() {
                 aria-label="Contagem regressiva para a estreia"
               >
                 <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.17em] text-blue-300">
-                  Falta pouco · Amanhã às 12h
+                  Falta pouco · Hoje às 12h
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Unit value={timeLeft?.days ?? null} label="Dias" />
