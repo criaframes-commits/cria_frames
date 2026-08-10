@@ -15,6 +15,7 @@ import { GLOBAL_JSON_LD, serializeJsonLd } from "@/lib/structured-data";
 import "./globals.css";
 
 const GOOGLE_ANALYTICS_ID = "G-5QH899RXH5";
+const MICROSOFT_CLARITY_ID = "y0b31fi4kk";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -90,6 +91,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={`${archivo.variable} ${inter.variable}`}>
+      <head>
+        <script
+          id="microsoft-clarity"
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "${MICROSOFT_CLARITY_ID}");
+            `,
+          }}
+        />
+      </head>
       <body
         suppressHydrationWarning
         className="bg-background text-foreground antialiased"
