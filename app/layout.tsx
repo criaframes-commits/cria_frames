@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { archivo, inter } from "@/lib/fonts";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -11,6 +12,8 @@ import {
   SITE_URL,
 } from "@/lib/metadata";
 import "./globals.css";
+
+const GOOGLE_ANALYTICS_ID = "G-5QH899RXH5";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -95,6 +98,18 @@ export default function RootLayout({
           {children}
           <Footer />
         </LanguageProvider>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GOOGLE_ANALYTICS_ID}');
+          `}
+        </Script>
       </body>
     </html>
   );
