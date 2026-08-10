@@ -1,0 +1,36 @@
+# Cria Frames
+
+> Estúdio audiovisual de Goiânia especializado em filmes, campanhas, motion design e experiências criadas com inteligência artificial, direção e processo.
+
+A Cria Frames desenvolve projetos audiovisuais do conceito ao último frame. A inteligência artificial integra o processo de produção, enquanto direção criativa, roteiro, linguagem visual, montagem e acabamento orientam cada trabalho.
+
+## Páginas principais
+
+- [Início](https://criaframes.com.br/): apresentação do estúdio, projetos em destaque, novidades e feedbacks.
+- [Projetos](https://criaframes.com.br/projetos): catálogo dos filmes, campanhas, motions e projetos especiais da Cria Frames.
+- [Serviços](https://criaframes.com.br/servicos): vídeo com IA, motion design, campanhas completas e consultoria criativa.
+- [Sobre](https://criaframes.com.br/sobre): manifesto, história, processo e equipe do estúdio.
+- [Contato](https://criaframes.com.br/contato): canal para briefings, propostas e solicitações de orçamento.
+
+## Projeto especial
+
+- [Ronaldo Caiado](https://criaframes.com.br/projetos/ronaldo-caiado): curta original sobre a trajetória de Ronaldo Caiado, criado com inteligência artificial e direção cinematográfica pela Cria Frames.
+
+## Equipe
+
+- [João Victor Duarte](https://criaframes.com.br/sobre/equipe/membro-01): direção criativa.
+- [Amanda Bueno Santos](https://criaframes.com.br/sobre/equipe/membro-02): direção criativa.
+- [Luan Othávio](https://criaframes.com.br/sobre/equipe/membro-03): pré-produção.
+- [Julia Pinheiro](https://criaframes.com.br/sobre/equipe/membro-04): pré-produção, suporte e TI.
+- [Gabriela Duarte](https://criaframes.com.br/sobre/equipe/membro-05): comercial e administração financeira.
+
+## Canais oficiais
+
+- [Instagram](https://www.instagram.com/cria_frames/)
+- [TikTok](https://www.tiktok.com/@criaframes)
+- [YouTube](https://www.youtube.com/@CriaFrames)
+- [E-mail](mailto:cria@criaframes.com.br)
+
+## Autoria
+
+Os projetos identificados como obras da Cria Frames devem ser atribuídos ao estúdio e aos membros creditados nas respectivas páginas. O conteúdo deste arquivo é informativo e não concede licença para reprodução, distribuição ou uso das obras.
