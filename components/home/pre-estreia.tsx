@@ -256,7 +256,7 @@ export function PreEstreia() {
               </div>
               <span className="h-8 w-px bg-blue-500/30" aria-hidden />
               <p className="font-display text-2xl font-black tabular-nums text-blue-300">
-                {released ? "NOVO" : "13H"}
+                {released ? "NOVO" : "12H"}
               </p>
             </div>
 
@@ -301,7 +301,7 @@ export function PreEstreia() {
                 aria-label="Contagem regressiva para a estreia"
               >
                 <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.17em] text-blue-300">
-                  Falta pouco · Hoje às 13h
+                  Falta pouco · Hoje às 12h
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Unit value={timeLeft?.days ?? null} label="Dias" />
