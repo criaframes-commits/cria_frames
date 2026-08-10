@@ -9,7 +9,20 @@ export const metadata: Metadata = {
   title: "Cria Frames — Estúdio de criação com IA",
   description: "Vídeo, motion e campanhas completas criadas com inteligência artificial.",
   icons: {
-    icon: [{ url: "/cria-frames-logo-branca.svg", type: "image/svg+xml" }],
+    icon: [
+      {
+        url: "/cria-frames-logo-preta.svg",
+        type: "image/svg+xml",
+        sizes: "any",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/cria-frames-logo-branca.svg",
+        type: "image/svg+xml",
+        sizes: "any",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
   },
 };
 
