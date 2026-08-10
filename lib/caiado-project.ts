@@ -6,7 +6,7 @@ export const CAIADO_FEATURE_END_DATE = new Date(
   "2026-09-10T12:00:00-03:00"
 );
 
-// Cole entre as aspas o link completo do curta publicado no YouTube.
+// Link do curta completo exibido na sessão cinematográfica após a estreia.
 export const CAIADO_FULL_FILM_YOUTUBE_URL = "https://youtu.be/0MMWWu1OuDI";
 
 export const CAIADO_ASSETS = {

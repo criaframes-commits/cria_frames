@@ -206,7 +206,7 @@ export function PreEstreia() {
             >
               <span className="h-2 w-2 rounded-full bg-blue-500 shadow-[0_0_18px_rgba(61,110,255,0.95)]" />
               <p className="font-body text-[11px] font-semibold uppercase tracking-[0.2em] text-accent-text md:text-xs">
-                {released ? "Novidade · Já disponível" : "Novo curta · Pré-estreia"}
+                {released ? "Novo curta · Estreia" : "Novo curta · Pré-estreia"}
               </p>
             </div>
 
@@ -248,7 +248,7 @@ export function PreEstreia() {
             >
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-accent-text">
-                  {released ? "Projeto especial" : "Estreia · Amanhã"}
+                  Estreia · Hoje
                 </p>
                 <p className="mt-0.5 font-display text-lg font-black uppercase tracking-[-0.02em] text-foreground">
                   {released ? "Assista agora" : "10 ago 2026"}
@@ -271,11 +271,11 @@ export function PreEstreia() {
             >
               {released ? (
                 <Link
-                  href="/projetos/ronaldo-caiado#assistir"
+                  href="/projetos/ronaldo-caiado?cinema=1#assistir"
                   className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground shadow-[0_14px_40px_rgba(61,110,255,0.28)] transition-[transform,background,box-shadow] duration-300 ease-premium hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 hover:shadow-[0_18px_48px_rgba(61,110,255,0.42)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
                 >
                   <Play className="h-4 w-4 fill-current" aria-hidden />
-                  Assistir ao curta
+                  Assistir ao curta agora
                 </Link>
               ) : (
                 <button
@@ -289,28 +289,28 @@ export function PreEstreia() {
               )}
             </div>
 
-            {!released && (
-              <div
-                data-curta-reveal
-                data-start="0.34"
-                data-end="0.96"
-                data-x="18"
-                data-y="62"
-                data-rotate="1.5"
-                className="mt-5 will-change-transform"
-                aria-label="Contagem regressiva para a estreia"
-              >
-                <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.17em] text-blue-300">
-                  Falta pouco · Hoje às 12h
-                </p>
+            <div
+              data-curta-reveal
+              data-start="0.34"
+              data-end="0.96"
+              data-x="18"
+              data-y="62"
+              data-rotate="1.5"
+              className="mt-5 will-change-transform"
+              aria-label={released ? "Curta disponível" : "Contagem regressiva para a estreia"}
+            >
+              <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.17em] text-blue-300">
+                {released ? "Veja agora" : "Falta pouco · Hoje às 12h"}
+              </p>
+              {!released && (
                 <div className="flex flex-wrap gap-2">
                   <Unit value={timeLeft?.days ?? null} label="Dias" />
                   <Unit value={timeLeft?.hours ?? null} label="Horas" />
                   <Unit value={timeLeft?.minutes ?? null} label="Min" />
                   <Unit value={timeLeft?.seconds ?? null} label="Seg" />
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
             <div
               data-curta-reveal
@@ -348,7 +348,7 @@ export function PreEstreia() {
               {!isTrailerPlaying &&
                 (released ? (
                   <Link
-                    href="/projetos/ronaldo-caiado#assistir"
+                    href="/projetos/ronaldo-caiado?cinema=1#assistir"
                     aria-label="Assistir ao curta Ronaldo Caiado"
                     className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full border border-white/30 bg-white/90 text-black-950 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-[transform,background] duration-300 ease-premium hover:scale-105 hover:bg-blue-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >

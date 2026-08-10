@@ -247,6 +247,23 @@ export function CaiadoFilmPlayer() {
   const [cinemaOpen, setCinemaOpen] = useState(false);
   const youtubeId = getYouTubeId(CAIADO_FULL_FILM_YOUTUBE_URL);
 
+  useEffect(() => {
+    if (!released || !youtubeId) return;
+
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get("cinema") !== "1") return;
+
+    const frame = window.requestAnimationFrame(() => setCinemaOpen(true));
+    searchParams.delete("cinema");
+    const remainingSearch = searchParams.toString();
+    const cleanUrl = `${window.location.pathname}${
+      remainingSearch ? `?${remainingSearch}` : ""
+    }${window.location.hash || "#assistir"}`;
+    window.history.replaceState(window.history.state, "", cleanUrl);
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [released, youtubeId]);
+
   if (!released) {
     return (
       <div className="mx-auto max-w-[1500px] px-4 py-20 md:px-6 md:py-28">
