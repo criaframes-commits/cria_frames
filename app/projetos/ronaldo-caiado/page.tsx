@@ -11,12 +11,20 @@ import {
 import { CaiadoAuthorshipNotice } from "@/components/projects/caiado-authorship-notice";
 import { ProjectShareButton } from "@/components/projects/project-share-button";
 import { CAIADO_ASSETS } from "@/lib/caiado-project";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Ronaldo Caiado — Projeto especial | Cria Frames",
+export const metadata: Metadata = createPageMetadata({
+  title: "Ronaldo Caiado — Projeto especial",
   description:
     "Um curta sobre a trajetória de Ronaldo Caiado, criado inteiramente com inteligência artificial pela Cria Frames.",
-};
+  path: "/projetos/ronaldo-caiado",
+  image: {
+    url: CAIADO_ASSETS.poster,
+    width: 1600,
+    height: 900,
+    alt: "Ronaldo Caiado — projeto especial da Cria Frames",
+  },
+});
 
 const PROCESS = [
   {

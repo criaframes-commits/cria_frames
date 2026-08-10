@@ -9,12 +9,14 @@ import {
   Mail,
 } from "lucide-react";
 import { ContactForm } from "@/components/contact/contact-form";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Contato — Cria Frames",
+export const metadata: Metadata = createPageMetadata({
+  title: "Contato",
   description:
     "Peça um orçamento para filmes de marca, campanhas, motion design e projetos audiovisuais com IA.",
-};
+  path: "/contato",
+});
 
 const COMMERCIAL_POINTS = [
   "Briefing sem compromisso",

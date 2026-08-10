@@ -9,6 +9,7 @@ import {
   PORTFOLIO_PROJECTS,
 } from "@/lib/portfolio-projects";
 import { TEAM_MEMBERS } from "@/lib/team-members";
+import { createPageMetadata } from "@/lib/metadata";
 
 type MemberPageProps = {
   params: Promise<{ memberId: string }>;
@@ -28,10 +29,11 @@ export async function generateMetadata({
 
   if (!member) return {};
 
-  return {
-    title: `${member.name} — Cria Frames`,
+  return createPageMetadata({
+    title: member.name,
     description: `${member.role} na Cria Frames. Conheça o perfil e os projetos de ${member.name}.`,
-  };
+    path: `/sobre/equipe/${member.id}`,
+  });
 }
 
 export default async function MemberPage({ params }: MemberPageProps) {

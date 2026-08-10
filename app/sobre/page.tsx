@@ -5,12 +5,14 @@ import { ManifestoSection } from "@/components/about/manifesto-section";
 import { PillarsSection } from "@/components/about/pillars-section";
 import { TeamSection } from "@/components/about/team-section";
 import { TEAM_MEMBERS } from "@/lib/team-members";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Sobre — Cria Frames",
+export const metadata: Metadata = createPageMetadata({
+  title: "Sobre",
   description:
     "Conheça a história, o processo e a equipe por trás da Cria Frames.",
-};
+  path: "/sobre",
+});
 
 export default function SobrePage() {
   return (

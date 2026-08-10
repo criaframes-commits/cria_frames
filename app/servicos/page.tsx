@@ -5,12 +5,14 @@ import { ServiceDetails } from "@/components/services/service-details";
 import { ServicesCta } from "@/components/services/services-cta";
 import { ServicesFaq } from "@/components/services/services-faq";
 import { STUDIO_SERVICES } from "@/lib/studio-services";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Serviços — Cria Frames",
+export const metadata: Metadata = createPageMetadata({
+  title: "Serviços",
   description:
     "Vídeo com IA, motion design, campanhas completas e consultoria criativa.",
-};
+  path: "/servicos",
+});
 
 export default function ServicesPage() {
   return (
