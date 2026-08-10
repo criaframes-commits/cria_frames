@@ -1,9 +1,9 @@
 export const CAIADO_PREMIERE_DATE = new Date(
-  "2026-08-10T12:00:00-03:00"
+  "2026-08-10T13:00:00-03:00"
 );
 
 export const CAIADO_FEATURE_END_DATE = new Date(
-  "2026-09-10T12:00:00-03:00"
+  "2026-09-10T13:00:00-03:00"
 );
 
 // Cole entre as aspas o link completo do curta publicado no YouTube.
