@@ -1,12 +1,8 @@
-export const CAIADO_PREMIERE_DATE = new Date(
-  "2026-08-10T12:00:00-03:00"
-);
-
 export const CAIADO_FEATURE_END_DATE = new Date(
   "2026-09-10T12:00:00-03:00"
 );
 
-// Link do curta completo exibido na sessão cinematográfica após a estreia.
+// Link do curta completo exibido na sessão cinematográfica do projeto.
 export const CAIADO_FULL_FILM_YOUTUBE_URL = "https://youtu.be/0MMWWu1OuDI";
 
 export const CAIADO_ASSETS = {

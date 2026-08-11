@@ -13,7 +13,6 @@ import {
 import {
   CAIADO_ASSETS,
   CAIADO_FULL_FILM_YOUTUBE_URL,
-  CAIADO_PREMIERE_DATE,
   getYouTubeId,
 } from "@/lib/caiado-project";
 
@@ -24,25 +23,6 @@ const GALLERY_POSITIONS = [
   "88% 44%",
   "52% 50%",
 ] as const;
-
-function useCaiadoReleased() {
-  const [released, setReleased] = useState(false);
-
-  useEffect(() => {
-    const updateReleaseState = () => {
-      setReleased(Date.now() >= CAIADO_PREMIERE_DATE.getTime());
-    };
-    const frame = window.requestAnimationFrame(updateReleaseState);
-    const timer = window.setInterval(updateReleaseState, 1000);
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.clearInterval(timer);
-    };
-  }, []);
-
-  return released;
-}
 
 type CaiadoProcessVideoProps = {
   src: string;
@@ -229,76 +209,35 @@ export function CaiadoGallery() {
 }
 
 export function CaiadoHeroWatchLink() {
-  const released = useCaiadoReleased();
-
   return (
     <a
       href="#assistir"
       className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-pill bg-blue-500 px-6 text-sm font-semibold text-white transition-[background,transform] duration-300 hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
     >
       <Play className="h-4 w-4 fill-current" aria-hidden />
-      {released ? "Assistir ao curta" : "Assistir ao trailer"}
+      Assistir ao curta
     </a>
   );
 }
 
 export function CaiadoFilmPlayer() {
-  const released = useCaiadoReleased();
   const [cinemaOpen, setCinemaOpen] = useState(false);
   const youtubeId = getYouTubeId(CAIADO_FULL_FILM_YOUTUBE_URL);
 
   useEffect(() => {
-    if (!released || !youtubeId) return;
+    if (!youtubeId) return;
 
     const searchParams = new URLSearchParams(window.location.search);
     if (searchParams.get("cinema") !== "1") return;
 
-    const frame = window.requestAnimationFrame(() => setCinemaOpen(true));
+    queueMicrotask(() => setCinemaOpen(true));
     searchParams.delete("cinema");
     const remainingSearch = searchParams.toString();
     const cleanUrl = `${window.location.pathname}${
       remainingSearch ? `?${remainingSearch}` : ""
     }${window.location.hash || "#assistir"}`;
     window.history.replaceState(window.history.state, "", cleanUrl);
-
-    return () => window.cancelAnimationFrame(frame);
-  }, [released, youtubeId]);
-
-  if (!released) {
-    return (
-      <div className="mx-auto max-w-[1500px] px-4 py-20 md:px-6 md:py-28">
-        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-300">
-              Assista
-            </p>
-            <h2
-              id="watch-caiado-heading"
-              className="mt-4 font-display text-h2 font-black uppercase leading-none tracking-[-0.04em]"
-            >
-              Trailer oficial.
-            </h2>
-          </div>
-          <p className="text-xs uppercase tracking-[0.15em] text-white/45">
-            Curta-metragem · 01:23
-          </p>
-        </div>
-
-        <div className="overflow-hidden rounded-lg border border-white/14 bg-black shadow-[0_32px_100px_rgba(0,0,0,0.52)]">
-          <video
-            controls
-            playsInline
-            preload="metadata"
-            poster={CAIADO_ASSETS.poster}
-            className="aspect-video max-h-[82svh] w-full bg-black object-contain"
-          >
-            <source src={CAIADO_ASSETS.trailer} type="video/mp4" />
-            Seu navegador não suporta a reprodução deste vídeo.
-          </video>
-        </div>
-      </div>
-    );
-  }
+  }, [youtubeId]);
 
   return (
     <div className="mx-auto max-w-[1500px] px-4 py-20 md:px-6 md:py-28">

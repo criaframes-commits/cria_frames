@@ -1,45 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Play } from "lucide-react";
 import { CaiadoAuthorshipNotice } from "@/components/projects/caiado-authorship-notice";
-import {
-  CAIADO_FEATURE_END_DATE,
-  CAIADO_PREMIERE_DATE,
-} from "@/lib/caiado-project";
+import { CAIADO_FEATURE_END_DATE } from "@/lib/caiado-project";
 
 /* ============================================================
    DESTAQUE DE NOVIDADE — HOME
-   O conteúdo muda de pré-estreia para CTA após o lançamento.
+   O conteúdo apresenta o lançamento enquanto ele estiver em destaque.
    Para uma nova campanha, atualize datas e conteúdo neste módulo.
    ============================================================ */
-
-type TimeLeft = { days: number; hours: number; minutes: number; seconds: number };
-
-function getTimeLeft(): TimeLeft | null {
-  const diff = CAIADO_PREMIERE_DATE.getTime() - Date.now();
-  if (diff <= 0) return null;
-  return {
-    days: Math.floor(diff / 86400000),
-    hours: Math.floor((diff / 3600000) % 24),
-    minutes: Math.floor((diff / 60000) % 60),
-    seconds: Math.floor((diff / 1000) % 60),
-  };
-}
-
-function Unit({ value, label }: { value: number | null; label: string }) {
-  return (
-    <div className="min-w-16 rounded-lg border border-blue-500/40 bg-blue-950/45 px-3 py-2.5 text-center shadow-[0_12px_32px_rgba(0,68,189,0.16)] backdrop-blur-md md:min-w-[4.75rem]">
-      <div className="font-display text-2xl font-black tabular-nums text-white md:text-3xl">
-        {value === null ? "--" : String(value).padStart(2, "0")}
-      </div>
-      <div className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-blue-100/60">
-        {label}
-      </div>
-    </div>
-  );
-}
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
@@ -51,26 +23,20 @@ function smoothStep(value: number) {
 }
 
 export function PreEstreia() {
-  // null no 1º render evita mismatch de hidratação (server ≠ client)
-  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const [mounted, setMounted] = useState(false);
   const [featureExpired, setFeatureExpired] = useState(false);
-  const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
-  const trailerRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const updateReleaseState = () => {
-      const now = Date.now();
-      setTimeLeft(getTimeLeft());
-      setFeatureExpired(now >= CAIADO_FEATURE_END_DATE.getTime());
+    const updateFeatureState = () => {
+      setFeatureExpired(Date.now() >= CAIADO_FEATURE_END_DATE.getTime());
     };
     const initialFrame = requestAnimationFrame(() => {
       setMounted(true);
-      updateReleaseState();
+      updateFeatureState();
     });
-    const timer = setInterval(updateReleaseState, 1000);
+    const timer = setInterval(updateFeatureState, 60000);
     return () => {
       cancelAnimationFrame(initialFrame);
       clearInterval(timer);
@@ -158,20 +124,10 @@ export function PreEstreia() {
   // O conteúdo atual sai após um mês; o módulo permanece para a próxima novidade.
   if (mounted && featureExpired) return null;
 
-  const released = mounted && timeLeft === null;
-
-  const playTrailer = () => {
-    const trailer = trailerRef.current;
-    if (!trailer) return;
-    trailer.scrollIntoView({ behavior: "smooth", block: "center" });
-    trailer.controls = true;
-    void trailer.play();
-  };
-
   return (
     <section
       ref={sectionRef}
-      id="pre-estreia"
+      id="novidade"
       aria-labelledby="titulo-curta-caiado"
       className="relative z-20 -mt-[clamp(3.5rem,8vw,6rem)] min-h-[calc(100svh-var(--site-header-height))] scroll-mt-[var(--site-header-height)]"
     >
@@ -206,7 +162,7 @@ export function PreEstreia() {
             >
               <span className="h-2 w-2 rounded-full bg-blue-500 shadow-[0_0_18px_rgba(61,110,255,0.95)]" />
               <p className="font-body text-[11px] font-semibold uppercase tracking-[0.2em] text-accent-text md:text-xs">
-                {released ? "Novo curta · Estreia" : "Novo curta · Pré-estreia"}
+                Novidade · Já disponível
               </p>
             </div>
 
@@ -248,15 +204,15 @@ export function PreEstreia() {
             >
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-accent-text">
-                  Estreia · Hoje
+                  Projeto especial
                 </p>
                 <p className="mt-0.5 font-display text-lg font-black uppercase tracking-[-0.02em] text-foreground">
-                  {released ? "Assista agora" : "10 ago 2026"}
+                  Filme completo
                 </p>
               </div>
               <span className="h-8 w-px bg-blue-500/30" aria-hidden />
               <p className="font-display text-2xl font-black tabular-nums text-blue-300">
-                {released ? "NOVO" : "12H"}
+                01:23
               </p>
             </div>
 
@@ -269,47 +225,13 @@ export function PreEstreia() {
               data-rotate="-2"
               className="mt-5 flex flex-wrap items-center gap-3 will-change-transform"
             >
-              {released ? (
-                <Link
-                  href="/projetos/ronaldo-caiado?cinema=1#assistir"
-                  className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground shadow-[0_14px_40px_rgba(61,110,255,0.28)] transition-[transform,background,box-shadow] duration-300 ease-premium hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 hover:shadow-[0_18px_48px_rgba(61,110,255,0.42)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
-                >
-                  <Play className="h-4 w-4 fill-current" aria-hidden />
-                  Assistir ao curta agora
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  onClick={playTrailer}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground shadow-[0_14px_40px_rgba(61,110,255,0.28)] transition-[transform,background,box-shadow] duration-300 ease-premium hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 hover:shadow-[0_18px_48px_rgba(61,110,255,0.42)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
-                >
-                  <Play className="h-4 w-4 fill-current" aria-hidden />
-                  Assistir ao trailer
-                </button>
-              )}
-            </div>
-
-            <div
-              data-curta-reveal
-              data-start="0.34"
-              data-end="0.96"
-              data-x="18"
-              data-y="62"
-              data-rotate="1.5"
-              className="mt-5 will-change-transform"
-              aria-label={released ? "Curta disponível" : "Contagem regressiva para a estreia"}
-            >
-              <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.17em] text-blue-300">
-                {released ? "Veja agora" : "Falta pouco · Hoje às 12h"}
-              </p>
-              {!released && (
-                <div className="flex flex-wrap gap-2">
-                  <Unit value={timeLeft?.days ?? null} label="Dias" />
-                  <Unit value={timeLeft?.hours ?? null} label="Horas" />
-                  <Unit value={timeLeft?.minutes ?? null} label="Min" />
-                  <Unit value={timeLeft?.seconds ?? null} label="Seg" />
-                </div>
-              )}
+              <Link
+                href="/projetos/ronaldo-caiado?cinema=1#assistir"
+                className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground shadow-[0_14px_40px_rgba(61,110,255,0.28)] transition-[transform,background,box-shadow] duration-300 ease-premium hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950 hover:shadow-[0_18px_48px_rgba(61,110,255,0.42)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-text"
+              >
+                <Play className="h-4 w-4 fill-current" aria-hidden />
+                Assistir ao curta agora
+              </Link>
             </div>
 
             <div
@@ -326,7 +248,7 @@ export function PreEstreia() {
           </div>
 
           <div
-            id="trailer-caiado"
+            id="filme-caiado"
             data-curta-reveal
             data-start="0.08"
             data-end="0.9"
@@ -345,39 +267,20 @@ export function PreEstreia() {
               className="absolute inset-0 -z-10 translate-x-3 translate-y-3 rotate-[1.5deg] rounded-lg border border-blue-500/30 bg-blue-900/50"
             />
             <div className="relative aspect-video overflow-hidden rounded-lg border border-white/15 bg-black shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
-              {!isTrailerPlaying &&
-                (released ? (
-                  <Link
-                    href="/projetos/ronaldo-caiado?cinema=1#assistir"
-                    aria-label="Assistir ao curta Ronaldo Caiado"
-                    className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full border border-white/30 bg-white/90 text-black-950 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-[transform,background] duration-300 ease-premium hover:scale-105 hover:bg-blue-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                  >
-                    <Play className="h-4 w-4 fill-current" aria-hidden />
-                  </Link>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={playTrailer}
-                    aria-label="Reproduzir trailer"
-                    className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full border border-white/30 bg-white/90 text-black-950 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-[transform,background] duration-300 ease-premium hover:scale-105 hover:bg-blue-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                  >
-                    <Play className="h-3.5 w-3.5 translate-x-px fill-current" aria-hidden />
-                  </button>
-                ))}
-              <video
-                ref={trailerRef}
-                playsInline
-                poster="/curta-poster.jpg"
-                preload="metadata"
-                className="h-full w-full object-cover"
-                aria-label="Trailer do curta sobre Ronaldo Caiado"
-                onPlay={() => setIsTrailerPlaying(true)}
-                onPause={() => setIsTrailerPlaying(false)}
-                onEnded={() => setIsTrailerPlaying(false)}
+              <Link
+                href="/projetos/ronaldo-caiado?cinema=1#assistir"
+                aria-label="Assistir ao curta Ronaldo Caiado"
+                className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full border border-white/30 bg-white/90 text-black-950 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-[transform,background] duration-300 ease-premium hover:scale-105 hover:bg-blue-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
-                <source src="/curta-trailer.mp4" type="video/mp4" />
-                Seu navegador não suporta a reprodução deste vídeo.
-              </video>
+                <Play className="h-4 w-4 fill-current" aria-hidden />
+              </Link>
+              <Image
+                src="/curta-poster.jpg"
+                alt="Pôster do curta Ronaldo Caiado"
+                fill
+                sizes="(min-width: 1024px) 62vw, 100vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
