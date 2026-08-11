@@ -3,6 +3,8 @@ import { SITE_URL } from "@/lib/metadata";
 import { PORTFOLIO_PROJECTS } from "@/lib/portfolio-projects";
 import { TEAM_MEMBERS } from "@/lib/team-members";
 
+export const dynamic = "force-static";
+
 function absoluteUrl(path: string) {
   return `${SITE_URL}${path}`;
 }
