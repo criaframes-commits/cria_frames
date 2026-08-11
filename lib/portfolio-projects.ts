@@ -1,3 +1,5 @@
+import { CAIADO_TRAILER_YOUTUBE_ID } from "@/lib/caiado-project";
+
 export type PortfolioProject = {
   slug: string;
   title: string;
@@ -37,7 +39,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
       "Um projeto especial sobre a trajetória pública de Ronaldo Caiado, ex-governador de Goiás e candidato à Presidência. O filme combina pesquisa, roteiro, direção de arte e geração com inteligência artificial em uma narrativa concebida frame a frame.",
     memberIds: [],
     teaser: {
-      src: "/curta-trailer.mp4",
+      youtubeId: CAIADO_TRAILER_YOUTUBE_ID,
       label: "Trailer",
       availableFrom: "2026-08-10T12:00:00-03:00",
     },

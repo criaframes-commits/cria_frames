@@ -5,9 +5,12 @@ export const CAIADO_FEATURE_END_DATE = new Date(
 // Link do curta completo exibido na sessão cinematográfica do projeto.
 export const CAIADO_FULL_FILM_YOUTUBE_URL = "https://youtu.be/0MMWWu1OuDI";
 
+// Trailer oficial hospedado no YouTube para evitar servir o arquivo pesado pelo site.
+export const CAIADO_TRAILER_YOUTUBE_ID = "9T2EJB8HLIU";
+
 export const CAIADO_ASSETS = {
   poster: "/curta-poster.jpg",
-  trailer: "/curta-trailer.mp4",
+  trailerYoutubeId: CAIADO_TRAILER_YOUTUBE_ID,
   processVideos: [
     "/projetos/ronaldo-caiado/processo/01-pesquisa-e-roteiro.mp4",
     "/projetos/ronaldo-caiado/processo/02-direcao-de-arte.mp4",
