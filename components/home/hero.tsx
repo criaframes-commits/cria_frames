@@ -4,12 +4,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import Link from "next/link";
 import { X } from "lucide-react";
+import {
+  HERO_BACKGROUND_VIDEO_URL,
+  HERO_DIALOG_VIDEO_URL,
+} from "@/lib/hero-video";
 
 export function Hero() {
   const [cursorActive, setCursorActive] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLIFrameElement>(null);
   const pointer = useRef({ x: 0, y: 0 });
 
   // Fonte única de verdade: a última posição conhecida do mouse é comparada
@@ -58,13 +62,20 @@ export function Hero() {
     const video = videoRef.current;
     if (!video) return;
 
+    const sendPlayerCommand = (command: "playVideo" | "pauseVideo") => {
+      video.contentWindow?.postMessage(
+        JSON.stringify({ event: "command", func: command, args: [] }),
+        "https://www.youtube-nocookie.com"
+      );
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
-          void video.play().catch(() => undefined);
+          sendPlayerCommand("playVideo");
           return;
         }
-        video.pause();
+        sendPlayerCommand("pauseVideo");
       },
       { threshold: [0, 0.4] }
     );
@@ -72,7 +83,7 @@ export function Hero() {
     observer.observe(video);
     return () => {
       observer.disconnect();
-      video.pause();
+      sendPlayerCommand("pauseVideo");
     };
   }, []);
 
@@ -82,19 +93,16 @@ export function Hero() {
         ref={sectionRef}
         className="relative min-h-[calc(100svh-var(--site-header-height))] overflow-hidden [@media(pointer:fine)]:cursor-none"
       >
-        <video
+        <iframe
           ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          poster="/hero-poster.jpg"
-          preload="metadata"
-          className="absolute inset-0 h-full w-full object-cover"
+          src={HERO_BACKGROUND_VIDEO_URL}
+          title="Vídeo de destaque da Cria Frames"
+          tabIndex={-1}
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.7778svh] min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 scale-[1.01] border-0 bg-black"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          referrerPolicy="strict-origin-when-cross-origin"
           aria-hidden="true"
-        >
-          <source src="/hero-teaser.mp4" type="video/mp4" />
-        </video>
+        />
 
         {/* Um único gradiente amplo, com stops intermediários para dissolver
             devagar. Sem camadas duras e sem text-shadow — o escurecimento é
@@ -163,7 +171,7 @@ export function Hero() {
           className="fixed inset-0 z-[100] flex items-center justify-center p-2 transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0 md:p-6"
         >
           <DialogPrimitive.Title className="sr-only">
-            Reel completo da Cria Frames
+            Vídeo principal da Cria Frames
           </DialogPrimitive.Title>
           <DialogPrimitive.Close
             aria-label="Fechar vídeo"
@@ -172,8 +180,8 @@ export function Hero() {
             <X className="h-5 w-5" />
           </DialogPrimitive.Close>
           <iframe
-            src="https://www.youtube-nocookie.com/embed/e7cgHPI8wFo?autoplay=1&rel=0&playsinline=1"
-            title="Reel completo da Cria Frames"
+            src={HERO_DIALOG_VIDEO_URL}
+            title="Vídeo principal da Cria Frames"
             className="aspect-video max-h-[95vh] w-full max-w-[95vw] rounded-md border-0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
