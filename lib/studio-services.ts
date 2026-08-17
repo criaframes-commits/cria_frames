@@ -13,7 +13,7 @@ export const STUDIO_SERVICES: readonly StudioService[] = [
     title: "Vídeo com IA",
     description:
       "Criamos narrativas audiovisuais do conceito à finalização. A IA amplia as possibilidades de produção; direção, ritmo e intenção continuam guiando cada escolha.",
-    videoSrc: "/services-background.mp4",
+    videoSrc: "/showreel-teaser.mp4",
     deliverables: [
       "Conceito e roteiro",
       "Direção de IA",
@@ -27,7 +27,7 @@ export const STUDIO_SERVICES: readonly StudioService[] = [
     title: "Motion Design",
     description:
       "Transformamos identidade, informação e conceito em movimento. O projeto pode nascer como uma peça única ou como um sistema preparado para diferentes formatos.",
-    videoSrc: "/services-background.mp4",
+    videoSrc: "/showreel-teaser.mp4",
     deliverables: [
       "Direção de arte",
       "Styleframes",
@@ -41,7 +41,7 @@ export const STUDIO_SERVICES: readonly StudioService[] = [
     title: "Campanha completa",
     description:
       "Pensamos a campanha como um conjunto, não como uma soma de entregas. Conceito, produção e desdobramentos avançam juntos para manter consistência em todos os pontos de contato.",
-    videoSrc: "/services-background.mp4",
+    videoSrc: "/showreel-teaser.mp4",
     deliverables: [
       "Conceito criativo",
       "Plano de peças",
@@ -55,7 +55,7 @@ export const STUDIO_SERVICES: readonly StudioService[] = [
     title: "Consultoria criativa",
     description:
       "Entramos antes da produção para organizar linguagem, ferramentas e fluxo. É uma forma direta de testar caminhos e tomar decisões com mais clareza.",
-    videoSrc: "/services-background.mp4",
+    videoSrc: "/showreel-teaser.mp4",
     deliverables: [
       "Diagnóstico criativo",
       "Workshop com a equipe",

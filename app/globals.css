@@ -162,6 +162,7 @@
 .hero-fade-2 { animation-delay: 400ms; }
 .hero-fade-3 { animation-delay: 600ms; }
 .hero-fade-4 { animation-delay: 850ms; }
+.hero-fade-5 { animation-delay: 1050ms; }
 
 /* cursor WATCH — "pulinho" ao entrar na área do vídeo */
 @keyframes watchIn {

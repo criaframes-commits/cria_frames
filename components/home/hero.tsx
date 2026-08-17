@@ -2,18 +2,19 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
+import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react";
 import {
-  HERO_BACKGROUND_VIDEO_URL,
   HERO_DIALOG_VIDEO_URL,
+  HERO_TEASER_SRC,
 } from "@/lib/hero-video";
 
 export function Hero() {
   const [cursorActive, setCursorActive] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLIFrameElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const pointer = useRef({ x: 0, y: 0 });
 
   // Fonte única de verdade: a última posição conhecida do mouse é comparada
@@ -62,20 +63,13 @@ export function Hero() {
     const video = videoRef.current;
     if (!video) return;
 
-    const sendPlayerCommand = (command: "playVideo" | "pauseVideo") => {
-      video.contentWindow?.postMessage(
-        JSON.stringify({ event: "command", func: command, args: [] }),
-        "https://www.youtube-nocookie.com"
-      );
-    };
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
-          sendPlayerCommand("playVideo");
+          void video.play().catch(() => undefined);
           return;
         }
-        sendPlayerCommand("pauseVideo");
+        video.pause();
       },
       { threshold: [0, 0.4] }
     );
@@ -83,7 +77,7 @@ export function Hero() {
     observer.observe(video);
     return () => {
       observer.disconnect();
-      sendPlayerCommand("pauseVideo");
+      video.pause();
     };
   }, []);
 
@@ -93,16 +87,20 @@ export function Hero() {
         ref={sectionRef}
         className="relative min-h-[calc(100svh-var(--site-header-height))] overflow-hidden [@media(pointer:fine)]:cursor-none"
       >
-        <iframe
+        <video
           ref={videoRef}
-          src={HERO_BACKGROUND_VIDEO_URL}
-          title="Vídeo de destaque da Cria Frames"
-          tabIndex={-1}
-          className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.7778svh] min-w-full max-w-none -translate-x-1/2 -translate-y-1/2 scale-[1.01] border-0 bg-black"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          referrerPolicy="strict-origin-when-cross-origin"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/hero-poster.jpg"
+          preload="auto"
+          disablePictureInPicture
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover"
           aria-hidden="true"
-        />
+        >
+          <source src={HERO_TEASER_SRC} type="video/mp4" />
+        </video>
 
         {/* Um único gradiente amplo, com stops intermediários para dissolver
             devagar. Sem camadas duras e sem text-shadow — o escurecimento é
@@ -124,16 +122,28 @@ export function Hero() {
                 Estúdio de criação com IA
               </span>
 
-              <h1 className="mt-5">
-                <span className="hero-fade hero-fade-2 block font-display text-hero-title font-extrabold uppercase leading-[0.98] tracking-[-0.035em] text-white">
-                  Criamos o impossível
+              <h1 className="mt-5 font-display text-hero-title font-extrabold uppercase leading-[0.98] tracking-[-0.035em] text-white">
+                <span className="hero-fade hero-fade-2 block">
+                  Você pensa
                 </span>
-                <span className="hero-fade hero-fade-3 mt-2 block font-body text-[clamp(0.95rem,0.85rem+0.5vw,1.25rem)] font-light uppercase tracking-[0.3em] text-white/80">
-                  com IA, cinema e processo
+                <span className="hero-fade hero-fade-3 mt-2 flex items-center gap-[0.2em]">
+                  <span>A gente</span>
+                  <Image
+                    src="/cria-frames-logo-so-texto.svg"
+                    alt="Cria"
+                    width={690}
+                    height={470}
+                    priority
+                    className="h-[0.88em] w-auto shrink-0 brightness-0 invert"
+                  />
                 </span>
               </h1>
 
-              <div className="hero-fade hero-fade-4 mt-9 flex flex-wrap items-center gap-3">
+              <p className="hero-fade hero-fade-4 mt-5 font-body text-[clamp(0.85rem,0.76rem+0.35vw,1.08rem)] font-light uppercase tracking-[0.22em] text-white/82">
+                IA para Publicidade, Cinema &amp; TV
+              </p>
+
+              <div className="hero-fade hero-fade-5 mt-9 flex flex-wrap items-center gap-3">
                 <Link
                   href="/projetos"
                   className="inline-flex min-h-11 items-center rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground transition-[transform,background] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950"
