@@ -197,11 +197,16 @@ export default function RonaldoCaiadoProjectPage() {
           <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-300">
             Ficha técnica
           </p>
-          <dl className="mt-8 grid border-l border-t border-white/12 sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="mt-8 grid border-l border-t border-white/12 sm:grid-cols-2 lg:grid-cols-3">
             {[
               ["Formato", "Curta-metragem"],
               ["Lançamento", "10 de agosto de 2026"],
+              ["Cliente", "Família Caiado"],
               ["Produção", "Cria Frames"],
+              [
+                "Equipe do projeto",
+                "João Victor Duarte, Amanda Bueno Santos e Luan Othávio",
+              ],
               ["Tecnologia", "Inteligência artificial"],
             ].map(([term, description]) => (
               <div
@@ -212,7 +217,32 @@ export default function RonaldoCaiadoProjectPage() {
                   {term}
                 </dt>
                 <dd className="mt-3 font-display text-lg font-black uppercase tracking-[-0.02em]">
-                  {description}
+                  {term === "Equipe do projeto" ? (
+                    <span className="flex flex-wrap gap-x-2 gap-y-1">
+                      <Link
+                        href="/sobre/equipe/membro-01"
+                        className="transition-colors hover:text-blue-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300"
+                      >
+                        João Victor Duarte
+                      </Link>
+                      <span aria-hidden="true">·</span>
+                      <Link
+                        href="/sobre/equipe/membro-02"
+                        className="transition-colors hover:text-blue-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300"
+                      >
+                        Amanda Bueno Santos
+                      </Link>
+                      <span aria-hidden="true">·</span>
+                      <Link
+                        href="/sobre/equipe/membro-03"
+                        className="transition-colors hover:text-blue-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300"
+                      >
+                        Luan Othávio
+                      </Link>
+                    </span>
+                  ) : (
+                    description
+                  )}
                 </dd>
               </div>
             ))}

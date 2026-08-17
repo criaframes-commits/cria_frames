@@ -27,6 +27,7 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
   {
     slug: "ronaldo-caiado",
     title: "Ronaldo Caiado",
+    client: "Família Caiado",
     category: "Especial",
     year: "2026",
     duration: "01:23",
@@ -37,12 +38,54 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
       "Um curta sobre a trajetória de Ronaldo Caiado, construído inteiramente com inteligência artificial e direção cinematográfica.",
     context:
       "Um projeto especial sobre a trajetória pública de Ronaldo Caiado, ex-governador de Goiás e candidato à Presidência. O filme combina pesquisa, roteiro, direção de arte e geração com inteligência artificial em uma narrativa concebida frame a frame.",
-    memberIds: [],
+    memberIds: ["membro-01", "membro-02", "membro-03"],
     teaser: {
       youtubeId: CAIADO_TRAILER_YOUTUBE_ID,
       label: "Trailer",
       availableFrom: "2026-08-10T12:00:00-03:00",
     },
+  },
+  {
+    slug: "meu-espelho",
+    title: "Meu Espelho - Curta Oficial",
+    category: "Filme",
+    year: "2026",
+    duration: "01:33",
+    coverSrc: "/projetos/meu-espelho.jpg",
+    youtubeId: "85TBKCcr2u8",
+    summary:
+      "Meu Espelho / My Mirror. Curta inspirado no clipe Mirrors, de Justin Timberlake. Made with Higgsfield and Runway.",
+    context:
+      "Meu Espelho / My Mirror. Curta inspirado no clipe Mirrors, de Justin Timberlake. Made with Higgsfield and Runway.",
+    memberIds: ["membro-01"],
+  },
+  {
+    slug: "perigo-na-selva",
+    title: "Perigo na Selva",
+    category: "Filme",
+    year: "2026",
+    duration: "00:18",
+    coverSrc: "/projetos/perigo-na-selva.jpg",
+    youtubeId: "GJ7FPLrlbhA",
+    summary:
+      "Pré-produção e animação: Perigo na Selva. Produção desenvolvida com IA.",
+    context:
+      "Pré-produção e animação: Perigo na Selva. Produção desenvolvida com IA.",
+    memberIds: ["membro-01"],
+  },
+  {
+    slug: "comercial-de-perfume",
+    title: "Comercial de Perfume",
+    category: "Campanha",
+    year: "2026",
+    duration: "00:49",
+    coverSrc: "/projetos/comercial-de-perfume.jpg",
+    youtubeId: "rQmPxr8AAqs",
+    summary:
+      "E se a CRIA lançasse um perfume… Esse é nosso novo quadro onde a gente reimagina diferentes formatos de marca. Produção desenvolvida com IA.",
+    context:
+      "E se a CRIA lançasse um perfume… Esse é nosso novo quadro onde a gente reimagina diferentes formatos de marca. Produção desenvolvida com IA.",
+    memberIds: ["membro-01"],
   },
   {
     slug: "ai-when-its-directed",
@@ -111,6 +154,17 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     memberIds: ["membro-01"],
   },
 ];
+
+const HOME_FEATURED_PROJECT_SLUGS = [
+  "meu-espelho",
+  "perigo-na-selva",
+  "showreel-cria-frames",
+  "a-ultima-corrida",
+] as const;
+
+export const HOME_FEATURED_PROJECTS = HOME_FEATURED_PROJECT_SLUGS.map(
+  (slug) => PORTFOLIO_PROJECTS.find((project) => project.slug === slug)
+).filter((project): project is PortfolioProject => Boolean(project));
 
 export const MEMBER_PROFILE_PROJECTS: Record<string, PortfolioProject[]> = {
   "membro-04": [
