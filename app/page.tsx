@@ -1,5 +1,5 @@
 import { Hero } from "@/components/home/hero";
-import { PreEstreia } from "@/components/home/pre-estreia";
+import { Novidades } from "@/components/home/novidades";
 import { ScrollHolofote } from "@/components/holofote/scroll-holofote";
 import { ProvaSocial } from "@/components/home/prova-social";
 import { CtaFinal } from "@/components/home/cta-final";
@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <main>
       <Hero />
-      <PreEstreia />
+      <Novidades />
       <ScrollHolofote
         heading="Projetos em destaque"
         projects={HOME_FEATURED_PROJECTS}
