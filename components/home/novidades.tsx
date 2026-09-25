@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import {
   getActiveHomeNews,
@@ -53,15 +54,13 @@ function NewsPoster({ item, tone }: { item: HomeNewsItem; tone: string }) {
     <div
       className={`relative aspect-video overflow-hidden rounded-lg border bg-black shadow-[0_30px_80px_rgba(0,0,0,0.5)] ${tone}`}
     >
-      <a
-        href={item.videoUrl}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={`Assistir ${item.title} no YouTube`}
+      <Link
+        href={item.href}
+        aria-label={`Assistir ao projeto ${item.title}`}
         className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full border border-white/30 bg-white/90 text-black-950 shadow-[0_8px_24px_rgba(0,0,0,0.35)] backdrop-blur-md transition-[transform,background] duration-300 ease-premium hover:scale-105 hover:bg-rose-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       >
         <ArrowUpRight className="h-4 w-4" aria-hidden />
-      </a>
+      </Link>
       <Image
         src={src}
         alt={item.posterAlt}
@@ -299,15 +298,13 @@ export function Novidades() {
                 data-rotate="-2"
                 className="mt-5 flex flex-wrap items-center gap-3"
               >
-                <a
-                  href={item.videoUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                <Link
+                  href={item.href}
                   className={`inline-flex min-h-11 items-center gap-2 rounded-pill px-7 text-sm font-semibold text-white transition-[transform,background,box-shadow] duration-300 ease-premium hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-200 ${tone.button}`}
                 >
                   Assistir agora
                   <ArrowUpRight className="h-4 w-4" aria-hidden />
-                </a>
+                </Link>
               </div>
             </div>
 

@@ -6,7 +6,7 @@ import { TEAM_MEMBERS } from "@/lib/team-members";
 export const dynamic = "force-static";
 
 function absoluteUrl(path: string) {
-  return `${SITE_URL}${path}`;
+  return new URL(path, SITE_URL).toString();
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {

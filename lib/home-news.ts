@@ -6,7 +6,7 @@ export type HomeNewsItem = {
   description: string;
   formatLabel: string;
   category: string;
-  videoUrl: string;
+  href: string;
   posterUrl: string;
   posterFallbackUrl?: string;
   posterAlt: string;
@@ -25,7 +25,7 @@ export const HOME_NEWS: HomeNewsItem[] = [
     description: "Um short movie de terror criado pela Cria Frames.",
     formatLabel: "Short movie",
     category: "Terror",
-    videoUrl: "https://youtu.be/oMoXCRytkAs",
+    href: "/projetos/#dont-open-the-door",
     posterUrl: "https://img.youtube.com/vi/oMoXCRytkAs/maxresdefault.jpg",
     posterFallbackUrl: "https://img.youtube.com/vi/oMoXCRytkAs/hqdefault.jpg",
     posterAlt: "Cena do short movie de terror DON'T OPEN THE DOOR",

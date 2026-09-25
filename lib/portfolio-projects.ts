@@ -46,6 +46,19 @@ export const PORTFOLIO_PROJECTS: PortfolioProject[] = [
     },
   },
   {
+    slug: "dont-open-the-door",
+    title: "DON'T OPEN THE DOOR",
+    category: "Filme",
+    year: "2026",
+    duration: "03:07",
+    coverSrc: "https://img.youtube.com/vi/oMoXCRytkAs/maxresdefault.jpg",
+    youtubeId: "oMoXCRytkAs",
+    summary: "Short movie de terror da Cria Frames produzido por João Victor Duarte.",
+    context:
+      "DON'T OPEN THE DOOR é um short movie de terror produzido por João Victor Duarte para a Cria Frames.",
+    memberIds: ["membro-01"],
+  },
+  {
     slug: "meu-espelho",
     title: "Meu Espelho - Curta Oficial",
     category: "Filme",
