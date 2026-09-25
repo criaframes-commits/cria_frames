@@ -72,9 +72,9 @@
   .navigation { right: 14px; }
 }
 @media (max-width: 800px) {
-  .viewerHeader { inset: max(8px, env(safe-area-inset-top)) 12px auto; gap: 12px; }
+  .viewerHeader { inset: max(8px, env(safe-area-inset-top)) 12px auto; justify-content: flex-start; gap: 12px; }
   .brand, .viewerTitle { display: none; }
-  .close { color: white; background: rgb(0 0 0 / 38%); border-color: rgb(255 255 255 / 28%); box-shadow: none; }
+  .close { margin-left: 0; color: white; background: rgb(0 0 0 / 38%); border-color: rgb(255 255 255 / 28%); box-shadow: none; }
   .viewerBody { position: relative; display: block; height: 100%; padding: 0; }
   .viewerBody::after { content: ""; position: absolute; z-index: 1; inset: auto 0 0; height: 42%; background: linear-gradient(transparent, rgb(0 0 0 / 76%)); pointer-events: none; }
   .feed { position: absolute; inset: 0; width: 100%; height: 100%; }
