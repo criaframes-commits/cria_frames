@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local analysis of the user-provided video reference
+/tmp/reels-reference*
+/tmp/reels-tools/

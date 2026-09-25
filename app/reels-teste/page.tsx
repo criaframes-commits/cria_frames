@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { ReelsGallery } from "@/components/reels/reels-gallery";
-import { REELS } from "@/lib/reels";
+import { ReelsViewer } from "@/components/reels/reels-viewer";
+import { REELS, REELS_ARE_PREVIEW } from "@/lib/reels";
 
 export const metadata: Metadata = {
   title: "Reels · Prévia",
@@ -10,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function ReelsTestPage() {
-  return <ReelsGallery reels={REELS} />;
+  return <ReelsViewer reels={REELS} preview={REELS_ARE_PREVIEW} />;
 }

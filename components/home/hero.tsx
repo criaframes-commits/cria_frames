@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
 import Image from "next/image";
 import Link from "next/link";
-import { X } from "lucide-react";
+import { Play, X } from "lucide-react";
 import {
   HERO_DIALOG_VIDEO_URL,
   HERO_TEASER_SRC,
@@ -149,6 +149,13 @@ export function Hero() {
                   className="inline-flex min-h-11 items-center rounded-pill bg-primary px-7 text-sm font-semibold text-primary-foreground transition-[transform,background] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-blue-300 hover:text-black-950"
                 >
                   Ver portfólio
+                </Link>
+                <Link
+                  href="/reels/"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-pill border border-white/30 px-7 text-sm font-semibold text-white transition-colors duration-200 hover:bg-white/10"
+                >
+                  <Play size={15} aria-hidden="true" />
+                  Vídeos verticais
                 </Link>
                 <Link
                   href="/contato"
