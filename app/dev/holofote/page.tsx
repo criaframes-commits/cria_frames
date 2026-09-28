@@ -35,7 +35,7 @@ const DEV_PROJECTS: HolofoteProject[] = [
   },
 ];
 
-export function ScrollHolofote({
+function ScrollHolofote({
   id = "projetos",
   projects,
 }: ScrollHolofoteProps) {
